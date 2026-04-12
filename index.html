@@ -796,6 +796,25 @@ if(sessionStorage.getItem('auth')==='1'){
 
 </div>
 
+<!-- ========== SETTINGS MODAL ========== -->
+<div class="modal-backdrop" id="settings-modal">
+  <div class="modal">
+    <h3>⚙ Ajustes de sincronización</h3>
+    <p>Para que los trámites y documentos se sincronicen entre dispositivos, introduce un <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">token personal de GitHub</a> con permiso <strong>Contents: Read and write</strong> sobre el repo <code>CommnaderWi11/parental-leave-plan</code>.</p>
+    <input type="password" id="pat-input" placeholder="github_pat_..." autocomplete="off">
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="pat-save">Guardar</button>
+      <button class="btn btn-secondary" id="pat-cancel">Cerrar</button>
+      <button class="btn btn-danger" id="pat-clear">Borrar token</button>
+    </div>
+    <div class="error-msg" id="pat-error"></div>
+    <p style="margin-top:14px;font-size:11px;color:var(--text-muted);">El token se guarda solo en este dispositivo (localStorage). Los documentos subidos son <strong>públicos</strong> (repo público). Revoca el token en cualquier momento desde los ajustes de GitHub.</p>
+  </div>
+</div>
+
+<!-- ========== TOAST HOST ========== -->
+<div id="toast-host"></div>
+
 <!-- ============================================
      SCRIPTS
      ============================================ -->
@@ -1488,25 +1507,6 @@ if ('serviceWorker' in navigator) {
   sections.forEach(s => observer.observe(s.el));
 })();
 </script>
-
-<!-- ========== SETTINGS MODAL ========== -->
-<div class="modal-backdrop" id="settings-modal">
-  <div class="modal">
-    <h3>⚙ Ajustes de sincronización</h3>
-    <p>Para que los trámites y documentos se sincronicen entre dispositivos, introduce un <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">token personal de GitHub</a> con permiso <strong>Contents: Read and write</strong> sobre el repo <code>CommnaderWi11/parental-leave-plan</code>.</p>
-    <input type="password" id="pat-input" placeholder="github_pat_..." autocomplete="off">
-    <div class="modal-actions">
-      <button class="btn btn-primary" id="pat-save">Guardar</button>
-      <button class="btn btn-secondary" id="pat-cancel">Cerrar</button>
-      <button class="btn btn-danger" id="pat-clear">Borrar token</button>
-    </div>
-    <div class="error-msg" id="pat-error"></div>
-    <p style="margin-top:14px;font-size:11px;color:var(--text-muted);">El token se guarda solo en este dispositivo (localStorage). Los documentos subidos son <strong>públicos</strong> (repo público). Revoca el token en cualquier momento desde los ajustes de GitHub.</p>
-  </div>
-</div>
-
-<!-- ========== TOAST HOST ========== -->
-<div id="toast-host"></div>
 
 </div><!-- /main-content -->
 </body>
