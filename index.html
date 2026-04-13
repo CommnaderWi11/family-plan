@@ -447,6 +447,40 @@ section { scroll-margin-top: 60px; }
 .chip-prv { background: rgba(96,165,250,0.14); color: #93c5fd; border-color: rgba(96,165,250,0.32); }
 .chip-emp { background: rgba(167,139,250,0.14); color: #c4b5fd; border-color: rgba(167,139,250,0.32); }
 
+.subtask-toggle {
+  background: transparent; border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text-secondary); font-size: 11px; font-weight: 500;
+  padding: 3px 8px; border-radius: 999px; margin-left: 6px; cursor: pointer;
+  font-family: inherit; display: inline-flex; align-items: center; gap: 5px;
+  white-space: nowrap;
+}
+.subtask-toggle:hover { border-color: var(--accent-purple-soft); color: var(--text); }
+.subtask-toggle .subtask-count { font-size: 10px; opacity: 0.7; }
+.subtasks-panel {
+  background: rgba(255,255,255,0.02);
+  border-left: 2px solid var(--accent-purple-soft);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px; margin: 2px 0 10px 22px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.subtask-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--text-secondary);
+  cursor: pointer; padding: 4px 0;
+}
+.subtask-item input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; cursor: pointer; flex-shrink: 0; }
+.subtask-item input[type="checkbox"]:checked + span { text-decoration: line-through; opacity: 0.55; }
+
+.tramite-row.blocked { opacity: 0.55; }
+.tramite-row.blocked input[type="checkbox"] { cursor: not-allowed; }
+.dep-badge {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  padding: 2px 8px; border-radius: 999px; margin-left: 6px;
+  background: rgba(251,191,36,0.14); color: #fcd34d;
+  border: 1px solid rgba(251,191,36,0.32);
+  white-space: nowrap;
+}
+
 .aggregate-card { display: flex; align-items: center; gap: 18px; padding: 18px 22px; margin-bottom: 24px; }
 .aggregate-card .agg-num { font-size: 30px; font-weight: 800; color: var(--accent-purple); letter-spacing: -1px; white-space: nowrap; }
 .aggregate-card .agg-info { flex: 1; min-width: 0; }
@@ -1000,17 +1034,48 @@ window.BLOQUE_STARTS = {
 // Existing 4 groups are also in HTML; new 3 groups (bebe, salud, ayudas) render from this config.
 window.TRAMITES = {
   // ---------- Preparación ----------
-  'preparacion-0': { deadline: { kind: 'beforeEDD', days: 7, label: 'Lista 7 d antes EDD' }, priority: 'critical', scope: 'privado' },
-  'preparacion-1': { deadline: { kind: 'beforeEDD', days: 7, label: 'Instalada 7 d antes EDD' }, priority: 'critical', scope: 'nacional' },
+  'preparacion-0': { deadline: { kind: 'beforeEDD', days: 7, label: 'Lista 7 d antes EDD' }, priority: 'critical', scope: 'privado',
+    subtasks: [
+      { id: 'mama-ropa', label: 'Mamá: camisones (2) + bata + sujetador lactancia + chanclas' },
+      { id: 'mama-higiene', label: 'Mamá: neceser (cepillo, pasta, compresas postparto, toalla)' },
+      { id: 'bebe-bodys', label: 'Bebé: bodys 0-3m (5-6) + pijamas + calcetines + gorrito' },
+      { id: 'bebe-manta', label: 'Bebé: manta envolvente + arrullo + toalla con capucha' },
+      { id: 'bebe-panales', label: 'Bebé: pañales recién nacido (1 paquete) + toallitas' },
+      { id: 'docs-hospital', label: 'Docs: DNIs padres + tarjeta SS madre + tarjeta seguro Vithas' },
+      { id: 'acomp-essentials', label: 'Acompañante: cargador móvil + snacks + botella agua + muda' }
+    ]
+  },
+  'preparacion-1': { deadline: { kind: 'beforeEDD', days: 7, label: 'Instalada 7 d antes EDD' }, priority: 'critical', scope: 'nacional',
+    subtasks: [
+      { id: 'comprar', label: 'Comprar silla i-Size grupo 0+ homologada' },
+      { id: 'instalar', label: 'Instalar en el coche (base isofix o cinturón)' },
+      { id: 'probar', label: 'Practicar el anclaje y desanclaje' }
+    ]
+  },
   'preparacion-2': { deadline: { kind: 'beforeEDD', days: 14, label: 'Presentar semana 36-37' }, priority: 'high', scope: 'privado' },
-  'preparacion-3': { deadline: { kind: 'beforeEDD', days: 3, label: 'Coordinar 3 d antes EDD' }, priority: 'high', scope: 'privado' },
+  'preparacion-3': { deadline: { kind: 'beforeEDD', days: 3, label: 'Coordinar 3 d antes EDD' }, priority: 'high', scope: 'privado',
+    subtasks: [
+      { id: 'school', label: 'Confirmar horario/recogida Luther King' },
+      { id: 'cuidador', label: 'Confirmar cuidador primario (abuelos/familia)' },
+      { id: 'pernocta', label: 'Plan B para pernocta si el parto es de noche' }
+    ]
+  },
   // ---------- Registro Civil ----------
   'registro-0': { deadline: { kind: 'afterBirth', days: 3, label: '72h tras nacimiento' }, priority: 'critical', scope: 'privado' },
   'registro-1': { deadline: { kind: 'afterBirth', days: 10, label: '10 días tras nacimiento' }, scope: 'nacional' },
   'registro-2': { deadline: { kind: 'afterBirth', days: 10, label: '10 días tras nacimiento' }, scope: 'nacional' },
   'registro-3': { deadline: { kind: 'afterBirth', days: 10, label: '10 días (max 30)' }, scope: 'nacional' },
   // ---------- INSS ----------
-  'inss-0': { deadline: { kind: 'afterBirth', days: 15, label: 'Cuanto antes tras nacimiento' }, priority: 'high', scope: 'nacional' },
+  'inss-0': { deadline: { kind: 'afterBirth', days: 15, label: 'Cuanto antes tras nacimiento' }, priority: 'high', scope: 'nacional',
+    subtasks: [
+      { id: 'clave', label: 'Tener Cl@ve PIN o certificado digital activo' },
+      { id: 'form', label: 'Rellenar modelo MP-1 bis (sede electrónica INSS)' },
+      { id: 'adj-libro', label: 'Adjuntar Libro de Familia / certificado literal' },
+      { id: 'adj-dni', label: 'Adjuntar DNIs de ambos progenitores' },
+      { id: 'adj-iban', label: 'Adjuntar certificado de titularidad IBAN' },
+      { id: 'enviar', label: 'Enviar solicitud y guardar número de registro' }
+    ]
+  },
   'inss-1': { deadline: { kind: 'afterBirth', days: 15, label: 'Con la solicitud' }, scope: 'nacional' },
   'inss-2': { deadline: { kind: 'afterBirth', days: 15, label: 'Tras el parto' }, scope: 'autonomica' },
   'inss-3': { deadline: { kind: 'afterBirth', days: 15, label: 'Tras inscripción Registro' }, scope: 'nacional' },
@@ -1029,10 +1094,19 @@ window.TRAMITES = {
               dependsOn: ['bebe-0'] },
   'bebe-2': { name: 'Empadronamiento bebé (Ciudad Jardín, LPGC)', meta: 'Ayto. Las Palmas · OAC Ciudad Jardín · Requiere Libro Familia',
               deadline: { kind: 'afterBirth', days: 30, label: 'Primer mes de vida' }, scope: 'municipal',
-              dependsOn: ['bebe-1'] },
+              dependsOn: ['bebe-1'],
+              subtasks: [
+                { id: 'cita', label: 'Pedir cita previa en OAC Ciudad Jardín' },
+                { id: 'docs', label: 'Llevar: Libro de Familia + DNIs padres + empadronamiento madre' },
+                { id: 'volante', label: 'Obtener volante de empadronamiento del bebé' }
+              ] },
   'bebe-3': { name: 'Tarjeta Sanitaria SCS bebé', meta: 'SCS · Requiere empadronamiento · Asignación centro de salud',
               deadline: { kind: 'afterBirth', days: 30, label: 'Primer mes' }, scope: 'autonomica',
-              dependsOn: ['bebe-2'] },
+              dependsOn: ['bebe-2'],
+              subtasks: [
+                { id: 'online', label: 'Solicitud online en miscs.sergas.es (o equivalente SCS)' },
+                { id: 'presencial', label: 'Alternativa: presencial en CS Ciudad Jardín con Libro Familia + volante empadronamiento' }
+              ] },
   'bebe-4': { name: 'Familia Digital (app Mi Familia)', meta: 'Ministerio de Justicia · Sustituye Libro de Familia en papel · Opcional',
               deadline: { kind: 'afterBirth', days: 30, label: 'Cuando esté disponible' }, scope: 'nacional',
               dependsOn: ['bebe-1'] },
@@ -1470,6 +1544,123 @@ window.fmtLongDate = function(d) {
   }
   renderScopeChips();
 
+  // Expandable subtasks UI
+  function renderSubtasks() {
+    document.querySelectorAll('.tramite-row input[type="checkbox"]').forEach(box => {
+      const key = box.dataset.group + '-' + box.dataset.idx;
+      const t = window.TRAMITES[key];
+      if (!t || !t.subtasks || !t.subtasks.length) return;
+      const row = box.closest('.tramite-row');
+      if (row.querySelector('.subtasks-panel')) return;
+
+      const btn = document.createElement('button');
+      btn.className = 'subtask-toggle';
+      btn.type = 'button';
+      btn.title = 'Mostrar subtareas';
+      btn.textContent = '▾';
+      row.appendChild(btn);
+
+      const panel = document.createElement('div');
+      panel.className = 'subtasks-panel';
+      panel.style.display = 'none';
+      t.subtasks.forEach(st => {
+        const id = 'st-' + key + '-' + st.id;
+        const item = document.createElement('label');
+        item.className = 'subtask-item';
+        item.innerHTML = '<input type="checkbox" data-tramite="' + key + '" data-sub="' + st.id + '"> <span>' + st.label + '</span>';
+        panel.appendChild(item);
+      });
+      row.parentNode.insertBefore(panel, row.nextSibling);
+
+      btn.addEventListener('click', () => {
+        const open = panel.style.display !== 'none';
+        panel.style.display = open ? 'none' : '';
+        btn.textContent = open ? '▾' : '▴';
+      });
+
+      panel.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          const tk = cb.dataset.tramite;
+          const sk = cb.dataset.sub;
+          state.subtasks = state.subtasks || {};
+          state.subtasks[tk] = state.subtasks[tk] || {};
+          state.subtasks[tk][sk] = cb.checked;
+          renderSubtaskProgress(tk);
+          queueSave();
+          if (navigator.vibrate && cb.checked) navigator.vibrate(15);
+        });
+      });
+    });
+  }
+  renderSubtasks();
+
+  function applySubtaskState() {
+    document.querySelectorAll('.subtasks-panel input[type="checkbox"]').forEach(cb => {
+      const tk = cb.dataset.tramite;
+      const sk = cb.dataset.sub;
+      cb.checked = !!((state.subtasks || {})[tk] || {})[sk];
+    });
+    document.querySelectorAll('.tramite-row input[data-group]').forEach(box => {
+      renderSubtaskProgress(box.dataset.group + '-' + box.dataset.idx);
+    });
+  }
+
+  function renderSubtaskProgress(key) {
+    const t = window.TRAMITES[key];
+    if (!t || !t.subtasks || !t.subtasks.length) return;
+    const row = document.querySelector('.tramite-row input[data-group="' + key.split('-')[0] + '"][data-idx="' + key.split('-').slice(1).join('-') + '"]');
+    if (!row) return;
+    const tr = row.closest('.tramite-row');
+    const btn = tr.querySelector('.subtask-toggle');
+    if (!btn) return;
+    const sub = (state.subtasks || {})[key] || {};
+    const done = t.subtasks.filter(s => sub[s.id]).length;
+    const total = t.subtasks.length;
+    let pill = btn.querySelector('.subtask-count');
+    if (!pill) {
+      pill = document.createElement('span');
+      pill.className = 'subtask-count';
+      btn.prepend(pill);
+    }
+    pill.textContent = done + '/' + total;
+  }
+
+  // Dependency rendering: grey out rows whose deps aren't complete
+  function renderDependencyState() {
+    document.querySelectorAll('.tramite-row input[type="checkbox"]').forEach(box => {
+      const key = box.dataset.group + '-' + box.dataset.idx;
+      const t = window.TRAMITES[key];
+      const row = box.closest('.tramite-row');
+      if (!row) return;
+      let depBadge = row.querySelector('.dep-badge');
+      if (!t || !t.dependsOn || !t.dependsOn.length) {
+        row.classList.remove('blocked');
+        if (depBadge) depBadge.remove();
+        return;
+      }
+      const unmet = t.dependsOn.filter(k => !state.tramites[k]);
+      if (!unmet.length) {
+        row.classList.remove('blocked');
+        if (depBadge) depBadge.remove();
+        return;
+      }
+      row.classList.add('blocked');
+      if (!depBadge) {
+        depBadge = document.createElement('span');
+        depBadge.className = 'dep-badge';
+        const statusBadge = row.querySelector('.badge');
+        if (statusBadge && statusBadge.parentNode) statusBadge.parentNode.insertBefore(depBadge, statusBadge);
+        else row.appendChild(depBadge);
+      }
+      const names = unmet.map(k => {
+        const t2 = window.TRAMITES[k];
+        return t2 && t2.name ? t2.name : k;
+      });
+      depBadge.textContent = '⏳ Requiere ' + unmet.length;
+      depBadge.title = 'Requiere: ' + names.join(' · ');
+    });
+  }
+
   const allBoxes = Array.from(document.querySelectorAll('.tramite-row input[type="checkbox"]'));
   const groups = new Set();
   allBoxes.forEach(b => groups.add(b.dataset.group));
@@ -1616,6 +1807,8 @@ window.fmtLongDate = function(d) {
       renderRowDoc(box);
       renderUrgencyBadge(box);
     });
+    applySubtaskState();
+    renderDependencyState();
     groups.forEach(updateGroupProgress);
     updateAggregate();
     renderDashboard();
@@ -1627,6 +1820,7 @@ window.fmtLongDate = function(d) {
       state.tramites[key] = this.checked;
       applyRowStyle(this);
       renderUrgencyBadge(this);
+      renderDependencyState();
       updateGroupProgress(this.dataset.group);
       updateAggregate();
       renderDashboard();

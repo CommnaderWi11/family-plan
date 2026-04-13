@@ -1,4 +1,4 @@
-const VERSION = 'v5-postbirth-groups';
+const VERSION = 'v6-deps-subtasks';
 const CACHE = 'paternidad-shell-' + VERSION;
 const SHELL = [
   './',
