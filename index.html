@@ -760,14 +760,19 @@ body[data-tab]:not([data-tab="resumen"]) .clock-sign { margin-right: 2px; opacit
 .tramite-row input[type="checkbox"] { width: 22px; height: 22px; min-width: 22px; cursor: pointer; }
 @media (max-width: 768px) {
   .nav-link { min-height: 44px; padding: 10px 14px !important; }
-  .tramite-row { min-height: 56px; gap: 8px; flex-wrap: wrap; }
-  .tramite-row .tramite-info { flex-basis: calc(100% - 52px); }
-  .tramite-row .badge { margin-left: 30px; }
-  .doc-pill, .lib-pill { min-height: 32px; font-size: 12px; max-width: 100%; }
-  .doc-pill .doc-name { max-width: 140px; }
+  .tramite-row { min-height: 56px; gap: 10px; align-items: flex-start; padding: 10px 0; }
+  .tramite-row input[type="checkbox"] { margin-top: 2px; }
+  .tramite-info { min-width: 0; }
+  .tramite-info .doc-slot { display: block; margin-top: 6px; }
+  .tramite-info .scope-chip { display: inline-block; margin-top: 4px; }
+  .doc-pill { max-width: 100%; font-size: 11px; padding: 3px 8px; }
+  .doc-pill .doc-name { max-width: 100%; white-space: normal; overflow-wrap: anywhere; word-break: break-word; }
+  .badge { font-size: 9px; padding: 3px 7px; align-self: flex-start; margin-top: 2px; }
+  .subtask-toggle, .journal-toggle { margin-top: 4px; }
   .subtask-item { min-height: 44px; }
   .glass { padding: 16px; }
   .tramite-group { padding: 14px; }
+  .tramite-group h3 { font-size: 14px; overflow-wrap: anywhere; }
 }
 
 .aggregate-card { display: flex; align-items: center; gap: 18px; padding: 18px 22px; margin-bottom: 24px; }
