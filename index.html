@@ -388,9 +388,9 @@ section { scroll-margin-top: 60px; }
 }
 .tramite-row:last-child { border-bottom: none; }
 .tramite-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent-purple-soft); cursor: pointer; flex-shrink: 0; }
-.tramite-info { flex: 1; min-width: 0; }
-.tramite-info .name { font-size: 13px; font-weight: 600; }
-.tramite-info .meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.tramite-info { flex: 1 1 0; min-width: 0; overflow: hidden; }
+.tramite-info .name { font-size: 13px; font-weight: 600; overflow-wrap: anywhere; word-break: break-word; }
+.tramite-info .meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; overflow-wrap: anywhere; word-break: break-word; }
 .tramite-info .doc-slot { display: inline-flex; margin-top: 4px; }
 .badge {
   font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
@@ -760,9 +760,14 @@ body[data-tab]:not([data-tab="resumen"]) .clock-sign { margin-right: 2px; opacit
 .tramite-row input[type="checkbox"] { width: 22px; height: 22px; min-width: 22px; cursor: pointer; }
 @media (max-width: 768px) {
   .nav-link { min-height: 44px; padding: 10px 14px !important; }
-  .tramite-row { min-height: 56px; }
-  .doc-pill, .lib-pill { min-height: 32px; font-size: 12px; }
+  .tramite-row { min-height: 56px; gap: 8px; flex-wrap: wrap; }
+  .tramite-row .tramite-info { flex-basis: calc(100% - 52px); }
+  .tramite-row .badge { margin-left: 30px; }
+  .doc-pill, .lib-pill { min-height: 32px; font-size: 12px; max-width: 100%; }
+  .doc-pill .doc-name { max-width: 140px; }
   .subtask-item { min-height: 44px; }
+  .glass { padding: 16px; }
+  .tramite-group { padding: 14px; }
 }
 
 .aggregate-card { display: flex; align-items: center; gap: 18px; padding: 18px 22px; margin-bottom: 24px; }
