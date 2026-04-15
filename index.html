@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Misión: Luca (Miguel?)</title>
+<title>Misión: Luca</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1a0533" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#f5f3ff" media="(prefers-color-scheme: light)">
 <meta name="color-scheme" content="light dark">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Luca / Miguel 2026">
+<meta name="apple-mobile-web-app-title" content="Luca 2026">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -760,13 +760,20 @@ body[data-tab]:not([data-tab="resumen"]) .clock-sign { margin-right: 2px; opacit
 .tramite-row input[type="checkbox"] { width: 22px; height: 22px; min-width: 22px; cursor: pointer; }
 @media (max-width: 768px) {
   .nav-link { min-height: 44px; padding: 10px 14px !important; }
-  .tramite-row { min-height: 56px; gap: 10px; align-items: flex-start; padding: 10px 0; }
+  .tramite-row { min-height: 56px; gap: 6px 10px; align-items: flex-start; padding: 10px 0; flex-wrap: wrap; }
   .tramite-row input[type="checkbox"] { margin-top: 2px; }
-  .tramite-info { min-width: 0; }
+  .tramite-info { min-width: 0; flex: 1 1 calc(100% - 34px); }
   .tramite-info .doc-slot { display: block; margin-top: 6px; }
   .tramite-info .scope-chip { display: inline-block; margin-top: 4px; }
   .doc-pill { max-width: 100%; font-size: 11px; padding: 3px 8px; }
   .doc-pill .doc-name { max-width: 100%; white-space: normal; overflow-wrap: anywhere; word-break: break-word; }
+  .tramite-row > .badge,
+  .tramite-row > .subtask-toggle,
+  .tramite-row > .journal-toggle,
+  .tramite-row > .dep-badge { margin-left: 32px; }
+  .tramite-row > .badge ~ .subtask-toggle,
+  .tramite-row > .badge ~ .journal-toggle,
+  .tramite-row > .subtask-toggle ~ .journal-toggle { margin-left: 0; }
   .badge { font-size: 9px; padding: 3px 7px; align-self: flex-start; margin-top: 2px; }
   .subtask-toggle, .journal-toggle { margin-top: 4px; }
   .subtask-item { min-height: 44px; }
@@ -974,8 +981,8 @@ window.sb.auth.getSession().then(({ data }) => {
 
   <!-- ========== HEADER ========== -->
   <div class="header">
-    <h1>Misión: Luca (Miguel?)</h1>
-    <div class="sub">Luca / Miguel llega el 17 de abril de 2026 a las 09:00</div>
+    <h1>Misión: Luca</h1>
+    <div class="sub">Luca llega el 17 de abril de 2026 a las 09:00</div>
   </div>
 
   <!-- ========== MISSION COUNTDOWN ========== -->
@@ -997,7 +1004,7 @@ window.sb.auth.getSession().then(({ data }) => {
         <div class="clock-seg"><div class="seg-num" id="cd-secs">--</div><div class="seg-lbl">SEC</div></div>
       </div>
       <div class="mission-footer">
-        <div id="countdown-sub" style="font-family: 'Courier New', 'SF Mono', Menlo, Consolas, monospace;"><strong>Últimas Noticias</strong><ul style="margin:6px 0 0 0; padding-left:18px;"><li>14-04 09:15 Sujeto presenta contracciones!</li><li>14-04 08:31 Sujeto somnoliento de muy mal humor (extremar precaución)</li><li>14-04 03:45 Sujeto no puedo dormir (y no deja dormir)</li><li>13-04 02:56 Sujeto padece de gases... abdominales</li><li>13-04 22:34 Sujeto presenta cansancio extremo</li></ul></div>
+        <div id="countdown-sub" style="font-family: 'Courier New', 'SF Mono', Menlo, Consolas, monospace;"><strong>Últimas Noticias</strong><ul style="margin:6px 0 0 0; padding-left:18px;"><li>14-04 09:15 Sujeto presenta contracciones!!!</li></ul></div>
         <button class="btn-link birth-toggle" id="birth-toggle-btn">Registrar fecha de nacimiento</button>
       </div>
     </div>
@@ -1064,7 +1071,7 @@ window.sb.auth.getSession().then(({ data }) => {
       <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); box-shadow: inset 0 0 0 2.5px var(--cal-trip-ring)"></div> Viaje</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); outline: 2.5px solid var(--cal-shift-ring); outline-offset:-2.5px"></div> Días libres turno</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); border-bottom: 2.5px solid var(--cal-school-border)"></div> Escuela verano</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-baby-bg)"></div> Nace Luca / Miguel</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-baby-bg)"></div> Nace Luca</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); box-shadow: 0 0 0 2.5px #fbbf24"></div> Hoy</div>
     </div>
     <div class="cal-grid" id="yearCalendar"></div>
@@ -1079,13 +1086,13 @@ window.sb.auth.getSession().then(({ data }) => {
         <tbody>
           <tr>
             <td data-label="Bloque"><span class="status-dot" style="background:#a855f7"></span>Obligatorio</td>
-            <td data-label="Plan">Primeras 6 semanas con Luca / Miguel en casa, adaptación familiar</td>
+            <td data-label="Plan">Primeras 6 semanas con Luca en casa, adaptación familiar</td>
             <td data-label="Días">42</td>
             <td data-label="Período">20 abr – 31 may</td>
           </tr>
           <tr>
             <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloque 1 – Junio</td>
-            <td data-label="Plan">Adaptación a la vida en Tenerife con Luca / Miguel</td>
+            <td data-label="Plan">Adaptación a la vida en Tenerife con Luca</td>
             <td data-label="Días">12</td>
             <td data-label="Período">14 – 25 jun</td>
           </tr>
@@ -1121,7 +1128,7 @@ window.sb.auth.getSession().then(({ data }) => {
           </tr>
           <tr class="muted-row">
             <td data-label="Bloque"><span class="status-dot" style="background:var(--accent-blue)"></span>Adicionales (2 semanas)</td>
-            <td data-label="Plan">Uso futuro — disponibles hasta que Luca / Miguel cumpla 8 años</td>
+            <td data-label="Plan">Uso futuro — disponibles hasta que Luca cumpla 8 años</td>
             <td data-label="Días">14</td>
             <td data-label="Período">Antes abr 2034</td>
           </tr>
@@ -1304,7 +1311,7 @@ window.sb.auth.getSession().then(({ data }) => {
         <li><strong>Siam Park (5–7 jun):</strong> Cae en días libres de turno — no requiere permiso.</li>
         <li><strong>La Graciosa (5–12 nov):</strong> 5–7 nov días libres de turno + bloque 3 (8–14 nov). Totalmente cubierto.</li>
         <li><strong>Viaje con padre (por decidir):</strong> Viaje con padre (77 años) a Miami o Perú — destino pendiente. 2 bloques reservados.</li>
-        <li><strong>Plazo límite:</strong> 17 de las 19 semanas deben usarse antes de que Luca / Miguel cumpla 1 año (20 abr 2027). Los bloques de Japón terminan el 15 abr — 5 días de margen. Las 2 semanas adicionales pueden disfrutarse hasta que cumpla 8 años (abr 2034).</li>
+        <li><strong>Plazo límite:</strong> 17 de las 19 semanas deben usarse antes de que Luca cumpla 1 año (20 abr 2027). Los bloques de Japón terminan el 15 abr — 5 días de margen. Las 2 semanas adicionales pueden disfrutarse hasta que cumpla 8 años (abr 2034).</li>
       </ul>
     </div>
   </section>
@@ -1341,7 +1348,7 @@ window.sb.auth.getSession().then(({ data }) => {
 <div class="modal-backdrop" id="birth-modal">
   <div class="modal">
     <h3>👶 Registrar nacimiento</h3>
-    <p>Marca la fecha real de nacimiento de Luca / Miguel. Todos los plazos posteriores se recalcularán desde esta fecha.</p>
+    <p>Marca la fecha real de nacimiento de Luca. Todos los plazos posteriores se recalcularán desde esta fecha.</p>
     <label style="display:block;font-size:12px;color:var(--text-muted);margin-top:14px;margin-bottom:6px;">Fecha de nacimiento</label>
     <input type="date" id="birth-date-input" min="2026-03-01" max="2026-06-30" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#f0eef5;font-size:15px;font-family:inherit;">
     <div class="modal-actions">
@@ -1678,7 +1685,7 @@ window.fmtLongDate = function(d) {
       if (shiftOff) { cell.classList.add('shift-off'); cell.title = 'Día libre de turno'; }
       if (tripDay) cell.classList.add('trip');
       if (schoolDay && !type) cell.classList.add('school');
-      if (year === 2026 && month === 3 && d === 20) { cell.classList.add('baby'); cell.title = '¡Nace Luca / Miguel!'; }
+      if (year === 2026 && month === 3 && d === 20) { cell.classList.add('baby'); cell.title = '¡Nace Luca!'; }
       const todayCmp = new Date(); todayCmp.setHours(0,0,0,0);
       if (date.getTime() === todayCmp.getTime()) { cell.classList.add('today'); cell.title = (cell.title ? cell.title + ' · ' : '') + 'Hoy'; }
       daysDiv.appendChild(cell);
