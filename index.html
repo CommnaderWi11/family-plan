@@ -824,7 +824,7 @@ body.is-offline .offline-badge { display: inline-block; }
         <button class="btn btn-link" id="btn-reset-born" hidden>Resetear</button>
       </div>
     </div>
-    <img class="cd-hero" id="cd-hero" alt="Portada" loading="lazy" decoding="async" hidden>
+    <img class="cd-hero" id="cd-hero" src="hero.jpg" alt="Portada" loading="lazy" decoding="async">
   </div>
 
   <!-- ADMIN POST FORM -->
@@ -1159,14 +1159,10 @@ body.is-offline .offline-badge { display: inline-block; }
     if (bornAt && !prev) maybeNotifyBirth();
   }
 
+  const HERO_DEFAULT = 'hero.jpg';
   function applyHero() {
-    if (heroPhotoUrl) {
-      cdHero.src = heroPhotoUrl;
-      cdHero.hidden = false;
-    } else {
-      cdHero.hidden = true;
-      cdHero.removeAttribute('src');
-    }
+    cdHero.src = heroPhotoUrl || HERO_DEFAULT;
+    cdHero.hidden = false;
     // refresh pin button states in feed if rendered
     feedEl.querySelectorAll('.update-pin').forEach(btn => {
       const url = btn.dataset.photo;

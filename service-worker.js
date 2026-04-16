@@ -1,4 +1,4 @@
-const VERSION = 'v13-llega-luca';
+const VERSION = 'v14-llega-luca';
 const SHELL_CACHE = 'llega-luca-shell-' + VERSION;
 const DATA_CACHE = 'llega-luca-data-' + VERSION;
 const PHOTO_CACHE = 'llega-luca-photos-' + VERSION;
@@ -8,7 +8,8 @@ const SHELL = [
   './parental-leave.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './hero.jpg'
 ];
 const SUPABASE_HOST = 'voirsxfjdayhhvwviaqt.supabase.co';
 
