@@ -2,3021 +2,562 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Misión: Luca</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="theme-color" content="#fdfaf4">
+<title>Llega Luca</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1a0533" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#f5f3ff" media="(prefers-color-scheme: light)">
-<meta name="color-scheme" content="light dark">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Luca 2026">
 <link rel="apple-touch-icon" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-/* ============================================
-   CSS CUSTOM PROPERTIES — THEMED
-   ============================================ */
-:root {
-  color-scheme: light dark;
-  --bg: #0a0a1a;
-  --bg-gradient: linear-gradient(135deg, #1a0533 0%, #0f1b3d 40%, #0a2a4a 70%, #132743 100%);
-  --mission-bg: var(--glass-bg);
-  --mission-border: var(--glass-border);
-  --mission-label: var(--text-secondary);
-  --mission-sep: var(--accent-purple-soft);
-  --mission-accent: var(--accent-purple);
-  --mission-scanline: rgba(167,139,250,0.05);
-  --orb-opacity: 0.35;
-  --glass-bg: rgba(255,255,255,0.06);
-  --glass-border: rgba(255,255,255,0.1);
-  --glass-hover-border: rgba(255,255,255,0.18);
-  --glass-shadow: 0 8px 40px rgba(139,92,246,0.1);
-  --text: #f0eef5;
-  --text-secondary: rgba(255,255,255,0.5);
-  --text-muted: rgba(255,255,255,0.3);
-  --nav-bg: rgba(15,10,30,0.75);
-  --nav-active: rgba(167,139,250,0.2);
-  --nav-active-text: #c4b5fd;
-  --nav-link-text: rgba(255,255,255,0.72);
-  --accent-purple: #c4b5fd;
-  --accent-purple-soft: #a78bfa;
-  --accent-green: #6ee7b7;
-  --accent-green-soft: #4ade80;
-  --accent-orange: #fdba74;
-  --accent-orange-soft: #fb923c;
-  --accent-pink: #fda4af;
-  --accent-pink-soft: #fb7185;
-  --accent-blue: #93c5fd;
-  --cal-workday-bg: rgba(255,255,255,0.03);
-  --cal-workday-text: rgba(255,255,255,0.35);
-  --cal-weekend-bg: rgba(255,255,255,0.015);
-  --cal-weekend-text: rgba(255,255,255,0.15);
-  --cal-mandatory-bg: rgba(167,82,222,0.5);
-  --cal-mandatory-text: #fff;
-  --cal-parental-bg: rgba(167,82,222,0.2);
-  --cal-parental-text: #dbb2e8;
-  --cal-annual-bg: rgba(52,199,89,0.35);
-  --cal-annual-text: #fff;
-  --cal-trip-ring: #ff2d55;
-  --cal-shift-ring: #eab308;
-  --cal-school-border: #ff9500;
-  --cal-annual-overlay: #34c759;
-  --cal-baby-bg: #ff2d55;
-  --badge-pending-bg: rgba(251,191,36,0.15);
-  --badge-pending-text: #fbbf24;
-  --badge-done-bg: rgba(52,211,153,0.15);
-  --badge-done-text: #34d399;
-  --progress-gradient: linear-gradient(90deg, #a78bfa, #4ade80);
-  --progress-track: rgba(255,255,255,0.08);
-  --alert-bg: rgba(251,191,36,0.1);
-  --alert-border: #f59e0b;
-  --alert-text: #fbbf24;
-  --timeline-line: rgba(255,255,255,0.08);
-  --print-border: #ddd;
-}
-
-/* ============================================
-   LIGHT THEME — follows system preference
-   ============================================ */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f7f5fb;
-    --bg-gradient: linear-gradient(135deg, #efeaff 0%, #e7ecff 40%, #e8f3ff 70%, #eef2fb 100%);
-    --orb-opacity: 0.22;
-    --glass-bg: rgba(255,255,255,0.72);
-    --glass-border: rgba(30,20,60,0.08);
-    --glass-hover-border: rgba(30,20,60,0.18);
-    --glass-shadow: 0 8px 32px rgba(80,60,160,0.08);
-    --text: #1a1438;
-    --text-secondary: rgba(26,20,56,0.65);
-    --text-muted: rgba(26,20,56,0.45);
-    --nav-bg: rgba(255,255,255,0.92);
-    --nav-active: rgba(109,40,217,0.16);
-    --nav-active-text: #4c1d95;
-    --nav-link-text: #1a1438;
-    --accent-purple: #6d28d9;
-    --accent-purple-soft: #7c3aed;
-    --accent-green: #059669;
-    --accent-green-soft: #10b981;
-    --accent-orange: #c2410c;
-    --accent-orange-soft: #ea580c;
-    --accent-pink: #be185d;
-    --accent-pink-soft: #db2777;
-    --accent-blue: #1d4ed8;
-    --cal-workday-bg: rgba(30,20,60,0.04);
-    --cal-workday-text: rgba(26,20,56,0.55);
-    --cal-weekend-bg: rgba(30,20,60,0.02);
-    --cal-weekend-text: rgba(26,20,56,0.3);
-    --cal-mandatory-bg: rgba(124,58,237,0.6);
-    --cal-mandatory-text: #fff;
-    --cal-parental-bg: rgba(124,58,237,0.22);
-    --cal-parental-text: #4c1d95;
-    --cal-annual-bg: rgba(16,185,129,0.45);
-    --cal-annual-text: #064e3b;
-    --cal-trip-ring: #e11d48;
-    --cal-shift-ring: #ca8a04;
-    --cal-school-border: #ea580c;
-    --cal-annual-overlay: #10b981;
-    --cal-baby-bg: #e11d48;
-    --badge-pending-bg: rgba(202,138,4,0.16);
-    --badge-pending-text: #a16207;
-    --badge-done-bg: rgba(5,150,105,0.16);
-    --badge-done-text: #047857;
-    --progress-gradient: linear-gradient(90deg, #7c3aed, #10b981);
-    --progress-track: rgba(30,20,60,0.08);
-    --alert-bg: rgba(202,138,4,0.12);
-    --alert-border: #d97706;
-    --alert-text: #a16207;
-    --timeline-line: rgba(30,20,60,0.1);
-    --mission-bg: var(--glass-bg);
-    --mission-border: var(--glass-border);
-    --mission-label: var(--text-secondary);
-    --mission-sep: var(--accent-purple-soft);
-    --mission-accent: var(--accent-purple);
-    --mission-scanline: rgba(109,40,217,0.05);
-  }
-}
-
-/* ============================================
-   BASE
-   ============================================ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
-body { overflow-x: hidden; max-width: 100vw; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--bg);
-  background-image: var(--bg-gradient);
-  background-attachment: fixed;
-  color: var(--text);
+  font-size: 16px;
+  line-height: 1.55;
+  color: #2a3142;
+  background: linear-gradient(180deg, #fdfaf4 0%, #f6ede0 100%);
   min-height: 100vh;
-  padding: 0 0 60px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Animated orbs */
-body::before, body::after {
-  content: '';
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(120px);
-  z-index: 0;
-  pointer-events: none;
-  opacity: var(--orb-opacity);
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
 }
-body::before {
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(139,92,246,1), transparent 70%);
-  top: -100px; left: -100px;
-  animation: drift1 12s ease-in-out infinite alternate;
-}
-body::after {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(59,130,246,1), transparent 70%);
-  bottom: -50px; right: -50px;
-  animation: drift2 10s ease-in-out infinite alternate;
-}
-@keyframes drift1 { to { transform: translate(80px, 60px); } }
-@keyframes drift2 { to { transform: translate(-60px, -40px); } }
 
-.container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
-
-/* ============================================
-   GLASS CARD
-   ============================================ */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: var(--glass-shadow);
-  transition: border-color 0.3s;
+/* ==== HEADER ==== */
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
 }
-.glass:hover { border-color: var(--glass-hover-border); }
-
-/* ============================================
-   STICKY NAV
-   ============================================ */
-.sticky-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--nav-bg);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--glass-border);
-  padding: 10px 0;
-  margin-bottom: 28px;
-}
-.nav-inner {
-  max-width: 960px; margin: 0 auto; padding: 0 20px;
-  display: flex; gap: 6px; overflow-x: auto;
-  scrollbar-width: none; -ms-overflow-style: none;
-}
-.nav-inner::-webkit-scrollbar { display: none; }
-.nav-link {
-  flex-shrink: 0;
-  font-size: 12px; font-weight: 600; color: var(--nav-link-text);
+.top-bar a {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a7e6b;
   text-decoration: none;
-  padding: 6px 14px; border-radius: 100px;
-  transition: background 0.2s, color 0.2s;
-  white-space: nowrap;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: color .2s;
 }
-.nav-link:hover { background: var(--nav-active); color: var(--nav-active-text); }
-.nav-link.active { background: var(--nav-active); color: var(--nav-active-text); }
+.top-bar a:hover { color: #1f2742; }
 
-section { scroll-margin-top: 60px; }
-.container > section.tab-section { display: none; }
-.container > section.tab-section.active { display: block; }
-
-/* ============================================
-   HEADER
-   ============================================ */
-.header { padding: 40px 0 8px; margin-bottom: 28px; text-align: center; }
-.header h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
-.header .sub { font-size: 14px; color: var(--text-secondary); font-weight: 400; }
-
-/* ============================================
-   SUMMARY CARDS
-   ============================================ */
-.summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 32px; }
-.summary .glass { padding: 20px; }
-.summary .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
-.summary .value { font-size: 30px; font-weight: 800; letter-spacing: -1px; }
-.summary .detail { font-size: 12px; color: var(--text-secondary); margin-top: 6px; line-height: 1.4; }
-.c-purple { color: var(--accent-purple); }
-.c-green { color: var(--accent-green); }
-.c-orange { color: var(--accent-orange); }
-.c-pink { color: var(--accent-pink); }
-
-/* ============================================
-   SECTION TITLE
-   ============================================ */
-.section-title {
-  font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px;
-  color: var(--text-muted); font-weight: 600;
-  margin-bottom: 14px; padding-top: 8px;
-}
-
-/* ============================================
-   CALENDAR
-   ============================================ */
-.cal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; margin-bottom: 32px; }
-.cal-month { padding: 16px; }
-.cal-month h3 { font-size: 14px; font-weight: 600; margin-bottom: 10px; text-align: center; color: var(--text-secondary); }
-.cal-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: 4px; }
-.cal-header span { font-size: 9px; font-weight: 600; color: var(--text-muted); text-align: center; }
-.cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
-.cal-day {
-  aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 500; position: relative;
-}
-.cal-day.empty { background: transparent; }
-.cal-day.workday { background: var(--cal-workday-bg); color: var(--cal-workday-text); }
-.cal-day.weekend { background: var(--cal-weekend-bg); color: var(--cal-weekend-text); }
-.cal-day.mandatory { background: var(--cal-mandatory-bg); color: var(--cal-mandatory-text); font-weight: 700; }
-.cal-day.parental { background: var(--cal-parental-bg); color: var(--cal-parental-text); }
-.cal-day.annual { background: var(--cal-annual-bg); color: var(--cal-annual-text); }
-.cal-day.trip { box-shadow: inset 0 0 0 2.5px var(--cal-trip-ring); }
-.cal-day.shift-off { outline: 2.5px solid var(--cal-shift-ring); outline-offset: -2.5px; }
-.cal-day.school { border-bottom: 2.5px solid var(--cal-school-border); }
-.cal-day.annual-overlay { border-bottom: 3px solid var(--cal-annual-overlay); }
-.cal-day.split-parental-annual {
-  background: linear-gradient(135deg, var(--cal-parental-bg) 50%, var(--cal-annual-bg) 50%) !important;
-  color: var(--cal-mandatory-text);
+.header { text-align: center; margin-bottom: 32px; }
+.header h1 {
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600;
+  font-size: clamp(44px, 9vw, 72px);
+  letter-spacing: -0.02em;
+  color: #1f2742;
+  margin: 8px 0 6px;
+  line-height: 1;
 }
-.cal-day.split-mandatory-annual {
-  background: linear-gradient(135deg, var(--cal-mandatory-bg) 50%, var(--cal-annual-bg) 50%) !important;
-  color: #fff;
+.header .sub {
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a7e6b;
+  font-weight: 500;
+}
+
+/* ==== CARDS ==== */
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 6px 28px rgba(20,30,60,0.06);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+/* ==== COUNTDOWN ==== */
+.countdown-card { text-align: center; padding: 28px 24px 24px; }
+.cd-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a7e6b;
+}
+.cd-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #f5b96b;
+  box-shadow: 0 0 0 0 rgba(245,185,107,0.6);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245,185,107,0.6); }
+  50%      { box-shadow: 0 0 0 10px rgba(245,185,107,0); }
+}
+.cd-status {
+  font-weight: 600;
+  color: #c97a4a;
+  letter-spacing: 0.16em;
+  padding: 3px 10px;
+  background: #fcefe1;
+  border-radius: 999px;
+  font-size: 10px;
+}
+.cd-status.born { color: #2f7a48; background: #e3f3e8; }
+
+.cd-clock {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-weight: 700;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  color: #1f2742;
+  font-size: clamp(28px, 7vw, 44px);
+  margin: 6px 0;
 }
-.cal-day.baby {
-  background: var(--cal-baby-bg); color: #fff; font-weight: 800;
-  border-radius: 50%; z-index: 1;
-  box-shadow: 0 0 14px rgba(255,45,85,0.5);
+.cd-sign { color: #c97a4a; font-size: 0.7em; margin-right: 6px; }
+.cd-seg { display: flex; flex-direction: column; align-items: center; min-width: 56px; }
+.cd-num { font-size: 1em; line-height: 1; color: #1f2742; }
+.cd-num.amber { color: #d99348; }
+.cd-lbl {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #a89880;
+  margin-top: 6px;
+  font-weight: 500;
 }
-.cal-day.today {
-  position: relative;
-  box-shadow: 0 0 0 2.5px #fbbf24, 0 0 10px rgba(251,191,36,0.5);
-  font-weight: 800;
-  z-index: 2;
+.cd-sep { color: #d2c5ad; font-size: 0.85em; padding: 0 2px; align-self: flex-start; margin-top: 4px; }
+
+.cd-suspense {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(36px, 8vw, 56px);
+  letter-spacing: 0.4em;
+  color: #d99348;
+  padding: 6px 0 4px;
+  animation: shimmer 1.6s ease-in-out infinite;
 }
-.cal-day.today::after {
-  content: ''; position: absolute; inset: -4px; border-radius: inherit;
-  box-shadow: 0 0 0 2px rgba(251,191,36,0.35);
-  pointer-events: none;
-  animation: today-pulse 2s ease-in-out infinite;
-}
-@keyframes today-pulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.08); }
+@keyframes shimmer {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
 }
 
-.legend {
-  display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;
-  padding: 12px 16px; border-radius: 14px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
+.cd-born-line {
+  margin-top: 10px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 18px;
+  color: #2f7a48;
+  font-weight: 500;
 }
-.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
-/* ============================================
-   TABLES (desktop) & CARD STACKS (mobile)
-   ============================================ */
-.data-card { margin-bottom: 24px; }
-.data-card h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
-
-.data-table { width: 100%; border-collapse: collapse; }
-.data-table th {
-  text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
-  color: var(--text-muted); font-weight: 600;
-  padding: 8px 12px; border-bottom: 1px solid var(--glass-border);
+.cd-admin-actions {
+  margin-top: 18px;
+  display: none;
 }
-.data-table td {
-  font-size: 13px; padding: 10px 12px; border-bottom: 1px solid var(--glass-border);
-  vertical-align: top; color: var(--text);
+body.is-admin .cd-admin-actions { display: block; }
+
+/* ==== BUTTONS ==== */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .1s, opacity .2s, box-shadow .2s;
 }
-.data-table tr:last-child td { border-bottom: none; }
-.data-table .total-row { font-weight: 700; background: var(--nav-active); }
-.data-table .muted-row td { color: var(--text-muted); }
-.status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
-
-/* ============================================
-   ALERT
-   ============================================ */
-.alert {
-  background: var(--alert-bg); border-left: 4px solid var(--alert-border);
-  padding: 14px 18px; border-radius: 12px; margin-bottom: 16px;
-  font-size: 13px; line-height: 1.5; color: var(--alert-text);
+.btn:active { transform: translateY(1px); }
+.btn-primary {
+  background: linear-gradient(135deg, #ec8567, #d05a3a);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(208,90,58,0.25);
 }
-.alert strong { font-weight: 700; }
-
-/* ============================================
-   NOTES
-   ============================================ */
-.notes-list { padding-left: 18px; }
-.notes-list li { font-size: 13px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 6px; }
-.notes-list li strong { color: var(--text); font-weight: 600; }
-
-/* ============================================
-   PARENTAL SUMMARY
-   ============================================ */
-.parental-totals { display: flex; gap: 32px; flex-wrap: wrap; }
-.total-box { text-align: center; }
-.total-box .num { font-size: 36px; font-weight: 800; letter-spacing: -1px; }
-.total-box .lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
-
-/* ============================================
-   TRÁMITES
-   ============================================ */
-.tramite-group { margin-bottom: 20px; border-left: 3px solid var(--accent-blue); }
-.tramite-group h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
-.tramite-group .group-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
-
-.progress-track { height: 4px; background: var(--progress-track); border-radius: 2px; margin: 10px 0 6px; overflow: hidden; }
-.progress-fill { height: 100%; background: var(--progress-gradient); border-radius: 2px; transition: width 0.4s ease; }
-.progress-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
-
-.tramite-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 0; border-bottom: 1px solid var(--glass-border);
+.btn-primary:hover { box-shadow: 0 6px 18px rgba(208,90,58,0.35); }
+.btn-ghost {
+  background: transparent;
+  color: #8a7e6b;
+  font-size: 12px;
+  padding: 6px 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
-.tramite-row:last-child { border-bottom: none; }
-.tramite-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent-purple-soft); cursor: pointer; flex-shrink: 0; }
-.tramite-info { flex: 1 1 0; min-width: 0; overflow: hidden; }
-.tramite-info .name { font-size: 13px; font-weight: 600; overflow-wrap: anywhere; word-break: break-word; }
-.tramite-info .meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; overflow-wrap: anywhere; word-break: break-word; }
-.tramite-info .doc-slot { display: inline-flex; margin-top: 4px; }
-.badge {
-  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-  padding: 4px 10px; border-radius: 100px; flex-shrink: 0; white-space: nowrap;
-}
-.badge-pending { background: var(--badge-pending-bg); color: var(--badge-pending-text); }
-.badge-done { background: var(--badge-done-bg); color: var(--badge-done-text); }
-.tramite-row.done .tramite-info .name { text-decoration: line-through; color: var(--text-muted); }
+.btn-ghost:hover { color: #1f2742; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* ============================================
-   SETTINGS / SYNC / MODAL / TOAST / UPLOAD
-   ============================================ */
-.nav-link.settings-link { margin-left: auto; cursor: pointer; }
-.sync-pill {
-  flex-shrink: 0; font-size: 11px; font-weight: 600;
-  padding: 5px 10px; border-radius: 100px;
-  background: rgba(255,255,255,0.04); color: var(--text-muted);
-  border: 1px solid var(--glass-border); white-space: nowrap;
-  align-self: center;
+/* ==== ADMIN POST FORM ==== */
+.admin-post {
+  display: none;
+  background: #fffaf2;
+  border: 1px dashed #e8c896;
 }
-.sync-pill.synced { background: rgba(74,222,128,0.12); color: var(--accent-green); border-color: rgba(74,222,128,0.25); }
-
-.modal-backdrop {
-  position: fixed; inset: 0; z-index: 9000;
-  background: rgba(8,6,20,0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-  display: none; align-items: center; justify-content: center; padding: 20px;
-}
-.modal-backdrop.open { display: flex; }
-.modal {
-  background: rgba(20,16,40,0.95);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--glass-border); border-radius: 20px;
-  padding: 28px; max-width: 460px; width: 100%;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-}
-.modal h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-.modal p { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 14px; }
-.modal p a { color: var(--accent-purple); text-decoration: none; }
-.modal p a:hover { text-decoration: underline; }
-.modal input[type="password"], .modal input[type="text"] {
-  width: 100%; padding: 11px 14px; border-radius: 10px;
-  border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05);
-  color: var(--text); font-size: 14px; font-family: inherit; outline: none;
+body.is-admin .admin-post { display: block; }
+.admin-post .label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #c97a4a;
+  font-weight: 600;
   margin-bottom: 10px;
 }
-.modal input:focus { border-color: var(--accent-purple-soft); }
-.modal .modal-actions { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
-.modal .btn {
-  padding: 10px 16px; border-radius: 10px; border: none;
-  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
-  transition: opacity 0.2s;
-}
-.modal .btn:hover { opacity: 0.85; }
-.modal .btn-primary { background: linear-gradient(135deg, #a78bfa, #7c3aed); color: #fff; flex: 1; }
-.modal .btn-secondary { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid var(--glass-border); }
-.modal .btn-danger { background: rgba(251,113,133,0.15); color: #fb7185; border: 1px solid rgba(251,113,133,0.3); }
-.modal .error-msg { color: #fb7185; font-size: 12px; margin-top: 8px; min-height: 16px; }
 
-#toast-host {
-  position: fixed; right: 16px; bottom: 16px; z-index: 9500;
-  display: flex; flex-direction: column; gap: 8px;
-  max-width: calc(100vw - 32px);
+textarea, input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ece2cf;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 15px;
+  color: #2a3142;
+  resize: vertical;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
 }
-.toast {
-  padding: 10px 14px; border-radius: 12px; font-size: 13px; font-weight: 500;
-  background: rgba(20,16,40,0.95); color: var(--text);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  display: flex; align-items: center; gap: 8px; max-width: 360px;
-  animation: toast-in 0.2s ease-out;
+textarea:focus, input[type="text"]:focus {
+  border-color: #d99348;
+  box-shadow: 0 0 0 3px rgba(217,147,72,0.15);
 }
-.toast.success { border-color: rgba(74,222,128,0.35); }
-.toast.error { border-color: rgba(251,113,133,0.4); }
-.toast.loading { border-color: rgba(139,92,246,0.35); }
-.toast .toast-x { cursor: pointer; color: var(--text-muted); margin-left: auto; font-size: 16px; line-height: 1; }
-@keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-/* Aggregate progress card */
-.urgent-banner {
-  display: flex; align-items: center; gap: 10px;
-  background: linear-gradient(135deg, rgba(239,68,68,0.22), rgba(251,113,133,0.18));
-  border: 1px solid rgba(239,68,68,0.5);
-  color: #fca5a5;
-  padding: 12px 16px; border-radius: 14px;
-  font-weight: 600; font-size: 14px;
-  cursor: pointer; user-select: none;
-  margin-bottom: 14px;
-  animation: urgent-pulse 2.4s ease-in-out infinite;
+textarea { min-height: 70px; }
+.form-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
 }
-.urgent-banner:hover { background: linear-gradient(135deg, rgba(239,68,68,0.3), rgba(251,113,133,0.25)); }
-.urgent-banner .urgent-text { flex: 1; }
-.urgent-banner .urgent-arrow { font-size: 18px; opacity: 0.8; }
-.urgent-banner .urgent-x { background: transparent; border: none; color: inherit; opacity: 0.6; font-size: 20px; cursor: pointer; padding: 0 4px; line-height: 1; }
-.urgent-banner .urgent-x:hover { opacity: 1; }
-@keyframes urgent-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.0); } 50% { box-shadow: 0 0 0 4px rgba(239,68,68,0.15); } }
-
-.birth-toggle {
-  align-self: flex-start;
-  background: var(--glass-bg); border: 1px solid var(--glass-border);
-  color: var(--text-secondary); font-size: 12px; font-weight: 600;
-  padding: 7px 14px; border-radius: 999px; cursor: pointer;
-  font-family: inherit; transition: all 0.15s;
+input[type="file"] {
+  flex: 1;
+  min-width: 160px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #6e6552;
 }
-.birth-toggle:hover { border-color: var(--accent-purple-soft); color: var(--accent-purple); }
-.countdown-card.post-birth .birth-toggle:hover { border-color: var(--cal-baby-bg, #ff2d55); color: var(--cal-baby-bg, #ff2d55); }
-
-/* ======== NASA-style Mission Countdown ======== */
-#mission-countdown-section { margin-bottom: 24px; }
-body[data-tab]:not([data-tab="resumen"]) #mission-countdown-section { margin-bottom: 12px; }
-body[data-tab]:not([data-tab="resumen"]) .mission-countdown { padding: 10px 14px; max-width: 360px; margin-left: auto; margin-right: auto; }
-body[data-tab]:not([data-tab="resumen"]) .mission-header .mission-status,
-body[data-tab]:not([data-tab="resumen"]) #countdown-sub,
-body[data-tab]:not([data-tab="resumen"]) #birth-toggle-btn,
-body[data-tab]:not([data-tab="resumen"]) .mission-footer { display: none !important; }
-body[data-tab]:not([data-tab="resumen"]) .mission-header { margin-bottom: 4px; }
-body[data-tab]:not([data-tab="resumen"]) .mission-label { font-size: 12px; }
-body[data-tab]:not([data-tab="resumen"]) .seg-num { font-size: 22px; }
-body[data-tab]:not([data-tab="resumen"]) .seg-lbl { font-size: 9px; }
-body[data-tab]:not([data-tab="resumen"]) .clock-sign,
-body[data-tab]:not([data-tab="resumen"]) .clock-sep { font-size: 16px; }
-body[data-tab]:not([data-tab="resumen"]) .clock-seg { min-width: 0; }
-body[data-tab]:not([data-tab="resumen"]) .mission-clock { gap: 4px; padding: 4px 0 2px; flex-wrap: nowrap; }
-body[data-tab]:not([data-tab="resumen"]) .clock-sign { margin-right: 2px; opacity: 1; }
-.mission-countdown {
-  padding: 22px 24px;
-  background: var(--mission-bg);
-  border: 1px solid var(--mission-border);
-  border-radius: 22px;
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  box-shadow: var(--glass-shadow);
-  position: relative;
-  overflow: hidden;
-}
-.mission-countdown::before {
-  content: ""; position: absolute; inset: 0;
-  background-image: repeating-linear-gradient(0deg, var(--mission-scanline) 0, var(--mission-scanline) 1px, transparent 1px, transparent 4px);
-  pointer-events: none; opacity: 0.6;
-}
-.mission-header {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
-  color: var(--mission-accent); margin-bottom: 16px;
-}
-.mission-header .mission-label { color: var(--text-muted); flex: 1; font-weight: 600; }
-.mission-header .mission-status { font-weight: 700; color: var(--mission-accent); }
-.mission-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--mission-accent); box-shadow: 0 0 10px var(--mission-accent), 0 0 20px var(--accent-purple-soft);
-  animation: mission-pulse 1.6s ease-in-out infinite;
-}
-@keyframes mission-pulse { 0%,100% { opacity: 1; transform: scale(1);} 50% { opacity: 0.45; transform: scale(0.85);} }
-.mission-clock {
-  display: flex; align-items: flex-end; justify-content: center; gap: 8px;
-  font-family: 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
-  padding: 8px 0 4px;
-}
-.clock-sign {
-  font-size: 24px; font-weight: 700; color: var(--accent-purple); margin-right: 4px;
-  align-self: center; opacity: 0.7;
-}
-.clock-seg { display: flex; flex-direction: column; align-items: center; min-width: 64px; }
-.seg-num {
-  font-size: clamp(40px, 9vw, 64px); font-weight: 800; line-height: 1;
-  color: var(--text); letter-spacing: -1px;
-  font-variant-numeric: tabular-nums;
-}
-.seg-lbl {
-  font-size: 10px; letter-spacing: 2.5px; color: var(--text-muted);
-  margin-top: 10px; text-transform: uppercase; font-weight: 600;
-}
-.clock-sep {
-  font-size: clamp(34px, 8vw, 56px); font-weight: 300; color: var(--accent-purple-soft);
-  line-height: 1; padding-bottom: 20px; opacity: 0.5;
-  animation: blink 1s steps(2, start) infinite;
-}
-@keyframes blink { 50% { opacity: 0.15; } }
-.mission-footer {
-  display: flex; justify-content: space-between; align-items: center; gap: 12px;
-  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--glass-border);
-  font-size: 13px; color: var(--text-secondary);
-}
-.countdown-card.post-birth { border-color: rgba(255,45,85,0.35); }
-.countdown-card.post-birth .seg-num { color: var(--cal-baby-bg, #ff2d55); }
-.countdown-card.post-birth .clock-sep,
-.countdown-card.post-birth .clock-sign { color: var(--cal-baby-bg, #ff2d55); }
-.countdown-card.post-birth .mission-dot { background: var(--cal-baby-bg, #ff2d55); box-shadow: 0 0 10px var(--cal-baby-bg, #ff2d55), 0 0 20px rgba(255,45,85,0.6); }
-.countdown-card.post-birth .mission-header,
-.countdown-card.post-birth .mission-header .mission-status { color: var(--cal-baby-bg, #ff2d55); }
-@media (max-width: 520px) {
-  .clock-seg { min-width: 48px; }
-  .mission-countdown { padding: 16px; }
-  .mission-footer { flex-direction: column; align-items: flex-start; }
-}
-
-.dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 18px; }
-.dash-card { padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; min-height: 118px; }
-.dash-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; }
-.dash-big { font-size: 44px; font-weight: 800; line-height: 1.05; letter-spacing: -1.5px; color: var(--accent-purple); }
-.dash-sub { font-size: 13px; color: var(--text-secondary); }
-.dash-title { font-size: 17px; font-weight: 700; color: var(--text); margin-top: 2px; line-height: 1.25; cursor: pointer; }
-.dash-title:hover { color: var(--accent-purple); }
-.dash-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-.dash-badge { margin-top: 8px; align-self: flex-start; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
-.countdown-card.post-birth .dash-big { color: var(--cal-baby-bg, #ff2d55); }
-.dl-ok { background: rgba(74,222,128,0.15); color: var(--accent-green); border: 1px solid rgba(74,222,128,0.3); }
-.dl-soon { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.35); }
-.dl-urgent { background: rgba(251,113,133,0.18); color: #fb7185; border: 1px solid rgba(251,113,133,0.4); }
-.dl-overdue { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid rgba(239,68,68,0.45); }
-.deadline-badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; margin-left: 6px; white-space: nowrap; }
-.scope-chip { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle; letter-spacing: 0.2px; border: 1px solid transparent; }
-.chip-nac { background: rgba(251,113,133,0.12); color: #fda4af; border-color: rgba(251,113,133,0.3); }
-.chip-aut { background: rgba(74,222,128,0.12); color: #86efac; border-color: rgba(74,222,128,0.3); }
-.chip-mun { background: rgba(251,191,36,0.14); color: #fcd34d; border-color: rgba(251,191,36,0.32); }
-.chip-prv { background: rgba(96,165,250,0.14); color: #93c5fd; border-color: rgba(96,165,250,0.32); }
-.chip-emp { background: rgba(167,139,250,0.14); color: #c4b5fd; border-color: rgba(167,139,250,0.32); }
-
-.subtask-toggle {
-  background: transparent; border: 1px solid rgba(255,255,255,0.12);
-  color: var(--text-secondary); font-size: 11px; font-weight: 500;
-  padding: 3px 8px; border-radius: 999px; margin-left: 6px; cursor: pointer;
-  font-family: inherit; display: inline-flex; align-items: center; gap: 5px;
-  white-space: nowrap;
-}
-.subtask-toggle:hover { border-color: var(--accent-purple-soft); color: var(--text); }
-.subtask-toggle .subtask-count { font-size: 10px; opacity: 0.7; }
-.subtasks-panel {
-  background: rgba(255,255,255,0.02);
-  border-left: 2px solid var(--accent-purple-soft);
-  border-radius: 0 8px 8px 0;
-  padding: 10px 14px; margin: 2px 0 10px 22px;
-  display: flex; flex-direction: column; gap: 6px;
-}
-.subtask-item {
-  display: flex; align-items: flex-start; gap: 10px;
-  font-size: 13px; color: var(--text-secondary);
-  cursor: pointer; padding: 4px 0;
-}
-.subtask-item input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; cursor: pointer; flex-shrink: 0; }
-.subtask-item input[type="checkbox"]:checked + span { text-decoration: line-through; opacity: 0.55; }
-
-.tramite-row.blocked { opacity: 0.55; }
-.tramite-row.blocked input[type="checkbox"] { cursor: not-allowed; }
-.dep-badge {
-  display: inline-block; font-size: 11px; font-weight: 600;
-  padding: 2px 8px; border-radius: 999px; margin-left: 6px;
-  background: rgba(251,191,36,0.14); color: #fcd34d;
-  border: 1px solid rgba(251,191,36,0.32);
-  white-space: nowrap;
-}
-
-/* Document Library */
-.lib-uploader { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
-.lib-type {
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-  color: var(--text); padding: 8px 12px; border-radius: 10px;
-  font-family: inherit; font-size: 13px; min-height: 40px;
-}
-.lib-list { display: flex; flex-direction: column; gap: 16px; }
-.lib-group {}
-.lib-group-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }
-.lib-group-count { opacity: 0.6; font-weight: 400; margin-left: 4px; }
-.lib-entry {
-  display: flex; align-items: center; gap: 10px;
-  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
-  padding: 10px 14px; border-radius: 10px; margin-bottom: 4px;
-  min-height: 44px;
-}
-.lib-name { flex: 1; color: var(--text); text-decoration: none; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
-.lib-name:hover { color: var(--accent-purple); }
-.lib-attach-count { font-size: 11px; color: var(--text-muted); padding: 3px 8px; background: rgba(167,139,250,0.1); border-radius: 999px; }
-.lib-del { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; padding: 4px 6px; min-width: 32px; min-height: 32px; }
-.lib-del:hover { color: #fb7185; }
-
-/* Picker modal */
-.lib-picker-list { max-height: 50vh; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; margin: 10px 0; }
-.lib-pick-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 12px; border-radius: 10px;
-  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
-  cursor: pointer; font-size: 13px;
-  min-height: 44px;
-}
-.lib-pick-item:hover { background: rgba(255,255,255,0.05); }
-.lib-pick-item input { width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
-.lib-pick-name { flex: 1; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
-.lib-pick-type { font-size: 11px; color: var(--text-muted); padding: 2px 8px; background: rgba(255,255,255,0.05); border-radius: 999px; }
-
-/* Pills on tramite rows */
-.lib-attached-host { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-.lib-pill {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 11px; padding: 3px 8px; border-radius: 999px;
-  background: rgba(96,165,250,0.12); color: #93c5fd;
-  border: 1px solid rgba(96,165,250,0.25);
-  text-decoration: none; max-width: 180px;
-}
-.lib-pill span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.lib-pill:hover { background: rgba(96,165,250,0.2); }
-.lib-add-btn {
-  background: transparent; border: 1px dashed rgba(255,255,255,0.2);
-  color: var(--text-muted); font-size: 12px; padding: 4px 10px;
-  border-radius: 999px; margin-left: 6px; cursor: pointer;
-  font-family: inherit; min-height: 32px;
-}
-.lib-add-btn:hover { border-color: var(--accent-purple-soft); color: var(--text); }
-
-/* Trámites search */
-.tramites-search { position: relative; margin-bottom: 14px; }
-.tramites-search input {
-  width: 100%; box-sizing: border-box;
-  padding: 12px 44px 12px 16px; border-radius: 12px;
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text); font-size: 15px; font-family: inherit;
-  min-height: 48px;
-}
-.tramites-search input:focus { outline: none; border-color: var(--accent-purple-soft); }
-.tramites-search-clear {
-  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
-  background: transparent; border: none; color: var(--text-muted);
-  font-size: 22px; cursor: pointer; padding: 8px 12px;
-}
-.tramites-search-clear:hover { color: var(--text); }
-
-/* Group collapse */
-.tramite-group.group-collapsed > * { display: none; }
-.tramite-group.group-collapsed > h3 { display: block; opacity: 0.75; }
-.tramite-group.group-collapsed > h3::after { content: ' ▸ (completado)'; font-size: 12px; color: var(--accent-green); font-weight: 500; }
-.tramite-group > h3 { user-select: none; }
-
-/* Toast undo button */
-.toast-undo {
-  background: transparent; border: 1px solid currentColor;
-  color: inherit; font-weight: 600; font-size: 12px;
-  padding: 4px 10px; border-radius: 999px; cursor: pointer;
-  margin-left: 8px; font-family: inherit;
-}
-.toast-undo:hover { background: rgba(255,255,255,0.1); }
-
-/* Journal notes */
-.journal-toggle {
-  background: transparent; border: 1px solid rgba(255,255,255,0.12);
-  color: var(--text-secondary); font-size: 14px;
-  padding: 4px 8px; border-radius: 999px; margin-left: 6px; cursor: pointer;
-  font-family: inherit; min-height: 32px;
-}
-.journal-toggle:hover { border-color: var(--accent-purple-soft); }
-.journal-toggle.has-note { border-color: #fbbf24; color: #fcd34d; background: rgba(251,191,36,0.08); }
-.journal-panel {
-  background: rgba(255,255,255,0.02);
-  border-left: 2px solid #fcd34d;
-  border-radius: 0 8px 8px 0;
-  padding: 10px 14px; margin: 2px 0 10px 22px;
-}
-.journal-textarea {
-  width: 100%; box-sizing: border-box;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
-  color: var(--text); font-family: inherit; font-size: 13px;
-  padding: 10px 12px; resize: vertical; min-height: 60px;
-}
-.journal-textarea:focus { outline: none; border-color: #fcd34d; }
-.journal-meta { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
-
-/* Tap-target bumps for mobile */
-.tramite-row input[type="checkbox"] { width: 22px; height: 22px; min-width: 22px; cursor: pointer; }
-@media (max-width: 768px) {
-  .nav-link { min-height: 44px; padding: 10px 14px !important; }
-  .tramite-row { min-height: 56px; gap: 6px 10px; align-items: flex-start; padding: 10px 0; flex-wrap: wrap; }
-  .tramite-row input[type="checkbox"] { margin-top: 2px; }
-  .tramite-info { min-width: 0; flex: 1 1 calc(100% - 34px); }
-  .tramite-info .doc-slot { display: block; margin-top: 6px; }
-  .tramite-info .scope-chip { display: inline-block; margin-top: 4px; }
-  .doc-pill { max-width: 100%; font-size: 11px; padding: 3px 8px; }
-  .doc-pill .doc-name { max-width: 100%; white-space: normal; overflow-wrap: anywhere; word-break: break-word; }
-  .tramite-row > .badge,
-  .tramite-row > .subtask-toggle,
-  .tramite-row > .journal-toggle,
-  .tramite-row > .dep-badge { margin-left: 32px; }
-  .tramite-row > .badge ~ .subtask-toggle,
-  .tramite-row > .badge ~ .journal-toggle,
-  .tramite-row > .subtask-toggle ~ .journal-toggle { margin-left: 0; }
-  .badge { font-size: 9px; padding: 3px 7px; align-self: flex-start; margin-top: 2px; }
-  .subtask-toggle, .journal-toggle { margin-top: 4px; }
-  .subtask-item { min-height: 44px; }
-  .glass { padding: 16px; }
-  .tramite-group { padding: 14px; }
-  .tramite-group h3 { font-size: 14px; overflow-wrap: anywhere; }
-}
-
-.aggregate-card { display: flex; align-items: center; gap: 18px; padding: 18px 22px; margin-bottom: 24px; }
-.aggregate-card .agg-num { font-size: 30px; font-weight: 800; color: var(--accent-purple); letter-spacing: -1px; white-space: nowrap; }
-.aggregate-card .agg-info { flex: 1; min-width: 0; }
-.aggregate-card .agg-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
-.aggregate-card .progress-track { margin: 0; }
-
-/* Uploader */
-.uploader {
-  display: block; box-sizing: border-box;
-  margin-top: 14px; border: 2px dashed var(--glass-border); border-radius: 14px;
-  padding: 18px; text-align: center; font-size: 13px; color: var(--text-secondary);
-  transition: border-color 0.2s, background 0.2s; cursor: pointer;
-  background: rgba(255,255,255,0.015);
-}
-.uploader:hover, .uploader.drag-over { border-color: var(--accent-purple-soft); background: rgba(167,139,250,0.06); color: var(--text); }
-.uploader input[type="file"] { display: none; }
-.uploader.hidden { display: none; }
-.uploader .u-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
-
-.doc-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
-.doc-list-empty { font-size: 11px; color: var(--text-muted); font-style: italic; padding: 4px 0; }
-.doc-entry {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 12px; border-radius: 10px;
-  background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+input[type="file"]::file-selector-button {
+  font-family: inherit;
   font-size: 12px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #ece2cf;
+  background: #fff;
+  color: #5e5444;
+  margin-right: 10px;
+  cursor: pointer;
 }
-.doc-entry a { color: var(--accent-blue); text-decoration: none; word-break: break-all; flex: 1; min-width: 0; }
-.doc-entry a:hover { text-decoration: underline; }
-.doc-entry .doc-del {
-  background: none; border: none; color: var(--text-muted); cursor: pointer;
-  font-size: 14px; padding: 2px 6px; border-radius: 6px;
+.form-error {
+  color: #c0392b;
+  font-size: 13px;
+  margin-top: 8px;
+  display: none;
 }
-.doc-entry .doc-del:hover { color: #fb7185; background: rgba(251,113,133,0.1); }
 
-/* Per-row doc pill (empty / filled states) */
-.doc-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: 500;
-  padding: 4px 10px; border-radius: 100px;
-  border: 1px dashed var(--glass-border);
-  background: transparent; color: var(--text-muted);
-  cursor: pointer; text-decoration: none;
-  transition: all 0.15s ease;
+/* ==== UPDATES FEED ==== */
+.feed-empty {
+  text-align: center;
+  color: #a89880;
+  font-style: italic;
+  padding: 30px 10px;
+  font-size: 14px;
+}
+.update {
+  position: relative;
+}
+.update-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.update-time {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a89880;
+  font-weight: 500;
+}
+.update-text {
+  font-size: 16px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  color: #2a3142;
+}
+.update-photo {
+  display: block;
+  width: 100%;
+  max-height: 460px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 12px;
+  cursor: zoom-in;
+  transition: transform .25s;
+}
+.update-photo:hover { transform: scale(1.005); }
+.update-del {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #c97a4a;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.update-del:hover { background: #fcefe1; }
+body.is-admin .update-del { display: inline-block; }
+
+/* ==== COMMENTS ==== */
+.comments {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #f1e8d6;
+}
+.comments-title {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #a89880;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.comment {
+  padding: 8px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.comment + .comment { border-top: 1px solid #f7f0e3; }
+.comment-name { font-weight: 600; color: #1f2742; }
+.comment-text { color: #2a3142; }
+.comment-time { color: #b5a489; font-size: 12px; margin-left: 6px; }
+.comments-empty { color: #b5a489; font-size: 13px; font-style: italic; padding: 4px 0; }
+
+.comment-form {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+.comment-form .name-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+.comment-form .name-row input { flex: 0 0 140px; }
+.comment-form .name-row textarea { flex: 1; min-height: 42px; }
+.comment-form .actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.comment-form .btn-primary {
+  padding: 7px 16px;
+  font-size: 13px;
+}
+
+/* ==== FOOTER ==== */
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 12px;
+  color: #b5a489;
+}
+.footer a { color: #8a7e6b; text-decoration: none; }
+.footer a:hover { color: #2a3142; }
+
+/* ==== TOAST ==== */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1f2742;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  z-index: 9000;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+#toast.error { background: #b9442b; }
+#toast.success { background: #2f7a48; }
+
+/* ==== MODAL (login) ==== */
+.modal-bg {
+  position: fixed; inset: 0;
+  background: rgba(31,39,66,0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9500;
+  padding: 20px;
+}
+.modal-bg.show { display: flex; }
+.modal {
+  background: #fff;
+  border-radius: 18px;
+  padding: 28px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(20,30,60,0.25);
+}
+.modal h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  margin: 0 0 6px;
+  font-size: 22px;
+  color: #1f2742;
+}
+.modal p {
+  font-size: 13px;
+  color: #8a7e6b;
+  margin: 0 0 18px;
+}
+.modal input { margin-bottom: 10px; }
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+
+/* ==== LIGHTBOX ==== */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(15,18,30,0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  cursor: zoom-out;
+  padding: 20px;
+}
+.lightbox img {
   max-width: 100%;
-}
-.doc-pill:hover { color: var(--accent-purple); border-color: var(--accent-purple); background: rgba(167,139,250,0.08); }
-.doc-pill.filled {
-  border-style: solid; border-color: rgba(96,165,250,0.35);
-  background: rgba(96,165,250,0.08); color: var(--accent-blue);
-}
-.doc-pill.filled:hover { background: rgba(96,165,250,0.15); }
-.doc-pill .doc-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
-.doc-pill-unlink {
-  background: none; border: none; cursor: pointer;
-  color: var(--text-muted); font-size: 13px; line-height: 1;
-  padding: 2px 4px; margin-left: 2px; border-radius: 4px;
-}
-.doc-pill-unlink:hover { color: #f87171; background: rgba(248,113,113,0.1); }
-.doc-pill.disabled { opacity: 0.5; cursor: not-allowed; }
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-@media (max-width: 700px) {
-  .header h1 { font-size: 24px; }
-  .summary { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .summary .value { font-size: 24px; }
-  .cal-grid { grid-template-columns: 1fr 1fr; }
-
-  /* Table card stacks */
-  .data-table thead { display: none; }
-  .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; }
-  .data-table tr {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px; padding: 14px; margin-bottom: 10px;
-  }
-  .data-table td { padding: 3px 0; border-bottom: none; }
-  .data-table td::before {
-    content: attr(data-label);
-    display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
-    color: var(--text-muted); font-weight: 600; margin-bottom: 2px;
-  }
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 12px 50px rgba(0,0,0,0.5);
 }
 
 @media (max-width: 480px) {
-  body { padding-bottom: 40px; }
-  .container { padding: 0 14px; }
-  .summary { grid-template-columns: 1fr; }
-  .cal-grid { grid-template-columns: 1fr; }
-}
-
-/* ============================================
-   PRINT
-   ============================================ */
-@media print {
-  body { background: #fff !important; color: #000 !important; padding: 20px; }
-  body::before, body::after { display: none !important; }
-  .sticky-nav { display: none !important; }
-  .glass, .tramite-group, .legend {
-    background: #fff !important; backdrop-filter: none !important;
-    border: 1px solid #ddd !important; box-shadow: none !important;
-  }
-  .cal-day.mandatory { background: #d8b4fe !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .cal-day.parental { background: #ede9fe !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .cal-day.annual { background: #bbf7d0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .cal-day.baby { background: #fda4af !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .status-dot, .badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .data-card, .tramite-group, .cal-month { break-inside: avoid; }
-  a { color: #000 !important; text-decoration: none !important; }
+  .container { padding: 20px 14px 50px; }
+  .card { padding: 20px 18px; border-radius: 14px; }
+  .countdown-card { padding: 22px 18px 20px; }
+  .cd-seg { min-width: 44px; }
+  .comment-form .name-row { flex-direction: column; }
+  .comment-form .name-row input { flex: 1; }
 }
 </style>
 </head>
 <body>
 
-<!-- ========== SUPABASE AUTH GATE ========== -->
-<div id="auth-gate" style="display:none;position:fixed;inset:0;z-index:9999;background:#0a0a1a;background-image:linear-gradient(135deg,#1a0533 0%,#0f1b3d 40%,#0a2a4a 70%,#132743 100%);display:flex;align-items:center;justify-content:center;font-family:'Inter',system-ui,sans-serif;">
-  <div style="background:rgba(255,255,255,0.06);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:40px;max-width:340px;width:90%;text-align:center;box-shadow:0 8px 40px rgba(139,92,246,0.15);">
-    <div style="font-size:36px;margin-bottom:12px;">👶</div>
-    <h2 style="color:#f0eef5;font-size:20px;font-weight:700;margin-bottom:6px;">Plan de Paternidad</h2>
-    <p style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:24px;">Inicia sesión para acceder</p>
-    <input id="auth-email" type="email" placeholder="Email" autocomplete="email" autofocus
-      style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#f0eef5;font-size:15px;outline:none;margin-bottom:10px;font-family:inherit;box-sizing:border-box;">
-    <input id="auth-input" type="password" placeholder="Contraseña" autocomplete="current-password"
-      style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#f0eef5;font-size:15px;outline:none;margin-bottom:12px;font-family:inherit;box-sizing:border-box;"
-      onkeydown="if(event.key==='Enter')document.getElementById('auth-btn').click()">
-    <button id="auth-btn" onclick="checkAuth()"
-      style="width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity 0.2s;"
-      onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Entrar</button>
-    <p id="auth-error" style="color:#fb7185;font-size:12px;margin-top:10px;display:none;">Credenciales incorrectas</p>
-  </div>
-</div>
-<script>
-const SUPABASE_URL = 'https://voirsxfjdayhhvwviaqt.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvaXJzeGZqZGF5aGh2d3ZpYXF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMTU3NjcsImV4cCI6MjA5MTY5MTc2N30.Jm-_Bzsxep9nl8PIvozQISiuPR_GzK_2hKJTCUGHUWM';
-window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
-window.__authReady = false;
-
-function showApp() {
-  const gate = document.getElementById('auth-gate');
-  if (gate) gate.remove();
-  const main = document.getElementById('main-content');
-  if (main) main.style.display = '';
-  if (!window.__authReady) {
-    window.__authReady = true;
-    window.dispatchEvent(new Event('auth-ready'));
-  }
-}
-
-async function checkAuth(){
-  const emailEl = document.getElementById('auth-email');
-  const passEl = document.getElementById('auth-input');
-  const errEl = document.getElementById('auth-error');
-  const btn = document.getElementById('auth-btn');
-  errEl.style.display = 'none';
-  btn.disabled = true; btn.textContent = 'Entrando…';
-  const { error } = await window.sb.auth.signInWithPassword({ email: emailEl.value.trim(), password: passEl.value });
-  btn.disabled = false; btn.textContent = 'Entrar';
-  if (error) {
-    errEl.textContent = 'Credenciales incorrectas';
-    errEl.style.display = 'block';
-    passEl.value = ''; passEl.focus();
-    return;
-  }
-  showApp();
-}
-
-// === TEMP AUTH BYPASS — to revert: uncomment ORIGINAL block below, delete this bypass ===
-window.__bypassAuth = true;
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', showApp);
-} else {
-  showApp();
-}
-/* ORIGINAL:
-window.sb.auth.getSession().then(({ data }) => {
-  if (data && data.session) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', showApp);
-    } else {
-      showApp();
-    }
-  }
-});
-*/
-</script>
-
-<div id="main-content" style="display:none;">
-
-<!-- ========== STICKY NAV ========== -->
-<nav class="sticky-nav">
-  <div class="nav-inner">
-    <a href="#resumen" class="nav-link active">Resumen</a>
-    <a href="#calendario" class="nav-link">Calendario</a>
-    <a href="#bloques" class="nav-link">Permisos & Vacaciones</a>
-    <a href="#tramites" class="nav-link">Trámites</a>
-    <a href="#documentos" class="nav-link">Docs</a>
-    <a href="#notas" class="nav-link">Notas</a>
-    <a class="nav-link settings-link" id="nav-settings">⚙ Ajustes</a>
-    <span class="sync-pill" id="sync-pill">📱 Solo este dispositivo</span>
-  </div>
-</nav>
-
 <div class="container">
+  <div class="top-bar">
+    <a href="#" id="admin-link">Soy Luis</a>
+  </div>
 
-  <!-- ========== HEADER ========== -->
   <div class="header">
-    <h1>Misión: Luca</h1>
-    <div class="sub">Luca llega el 17 de abril de 2026 a las 12:00</div>
+    <h1>Llega Luca</h1>
+    <div class="sub">17 de abril de 2026 · 12:00</div>
   </div>
 
-  <!-- ========== MISSION COUNTDOWN ========== -->
-  <section id="mission-countdown-section">
-    <div class="glass mission-countdown" id="countdown-card">
-      <div class="mission-header">
-        <span class="mission-dot"></span>
-        <span class="mission-label">Cuenta atrás para parto programado:</span>
-        <span class="mission-status" id="mission-status">COUNTDOWN ACTIVE</span>
-      </div>
-      <div class="mission-clock">
-        <span class="clock-sign" id="cd-sign">T−</span>
-        <div class="clock-seg"><div class="seg-num" id="cd-days">---</div><div class="seg-lbl">DAYS</div></div>
-        <div class="clock-sep">:</div>
-        <div class="clock-seg"><div class="seg-num" id="cd-hours">--</div><div class="seg-lbl">HRS</div></div>
-        <div class="clock-sep">:</div>
-        <div class="clock-seg"><div class="seg-num" id="cd-mins">--</div><div class="seg-lbl">MIN</div></div>
-        <div class="clock-sep">:</div>
-        <div class="clock-seg"><div class="seg-num" id="cd-secs">--</div><div class="seg-lbl">SEC</div></div>
-      </div>
-      <div class="mission-footer">
-        <button class="btn-link birth-toggle" id="birth-toggle-btn">Registrar fecha de nacimiento</button>
-      </div>
+  <!-- COUNTDOWN -->
+  <div class="card countdown-card" id="cd-card">
+    <div class="cd-strip">
+      <span class="cd-dot"></span>
+      <span>Cuenta atrás</span>
+      <span class="cd-status" id="cd-status">PROGRAMADO</span>
     </div>
-  </section>
-
-  <!-- ========== RESUMEN ========== -->
-  <section id="resumen" class="tab-section active">
-    <div class="glass" id="news-card" style="margin-bottom:16px;padding:16px 18px;font-family:'Inter',system-ui,-apple-system,sans-serif;">
-      <div style="font-size:15px;font-weight:600;margin-bottom:10px;letter-spacing:0.2px;">Últimas Noticias</div>
-      <ul id="news-list" style="margin:0 0 12px 0;padding:0;list-style:none;font-size:14px;line-height:1.5;"></ul>
-      <form id="news-form" style="display:flex;flex-direction:column;gap:8px;">
-        <textarea id="news-text" rows="3" maxlength="2000" placeholder="Escribe una actualización…"
-          style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);color:inherit;font-family:inherit;font-size:14px;line-height:1.4;resize:vertical;box-sizing:border-box;"></textarea>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-          <input id="news-photo" type="file" accept="image/*" capture="environment"
-            style="flex:1;min-width:160px;font-size:13px;color:inherit;font-family:inherit;">
-          <button id="news-submit" type="submit"
-            style="padding:8px 18px;border-radius:8px;border:none;background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">Publicar</button>
-        </div>
-        <div id="news-error" style="color:#fb7185;font-size:12px;display:none;"></div>
-      </form>
+    <div id="cd-display"></div>
+    <div id="cd-born-line" class="cd-born-line" style="display:none;"></div>
+    <div class="cd-admin-actions">
+      <button class="btn btn-primary" id="btn-born">Marcar como nacido ahora</button>
     </div>
-    <div class="urgent-banner" id="urgent-banner" style="display:none;">
-      <span class="urgent-text">⚠ Urgente esta semana</span>
-      <span class="urgent-arrow">→</span>
-      <button class="urgent-x" id="urgent-dismiss" title="Ocultar hasta cerrar sesión">×</button>
+  </div>
+
+  <!-- ADMIN POST FORM -->
+  <div class="card admin-post" id="admin-post">
+    <div class="label">Nueva actualización</div>
+    <textarea id="up-text" placeholder="Comparte una actualización…" maxlength="4000" rows="3"></textarea>
+    <div class="form-row">
+      <input type="file" id="up-photo" accept="image/*">
+      <button class="btn btn-primary" id="up-submit">Publicar</button>
     </div>
-    <div class="dashboard">
-      <div class="glass dash-card" id="total-dias">
-        <div class="dash-label">Total días de permiso</div>
-        <div id="parentalDaySummary" class="parental-totals" style="margin-top:8px;"></div>
-      </div>
-      <div class="glass dash-card next-action-card" id="next-action-card">
-        <div class="dash-label">Próxima acción</div>
-        <div class="dash-title" id="next-action-title">—</div>
-        <div class="dash-meta" id="next-action-meta"></div>
-        <div class="dash-badge" id="next-action-badge"></div>
-      </div>
-    </div>
-    <div class="glass aggregate-card">
-      <div class="agg-num"><span id="agg-done">0</span>/<span id="agg-total">0</span></div>
-      <div class="agg-info">
-        <div class="agg-label">Trámites completados</div>
-        <div class="progress-track"><div class="progress-fill" id="agg-fill" style="width:0%"></div></div>
-      </div>
-    </div>
-    <div class="summary">
-      <div class="glass">
-        <div class="label">Permiso Parental</div>
-        <div class="value c-purple">19 sem</div>
-        <div class="detail">6 oblig. + 11 flexibles (antes de 1 año) + 2 adicionales (hasta 8 años)</div>
-      </div>
-      <div class="glass">
-        <div class="label">Vacaciones Anuales</div>
-        <div class="value c-green">3 bloques</div>
-        <div class="detail">21 abr–2 may · 21 sep–2 oct · 11–22 dic</div>
-      </div>
-      <div class="glass">
-        <div class="label">Escuela de Verano</div>
-        <div class="value c-orange">~6 sem</div>
-        <div class="detail">22 jun – 31 jul</div>
-      </div>
-      <div class="glass">
-        <div class="label">Viajes</div>
-        <div class="value c-pink">3 + 1</div>
-        <div class="detail">Siam Park 5–7 jun · La Graciosa 5–12 nov · Japón abr '27 · Padre (TBD)</div>
-      </div>
-    </div>
-  </section>
+    <div id="up-error" class="form-error"></div>
+  </div>
 
-  <!-- ========== CALENDARIO ========== -->
-  <section id="calendario" class="tab-section">
-    <div class="section-title">Vista Anual</div>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-mandatory-bg)"></div> Parental obligatorio</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-parental-bg)"></div> Parental flexible</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-annual-bg)"></div> Vacaciones anuales</div>
-      <div class="legend-item"><div class="legend-dot" style="background: linear-gradient(135deg, var(--cal-parental-bg) 50%, var(--cal-annual-bg) 50%)"></div> Parental + Vacaciones</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); box-shadow: inset 0 0 0 2.5px var(--cal-trip-ring)"></div> Viaje</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); outline: 2.5px solid var(--cal-shift-ring); outline-offset:-2.5px"></div> Días libres turno</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); border-bottom: 2.5px solid var(--cal-school-border)"></div> Escuela verano</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-baby-bg)"></div> Nace Luca</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); box-shadow: 0 0 0 2.5px #fbbf24"></div> Hoy</div>
-    </div>
-    <div class="cal-grid" id="yearCalendar"></div>
-  </section>
+  <!-- FEED -->
+  <div id="feed">
+    <div class="feed-empty">Aún no hay actualizaciones.</div>
+  </div>
 
-  <!-- ========== BLOQUES DE PERMISO ========== -->
-  <section id="bloques" class="tab-section">
-    <div class="glass data-card">
-      <h2>Bloques de Permiso Parental (19 semanas)</h2>
-      <table class="data-table">
-        <thead><tr><th>Bloque</th><th>Plan</th><th>Días</th><th>Período</th></tr></thead>
-        <tbody>
-          <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#a855f7"></span>Obligatorio</td>
-            <td data-label="Plan">Primeras 6 semanas con Luca en casa, adaptación familiar</td>
-            <td data-label="Días">42</td>
-            <td data-label="Período">20 abr – 31 may</td>
-          </tr>
-          <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloque 1 – Junio</td>
-            <td data-label="Plan">Adaptación a la vida en Tenerife con Luca</td>
-            <td data-label="Días">12</td>
-            <td data-label="Período">14 – 25 jun</td>
-          </tr>
-          <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloque 2 – Agosto</td>
-            <td data-label="Plan">Porque Agosto nunca se lo dan a un piloto</td>
-            <td data-label="Días">12</td>
-            <td data-label="Período">7 – 18 ago</td>
-          </tr>
-          <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloque 3 – La Graciosa</td>
-            <td data-label="Plan">Primer viaje a La Graciosa con familia de 4</td>
-            <td data-label="Días">12</td>
-            <td data-label="Período">5 – 16 nov</td>
-          </tr>
-          <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloques 4–6 – Navidad</td>
-            <td data-label="Plan">Las vacaciones de navidad más largas de nuestras vidas</td>
-            <td data-label="Días">33</td>
-            <td data-label="Período">11 dic – 12 ene</td>
-          </tr>
-          <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloques 7–9 – Japón</td>
-            <td data-label="Plan">Viaje a Asia por visado. Kyoto</td>
-            <td data-label="Días">24</td>
-            <td data-label="Período">26 mar – 18 abr '27</td>
-          </tr>
-          <tr class="muted-row">
-            <td data-label="Bloque"><span class="status-dot" style="background:#aaa"></span>Reservados (2 bloques)</td>
-            <td data-label="Plan">Posible viaje con Padre</td>
-            <td data-label="Días">—</td>
-            <td data-label="Período">Por decidir</td>
-          </tr>
-          <tr class="muted-row">
-            <td data-label="Bloque"><span class="status-dot" style="background:var(--accent-blue)"></span>Adicionales (2 semanas)</td>
-            <td data-label="Plan">Uso futuro — disponibles hasta que Luca cumpla 8 años</td>
-            <td data-label="Días">14</td>
-            <td data-label="Período">Antes abr 2034</td>
-          </tr>
-          <tr class="total-row">
-            <td data-label="">Total</td>
-            <td data-label="">19 semanas (17 planificadas + 2 para uso futuro)</td>
-            <td data-label=""></td>
-            <td data-label=""></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="glass data-card" style="margin-top: 18px;">
-      <h2>Resumen de Vacaciones Anuales</h2>
-      <table class="data-table">
-        <thead><tr><th>Bloque</th><th>Período</th><th>Estado</th></tr></thead>
-        <tbody>
-          <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#f59e0b"></span>21 abr – 2 may</td>
-            <td data-label="Período">~8 días laborables</td>
-            <td data-label="Estado">Compensable — coincide con permiso obligatorio</td>
-          </tr>
-          <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#22c55e"></span>21 sep – 2 oct</td>
-            <td data-label="Período">~8 días laborables</td>
-            <td data-label="Estado">Aprobado</td>
-          </tr>
-          <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#22c55e"></span>11 – 22 dic</td>
-            <td data-label="Período">~8 días laborables</td>
-            <td data-label="Estado">Aprobado — enlaza con bloques navideños</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- ========== TRÁMITES ========== -->
-  <section id="tramites" class="tab-section">
-    <div class="section-title">Trámites y Documentación</div>
-    <div class="tramites-search">
-      <input type="search" id="tramites-search-input" placeholder="🔍 Buscar trámite…" autocomplete="off">
-      <button class="tramites-search-clear" id="tramites-search-clear" title="Limpiar" style="display:none;">×</button>
-    </div>
-
-    <!-- PREPARACIÓN (pre-parto) -->
-    <div class="glass tramite-group" id="grp-preparacion">
-      <h3>🎒 Preparación pre-parto</h3>
-      <p class="group-desc">Tareas críticas antes del nacimiento. Parto previsto en Vithas Ciudad Jardín (Las Palmas de GC).</p>
-      <div class="progress-label" id="prog-label-preparacion">0 / 4 completados</div>
-      <div class="progress-track"><div class="progress-fill" id="prog-preparacion" style="width:0%"></div></div>
-
-      <div class="tramite-row"><input type="checkbox" data-group="preparacion" data-idx="0">
-        <div class="tramite-info"><div class="name">Bolsa hospital preparada</div><div class="meta">Vithas · Mamá + bebé + acompañante · Lista 7 d antes EDD</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="preparacion" data-idx="1">
-        <div class="tramite-info"><div class="name">Silla de coche homologada i-Size (grupo 0+)</div><div class="meta">Obligatoria al alta · Instalada y probada 7 d antes EDD</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="preparacion" data-idx="2">
-        <div class="tramite-info"><div class="name">Plan de parto</div><div class="meta">Semana 36-37 · Entregar al equipo de matronas de Vithas</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="preparacion" data-idx="3">
-        <div class="tramite-info"><div class="name">Logística hermano mayor durante parto</div><div class="meta">Luther King La Laguna · Coordinar recogida/pernocta · 3 d antes EDD</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-    </div>
-
-    <!-- REGISTRO CIVIL -->
-    <div class="glass tramite-group" id="grp-registro">
-      <h3>Registro Civil — Inscripción de Nacimiento</h3>
-      <p class="group-desc">El hospital tramita la inscripción en 72h. Tener los documentos listos antes del parto.</p>
-      <div class="progress-label" id="prog-label-registro">0 / 4 completados</div>
-      <div class="progress-track"><div class="progress-fill" id="prog-registro" style="width:0%"></div></div>
-
-      <div class="tramite-row"><input type="checkbox" data-group="registro" data-idx="0">
-        <div class="tramite-info"><div class="name">Parte médico de nacimiento</div><div class="meta">Registro Civil · 72h tras nacimiento</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="registro" data-idx="1">
-        <div class="tramite-info"><div class="name">DNI ambos progenitores (copia)</div><div class="meta">Registro Civil · Con la inscripción</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="registro" data-idx="2">
-        <div class="tramite-info"><div class="name">Libro de Familia</div><div class="meta">Registro Civil · Con la inscripción</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="registro" data-idx="3">
-        <div class="tramite-info"><div class="name">Declaración de nacimiento</div><div class="meta">Registro Civil · 10 días (max 30) — solo si hospital no lo tramitó</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-    </div>
-
-    <!-- INSS -->
-    <div class="glass tramite-group" id="grp-inss">
-      <h3>INSS / Seguridad Social — Prestación por Nacimiento</h3>
-      <p class="group-desc">Solicitar vía Tu Seguridad Social con Cl@ve, por correo, o presencial en CAISS con cita previa. Plazo resolución: 30 días.</p>
-      <div class="progress-label" id="prog-label-inss">0 / 6 completados</div>
-      <div class="progress-track"><div class="progress-fill" id="prog-inss" style="width:0%"></div></div>
-
-      <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="0">
-        <div class="tramite-info"><div class="name">Formulario solicitud (MP-1 bis)</div><div class="meta">INSS sede electrónica · Desde día siguiente al nacimiento</div><span class="doc-slot" data-folder="INSS"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="1">
-        <div class="tramite-info"><div class="name">DNI / NIE</div><div class="meta">INSS · Con la solicitud</div><span class="doc-slot" data-folder="INSS"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="2">
-        <div class="tramite-info"><div class="name">Informe de maternidad</div><div class="meta">INSS · Lo expide el servicio público de salud tras el parto</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="3">
-        <div class="tramite-info"><div class="name">Libro de Familia o certificado nacimiento</div><div class="meta">INSS · Obtenido del Registro Civil tras inscripción</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="4">
-        <div class="tramite-info"><div class="name">Certificado de empresa (periodo obligatorio)</div><div class="meta">INSS (Binter lo envía) · Fecha inicio suspensión + bases cotización</div><span class="doc-slot" data-folder="Binter"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="5">
-        <div class="tramite-info"><div class="name">Solicitud periodos sucesivos (cada bloque)</div><div class="meta">INSS · Max 15 días antes de cada bloque · Múltiplos de 7 días</div><span class="doc-slot" data-folder="INSS"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-    </div>
-
-    <!-- BINTER -->
-    <div class="glass tramite-group" id="grp-binter">
-      <h3>Binter — Empresa / RRHH</h3>
-      <p class="group-desc">Comunicar los bloques con mínimo 15 días de antelación para que RRHH emita el certificado de empresa al INSS.</p>
-      <div class="progress-label" id="prog-label-binter">0 / 4 completados</div>
-      <div class="progress-track"><div class="progress-fill" id="prog-binter" style="width:0%"></div></div>
-
-      <div class="tramite-row"><input type="checkbox" data-group="binter" data-idx="0">
-        <div class="tramite-info"><div class="name">Comunicación formal de permiso parental</div><div class="meta">RRHH Binter · Antes del nacimiento · Fechas periodo obligatorio (20 abr – 31 may)</div><span class="doc-slot" data-folder="Binter"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="binter" data-idx="1">
-        <div class="tramite-info"><div class="name">Certificado / Libro de Familia</div><div class="meta">RRHH Binter · Tras inscripción · Acreditar nacimiento</div><span class="doc-slot" data-folder="Binter"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="binter" data-idx="2">
-        <div class="tramite-info"><div class="name">Solicitud de cada bloque flexible</div><div class="meta">RRHH Binter · Min 15 días antes de cada bloque</div><span class="doc-slot" data-folder="Binter"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-      <div class="tramite-row"><input type="checkbox" data-group="binter" data-idx="3">
-        <div class="tramite-info"><div class="name">Solicitud devolución vacaciones solapadas</div><div class="meta">RRHH Binter · 21 abr – 2 may (~8 días) solapan con obligatorio → devolver al saldo</div><span class="doc-slot" data-folder="Binter"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
-    </div>
-
-    <!-- JS-rendered groups (Bebé · Salud · Ayudas) -->
-    <div id="js-groups-host"></div>
-  </section>
-
-  <!-- ========== DOCUMENTOS (biblioteca) ========== -->
-  <section id="documentos" class="tab-section">
-    <div class="section-title">Biblioteca de Documentos</div>
-    <div class="glass data-card">
-      <p style="color: var(--text-muted); margin-bottom: 14px;">Sube cada documento una sola vez y adjúntalo a los trámites que lo necesiten (DNI, Libro de Familia, empadronamiento…).</p>
-      <div class="lib-uploader">
-        <label>
-          <input type="file" id="lib-file-input" accept="application/pdf,image/*" style="display:none;">
-          <span class="btn btn-primary" id="lib-pick-btn">📤 Subir documento</span>
-        </label>
-        <select id="lib-type-select" class="lib-type">
-          <option value="">Tipo (opcional)</option>
-          <option value="dni-luis">DNI Luis</option>
-          <option value="dni-madre">DNI Colombina</option>
-          <option value="libro-familia">Libro de Familia / Certificado literal</option>
-          <option value="empadronamiento">Empadronamiento</option>
-          <option value="parte-medico">Parte médico de nacimiento</option>
-          <option value="informe-mat">Informe de maternidad</option>
-          <option value="cert-empresa">Certificado de empresa (Binter)</option>
-          <option value="iban">Certificado titularidad IBAN</option>
-          <option value="seguro-medico">Tarjeta seguro médico</option>
-          <option value="otro">Otro</option>
-        </select>
-      </div>
-      <div class="lib-list" id="lib-list">
-        <div class="doc-list-empty">Cargando biblioteca…</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== NOTAS (al final) ========== -->
-  <section id="notas" class="tab-section">
-    <div class="glass data-card">
-      <h2>Notas Importantes</h2>
-      <div class="alert">
-        <strong>Solapamiento de vacaciones:</strong> Las vacaciones aprobadas del 21 abr al 2 may (~8 días laborables) coinciden con el permiso parental obligatorio. Estos días deben devolverse al saldo de vacaciones anuales. Solicitar reprogramación a RRHH.
-      </div>
-      <ul class="notes-list">
-        <li><strong>Optimización por turnos:</strong> Los bloques comienzan en la posición 3 del ciclo (primer día laborable tras 3 días libres). Bloques individuales: 6/7 días laborables (85,7%), 12 días libres consecutivos. Cadenas de 3: 15/21 (71,4%).</li>
-        <li><strong>Siam Park (5–7 jun):</strong> Cae en días libres de turno — no requiere permiso.</li>
-        <li><strong>La Graciosa (5–12 nov):</strong> 5–7 nov días libres de turno + bloque 3 (8–14 nov). Totalmente cubierto.</li>
-        <li><strong>Viaje con padre (por decidir):</strong> Viaje con padre (77 años) a Miami o Perú — destino pendiente. 2 bloques reservados.</li>
-        <li><strong>Plazo límite:</strong> 17 de las 19 semanas deben usarse antes de que Luca cumpla 1 año (20 abr 2027). Los bloques de Japón terminan el 15 abr — 5 días de margen. Las 2 semanas adicionales pueden disfrutarse hasta que cumpla 8 años (abr 2034).</li>
-      </ul>
-    </div>
-  </section>
-
+  <div class="footer">
+    Hecho con ♥ · <a href="parental-leave.html">Plan de paternidad</a>
+  </div>
 </div>
 
-<!-- ========== SETTINGS MODAL ========== -->
-<div class="modal-backdrop" id="settings-modal">
+<!-- Login modal -->
+<div class="modal-bg" id="login-modal">
   <div class="modal">
-    <h3>⚙ Sesión</h3>
-    <p>Los trámites y documentos se sincronizan automáticamente entre dispositivos con la misma cuenta.</p>
-    <p id="session-email" style="font-size:12px;color:var(--text-muted);margin-top:6px;"></p>
+    <h2>Hola Luis</h2>
+    <p>Inicia sesión para publicar actualizaciones.</p>
+    <input type="email" id="login-email" placeholder="Email" autocomplete="email">
+    <input type="text" id="login-pass" placeholder="Contraseña" style="-webkit-text-security: disc; text-security: disc;">
+    <div id="login-error" class="form-error"></div>
     <div class="modal-actions">
-      <button class="btn btn-secondary" id="logout-cancel">Cerrar</button>
-      <button class="btn btn-danger" id="logout-btn">Cerrar sesión</button>
+      <button class="btn btn-ghost" id="login-cancel">Cancelar</button>
+      <button class="btn btn-primary" id="login-submit">Entrar</button>
     </div>
   </div>
 </div>
 
-<!-- ========== LIBRARY PICKER MODAL ========== -->
-<div class="modal-backdrop" id="lib-picker-modal">
-  <div class="modal" style="max-width: 520px;">
-    <h3>📎 Adjuntar documentos</h3>
-    <p id="lib-picker-tramite-name" style="color: var(--text-muted); font-size: 13px; margin-bottom: 10px;"></p>
-    <div id="lib-picker-list" class="lib-picker-list"></div>
-    <div class="modal-actions">
-      <button class="btn btn-secondary" id="lib-picker-close">Cerrar</button>
-      <button class="btn btn-primary" id="lib-picker-upload">⬆ Subir uno nuevo</button>
-    </div>
-  </div>
-</div>
+<div id="toast"></div>
 
-<!-- ========== BIRTH MODAL ========== -->
-<div class="modal-backdrop" id="birth-modal">
-  <div class="modal">
-    <h3>👶 Registrar nacimiento</h3>
-    <p>Marca la fecha real de nacimiento de Luca. Todos los plazos posteriores se recalcularán desde esta fecha.</p>
-    <label style="display:block;font-size:12px;color:var(--text-muted);margin-top:14px;margin-bottom:6px;">Fecha de nacimiento</label>
-    <input type="date" id="birth-date-input" min="2026-03-01" max="2026-06-30" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#f0eef5;font-size:15px;font-family:inherit;">
-    <div class="modal-actions">
-      <button class="btn btn-secondary" id="birth-cancel">Cancelar</button>
-      <button class="btn btn-primary" id="birth-save">Guardar</button>
-      <button class="btn btn-danger" id="birth-clear" style="display:none;">Borrar (aún no nació)</button>
-    </div>
-  </div>
-</div>
-
-<!-- ========== TOAST HOST ========== -->
-<div id="toast-host"></div>
-
-<!-- ============================================
-     SCRIPTS
-     ============================================ -->
 <script>
-// ========== DEADLINE ENGINE ==========
-window.BIRTH_EDD = new Date(2026, 3, 17, 12, 0, 0); // Cesárea 17 Abr 2026 12:00
-window.birthActual = null; // set when "Ya nació" toggled, YYYY-MM-DD string
-window.getBirthAnchor = function() {
-  if (window.birthActual) {
-    const [y, m, d] = window.birthActual.split('-').map(n => parseInt(n, 10));
-    return new Date(y, m - 1, d);
-  }
-  return window.BIRTH_EDD;
-};
-window.isBornYet = function() { return !!window.birthActual; };
+(function () {
+  const SUPABASE_URL = 'https://voirsxfjdayhhvwviaqt.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvaXJzeGZqZGF5aGh2d3ZpYXF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMTU3NjcsImV4cCI6MjA5MTY5MTc2N30.Jm-_Bzsxep9nl8PIvozQISiuPR_GzK_2hKJTCUGHUWM';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
 
-window.BLOQUE_STARTS = {
-  1: new Date(2026, 3, 20),   // obligatorio
-  2: new Date(2026, 5, 17),
-  3: new Date(2026, 7, 10),
-  4: new Date(2026, 10, 8),
-  5: new Date(2026, 11, 23)
-};
+  const TARGET = new Date(2026, 3, 17, 12, 0, 0); // 17 Abr 2026 12:00
+  const BUCKET = 'birth-photos';
+  const PUBLIC_BASE = SUPABASE_URL + '/storage/v1/object/public/' + BUCKET + '/';
+  const MAX_PHOTO = 10 * 1024 * 1024;
 
-// Full trámite registry. Backwards-compat: window.TRAMITE_DEADLINES still works, read from .deadline.
-// scope: nacional | autonomica | municipal | privado | empresa
-// priority: critical | high | normal
-// dependsOn: [otherKey, ...]  — row greys out until deps are checked
-// Existing 4 groups are also in HTML; new 3 groups (bebe, salud, ayudas) render from this config.
-window.TRAMITES = {
-  // ---------- Preparación ----------
-  'preparacion-0': { deadline: { kind: 'beforeEDD', days: 7, label: 'Lista 7 d antes EDD' }, priority: 'critical', scope: 'privado',
-    subtasks: [
-      { id: 'mama-ropa', label: 'Mamá: camisones (2) + bata + sujetador lactancia + chanclas' },
-      { id: 'mama-higiene', label: 'Mamá: neceser (cepillo, pasta, compresas postparto, toalla)' },
-      { id: 'bebe-bodys', label: 'Bebé: bodys 0-3m (5-6) + pijamas + calcetines + gorrito' },
-      { id: 'bebe-manta', label: 'Bebé: manta envolvente + arrullo + toalla con capucha' },
-      { id: 'bebe-panales', label: 'Bebé: pañales recién nacido (1 paquete) + toallitas' },
-      { id: 'docs-hospital', label: 'Docs: DNIs padres + tarjeta SS madre + tarjeta seguro Vithas' },
-      { id: 'acomp-essentials', label: 'Acompañante: cargador móvil + snacks + botella agua + muda' }
-    ]
-  },
-  'preparacion-1': { deadline: { kind: 'beforeEDD', days: 7, label: 'Instalada 7 d antes EDD' }, priority: 'critical', scope: 'nacional',
-    subtasks: [
-      { id: 'comprar', label: 'Comprar silla i-Size grupo 0+ homologada' },
-      { id: 'instalar', label: 'Instalar en el coche (base isofix o cinturón)' },
-      { id: 'probar', label: 'Practicar el anclaje y desanclaje' }
-    ]
-  },
-  'preparacion-2': { deadline: { kind: 'beforeEDD', days: 14, label: 'Presentar semana 36-37' }, priority: 'high', scope: 'privado' },
-  'preparacion-3': { deadline: { kind: 'beforeEDD', days: 3, label: 'Coordinar 3 d antes EDD' }, priority: 'high', scope: 'privado',
-    subtasks: [
-      { id: 'school', label: 'Confirmar horario/recogida Luther King' },
-      { id: 'cuidador', label: 'Confirmar cuidador primario (abuelos/familia)' },
-      { id: 'pernocta', label: 'Plan B para pernocta si el parto es de noche' }
-    ]
-  },
-  // ---------- Registro Civil ----------
-  'registro-0': { deadline: { kind: 'afterBirth', days: 3, label: '72h tras nacimiento' }, priority: 'critical', scope: 'privado' },
-  'registro-1': { deadline: { kind: 'afterBirth', days: 10, label: '10 días tras nacimiento' }, scope: 'nacional' },
-  'registro-2': { deadline: { kind: 'afterBirth', days: 10, label: '10 días tras nacimiento' }, scope: 'nacional' },
-  'registro-3': { deadline: { kind: 'afterBirth', days: 10, label: '10 días (max 30)' }, scope: 'nacional' },
-  // ---------- INSS ----------
-  'inss-0': { deadline: { kind: 'afterBirth', days: 15, label: 'Cuanto antes tras nacimiento' }, priority: 'high', scope: 'nacional',
-    subtasks: [
-      { id: 'clave', label: 'Tener Cl@ve PIN o certificado digital activo' },
-      { id: 'form', label: 'Rellenar modelo MP-1 bis (sede electrónica INSS)' },
-      { id: 'adj-libro', label: 'Adjuntar Libro de Familia / certificado literal' },
-      { id: 'adj-dni', label: 'Adjuntar DNIs de ambos progenitores' },
-      { id: 'adj-iban', label: 'Adjuntar certificado de titularidad IBAN' },
-      { id: 'enviar', label: 'Enviar solicitud y guardar número de registro' }
-    ]
-  },
-  'inss-1': { deadline: { kind: 'afterBirth', days: 15, label: 'Con la solicitud' }, scope: 'nacional' },
-  'inss-2': { deadline: { kind: 'afterBirth', days: 15, label: 'Tras el parto' }, scope: 'autonomica' },
-  'inss-3': { deadline: { kind: 'afterBirth', days: 15, label: 'Tras inscripción Registro' }, scope: 'nacional' },
-  'inss-4': { deadline: { kind: 'afterBirth', days: 15, label: 'Certificado empresa' }, scope: 'empresa' },
-  'inss-5': { deadline: { kind: 'beforeBloque', bloque: 2, days: 15, label: '15 d antes del bloque' }, scope: 'nacional' },
-  // ---------- Binter ----------
-  'binter-0': { deadline: { kind: 'beforeEDD', days: 1, label: 'Antes del nacimiento' }, priority: 'critical', scope: 'empresa' },
-  'binter-1': { deadline: { kind: 'afterBirth', days: 15, label: 'Tras inscripción Registro' }, scope: 'empresa' },
-  'binter-2': { deadline: { kind: 'beforeBloque', bloque: 2, days: 15, label: '15 d antes del bloque' }, scope: 'empresa' },
-  'binter-3': { deadline: { kind: 'beforeEDD', days: 7, label: 'Antes del periodo obligatorio' }, scope: 'empresa' },
-  // ---------- Bebé (admin) ----------
-  'bebe-0': { name: 'Inscripción telemática Registro Civil (Vithas tramita)', meta: 'Vithas Ciudad Jardín · 72h · Se tramita desde el hospital',
-              deadline: { kind: 'afterBirth', days: 3, label: '72h tras nacimiento' }, priority: 'critical', scope: 'privado' },
-  'bebe-1': { name: 'Libro de Familia / Certificado literal', meta: 'Registro Civil telemático · Obligatorio para el resto de trámites',
-              deadline: { kind: 'afterBirth', days: 10, label: '~10 días tras inscripción' }, priority: 'high', scope: 'nacional',
-              dependsOn: ['bebe-0'] },
-  'bebe-2': { name: 'Empadronamiento bebé (Ciudad Jardín, LPGC)', meta: 'Ayto. Las Palmas · OAC Ciudad Jardín · Requiere Libro Familia',
-              deadline: { kind: 'afterBirth', days: 30, label: 'Primer mes de vida' }, scope: 'municipal',
-              dependsOn: ['bebe-1'],
-              subtasks: [
-                { id: 'cita', label: 'Pedir cita previa en OAC Ciudad Jardín' },
-                { id: 'docs', label: 'Llevar: Libro de Familia + DNIs padres + empadronamiento madre' },
-                { id: 'volante', label: 'Obtener volante de empadronamiento del bebé' }
-              ] },
-  'bebe-3': { name: 'Tarjeta Sanitaria SCS bebé', meta: 'SCS · Requiere empadronamiento · Asignación centro de salud',
-              deadline: { kind: 'afterBirth', days: 30, label: 'Primer mes' }, scope: 'autonomica',
-              dependsOn: ['bebe-2'],
-              subtasks: [
-                { id: 'online', label: 'Solicitud online en miscs.sergas.es (o equivalente SCS)' },
-                { id: 'presencial', label: 'Alternativa: presencial en CS Ciudad Jardín con Libro Familia + volante empadronamiento' }
-              ] },
-  'bebe-4': { name: 'Familia Digital (app Mi Familia)', meta: 'Ministerio de Justicia · Sustituye Libro de Familia en papel · Opcional',
-              deadline: { kind: 'afterBirth', days: 30, label: 'Cuando esté disponible' }, scope: 'nacional',
-              dependsOn: ['bebe-1'] },
-  'bebe-5': { name: 'DNI bebé', meta: 'Dirección General de Policía · Cita previa · Requerido para pasaporte',
-              deadline: { kind: 'afterBirth', days: 90, label: 'Antes de solicitar pasaporte' }, scope: 'nacional',
-              dependsOn: ['bebe-1'] },
-  'bebe-6': { name: 'Pasaporte bebé', meta: 'Dirección General de Policía · Necesario para viaje Japón abr 2027 · Iniciar 2 meses antes',
-              deadline: { kind: 'absolute', date: '2027-02-01', label: 'Al menos 2 meses antes del viaje' }, scope: 'nacional',
-              dependsOn: ['bebe-5'] },
-  // ---------- Salud ----------
-  'salud-0': { name: 'Asignación pediatra bebé (CS Ciudad Jardín)', meta: 'SCS Gran Canaria · Centro de salud por zona básica',
-               deadline: { kind: 'afterBirth', days: 30, label: 'Tras Tarjeta Sanitaria' }, scope: 'autonomica',
-               dependsOn: ['bebe-3'] },
-  'salud-1': { name: 'Screening metabólico (prueba del talón)', meta: 'Vithas · Se realiza en las primeras 48h · Resultado ~15 d',
-               deadline: { kind: 'afterBirth', days: 2, label: '48h tras nacimiento' }, priority: 'critical', scope: 'privado' },
-  'salud-2': { name: 'Screening auditivo', meta: 'Vithas · Se realiza en el hospital al nacer',
-               deadline: { kind: 'afterBirth', days: 2, label: '48h tras nacimiento' }, priority: 'critical', scope: 'privado' },
-  'salud-3': { name: 'Revisión matrona postparto (sem. 1 y 6)', meta: 'SCS La Laguna · Primera visita en la primera semana',
-               deadline: { kind: 'afterBirth', days: 7, label: 'Primera semana' }, priority: 'high', scope: 'autonomica' },
-  'salud-4': { name: 'Informe de maternidad (SCS)', meta: 'Matrona o médico de familia · NO lo expide Vithas · Necesario para INSS prestación',
-               deadline: { kind: 'afterBirth', days: 15, label: 'Primeras 2 semanas' }, priority: 'high', scope: 'autonomica' },
-  'salud-5': { name: 'Revisión niño sano (1 mes)', meta: 'Pediatra asignado · Primera revisión del Programa de Salud Infantil',
-               deadline: { kind: 'afterBirth', days: 30, label: '~1 mes de vida' }, scope: 'autonomica',
-               dependsOn: ['salud-0'] },
-  'salud-6': { name: 'Vacuna 2 meses (calendario Canarias)', meta: 'Centro de salud asignado · Hexavalente + meningo B + neumococo + rotavirus',
-               deadline: { kind: 'afterBirth', days: 60, label: '2 meses exactos' }, scope: 'autonomica',
-               dependsOn: ['salud-0'] },
-  'salud-7': { name: 'Vacuna 4 meses', meta: 'Centro de salud asignado',
-               deadline: { kind: 'afterBirth', days: 120, label: '4 meses' }, scope: 'autonomica',
-               dependsOn: ['salud-6'] },
-  'salud-8': { name: 'Vacuna 11 meses', meta: 'Hexavalente + Meningo C',
-               deadline: { kind: 'afterBirth', days: 330, label: '11 meses' }, scope: 'autonomica',
-               dependsOn: ['salud-7'] },
-  'salud-9': { name: 'Vacuna 12 meses', meta: 'Triple vírica + Meningo B + Varicela + Neumococo',
-               deadline: { kind: 'afterBirth', days: 365, label: '12 meses' }, scope: 'autonomica',
-               dependsOn: ['salud-8'] },
-  'salud-10': { name: 'Vacuna 15 meses', meta: 'Hepatitis A',
-                deadline: { kind: 'afterBirth', days: 456, label: '15 meses' }, scope: 'autonomica',
-                dependsOn: ['salud-9'] },
-  // ---------- Ayudas económicas ----------
-  'ayudas-0': { name: 'Contactar con asesora fiscal Elena Melián', meta: 'Verificación IRPF — datos familiares · Actualizar número de hijos para retenciones · Al empleador',
-                deadline: { kind: 'afterBirth', days: 60, label: 'Primeros 2 meses' }, scope: 'nacional' },
-  'ayudas-1': { name: 'Ayuda nacimiento Ayto. LPGC (si convocatoria activa)', meta: 'Ayto. Las Palmas · Verificar convocatoria en BOP · Requiere empadronamiento',
-                deadline: { kind: 'afterBirth', days: 90, label: 'Primeros 3 meses — verificar plazo BOP' }, scope: 'municipal',
-                dependsOn: ['bebe-2'] },
-  'ayudas-2': { name: 'Actualización beneficiarios seguros de vida', meta: 'Aseguradora · Incluir al nuevo hijo',
-                deadline: { kind: 'afterBirth', days: 60, label: 'Primeros 2 meses' }, scope: 'nacional' },
-  'ayudas-3': { name: 'Actualización seguro médico privado (si aplica)', meta: 'Aseguradora · Alta del bebé · Algunos tienen 15-30 días plazo',
-                deadline: { kind: 'afterBirth', days: 15, label: 'Primeras 2 semanas' }, priority: 'high', scope: 'privado' }
-};
+  let isAdmin = false;
+  let bornAt = null;
+  let updates = [];
+  const commentsByUpdate = new Map();
 
-// Backwards-compat alias used by legacy paths.
-window.TRAMITE_DEADLINES = new Proxy({}, {
-  get(_, key) {
-    const t = window.TRAMITES[key];
-    if (!t || !t.deadline) return undefined;
-    return Object.assign({ priority: t.priority }, t.deadline);
-  },
-  has(_, key) { return !!(window.TRAMITES[key] && window.TRAMITES[key].deadline); }
-});
-
-window.GROUPS = {
-  preparacion: { title: '🎒 Preparación pre-parto', desc: 'Tareas críticas antes del nacimiento.', renderMode: 'html' },
-  registro:    { title: 'Registro Civil — Inscripción de Nacimiento', renderMode: 'html' },
-  inss:        { title: 'INSS / Seguridad Social — Prestación por Nacimiento', renderMode: 'html' },
-  binter:      { title: 'Binter — Empresa / RRHH', renderMode: 'html' },
-  bebe:        { title: '👶 Bebé — Admin', desc: 'Trámites administrativos del bebé tras el nacimiento.', renderMode: 'js', count: 7 },
-  salud:       { title: '🩺 Salud', desc: 'Seguimiento sanitario entre Vithas (parto) y SCS (post-parto La Laguna / LPGC). Calendario vacunal Canarias.', renderMode: 'js', count: 11 },
-  ayudas:      { title: '💶 Ayudas económicas', desc: 'Deducciones y ayudas aplicables a nivel nacional, autonómico y municipal.', renderMode: 'js', count: 4 }
-};
-
-window.SCOPE_CHIPS = {
-  nacional:   { label: 'Nacional', emoji: '🇪🇸', cls: 'chip-nac' },
-  autonomica: { label: 'Canarias', emoji: '🌴', cls: 'chip-aut' },
-  municipal:  { label: 'LPGC', emoji: '🏛', cls: 'chip-mun' },
-  privado:    { label: 'Vithas', emoji: '🏥', cls: 'chip-prv' },
-  empresa:    { label: 'Binter', emoji: '🏢', cls: 'chip-emp' }
-};
-
-window.resolveDeadline = function(key) {
-  const rule = window.TRAMITE_DEADLINES[key];
-  if (!rule) return null;
-  let d = null;
-  if (rule.kind === 'absolute') d = new Date(rule.date);
-  else if (rule.kind === 'afterBirth') { d = new Date(window.getBirthAnchor()); d.setDate(d.getDate() + rule.days); }
-  else if (rule.kind === 'beforeEDD') { d = new Date(window.BIRTH_EDD); d.setDate(d.getDate() - rule.days); }
-  else if (rule.kind === 'beforeBloque') { const b = window.BLOQUE_STARTS[rule.bloque]; if (!b) return null; d = new Date(b); d.setDate(d.getDate() - rule.days); }
-  if (!d) return null;
-  d.setHours(0,0,0,0);
-  const today = new Date(); today.setHours(0,0,0,0);
-  const days = Math.round((d - today) / 86400000);
-  return { date: d, daysUntil: days, label: rule.label, rule };
-};
-
-window.formatDeadlineBadge = function(daysUntil) {
-  if (daysUntil < 0) return { text: 'Vencido hace ' + Math.abs(daysUntil) + ' d', cls: 'dl-overdue' };
-  if (daysUntil === 0) return { text: 'Vence hoy', cls: 'dl-urgent' };
-  if (daysUntil === 1) return { text: 'Vence mañana', cls: 'dl-urgent' };
-  if (daysUntil <= 3) return { text: 'Vence en ' + daysUntil + ' d', cls: 'dl-urgent' };
-  if (daysUntil <= 14) return { text: 'Vence en ' + daysUntil + ' d', cls: 'dl-soon' };
-  return { text: 'Vence en ' + daysUntil + ' d', cls: 'dl-ok' };
-};
-
-window.fmtLongDate = function(d) {
-  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-  return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-};
-</script>
-<script>
-// ========== CALENDAR ==========
-(function() {
-  const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const dayLabels = ['L','M','X','J','V','S','D'];
-  const shiftRef = new Date(2026, 3, 3);
-  const CYCLE = 9;
-
-  function daysBetween(a, b) { return Math.round((b.getTime() - a.getTime()) / 86400000); }
-  function isShiftOff(date) {
-    const diff = daysBetween(shiftRef, date);
-    const pos = ((diff % CYCLE) + CYCLE) % CYCLE;
-    return pos < 3;
-  }
-
-  const mandatory = { start: new Date(2026, 3, 20), end: new Date(2026, 4, 31) };
-  const flexibleBlocks = [
-    { start: new Date(2026, 5, 17), end: new Date(2026, 5, 23) },
-    { start: new Date(2026, 7, 10), end: new Date(2026, 7, 16) },
-    { start: new Date(2026, 10, 8), end: new Date(2026, 10, 14) },
-    { start: new Date(2026, 11, 23), end: new Date(2027, 0, 12) },
-    { start: new Date(2027, 2, 26), end: new Date(2027, 3, 15) },
-  ];
-  const annualLeave = [
-    { start: new Date(2026, 3, 21), end: new Date(2026, 4, 2) },
-    { start: new Date(2026, 8, 21), end: new Date(2026, 9, 2) },
-    { start: new Date(2026, 11, 11), end: new Date(2026, 11, 22) },
-  ];
-  const trips = [
-    { start: new Date(2026, 5, 5), end: new Date(2026, 5, 7) },
-    { start: new Date(2026, 10, 5), end: new Date(2026, 10, 12) },
-    { start: new Date(2027, 2, 26), end: new Date(2027, 3, 15) },
-  ];
-  const school = { start: new Date(2026, 5, 22), end: new Date(2026, 6, 31) };
-
-  function inRange(d, s, e) { return d >= s && d <= e; }
-  function getType(date) {
-    if (inRange(date, mandatory.start, mandatory.end)) return 'mandatory';
-    for (const b of flexibleBlocks) { if (inRange(date, b.start, b.end)) return 'parental'; }
-    for (const a of annualLeave) { if (inRange(date, a.start, a.end)) return 'annual'; }
-    return null;
-  }
-  function isTrip(d) { for (const t of trips) { if (inRange(d, t.start, t.end)) return true; } return false; }
-  function isSchool(d) { return inRange(d, school.start, school.end); }
-  function isAnnualLeave(d) { for (const a of annualLeave) { if (inRange(d, a.start, a.end)) return true; } return false; }
-
-  // Parental day count
-  let totalParentalDays = 0, totalWorkDays = 0;
-  for (let dt = new Date(mandatory.start); dt <= mandatory.end; dt.setDate(dt.getDate() + 1)) {
-    totalParentalDays++; if (!isShiftOff(new Date(dt))) totalWorkDays++;
-  }
-  for (const b of flexibleBlocks) {
-    for (let dt = new Date(b.start); dt <= b.end; dt.setDate(dt.getDate() + 1)) {
-      totalParentalDays++; if (!isShiftOff(new Date(dt))) totalWorkDays++;
-    }
-  }
-  setTimeout(() => {
-    const target = document.getElementById('parentalDaySummary');
-    if (!target) return;
-    target.innerHTML =
-      '<div class="total-box"><div class="num c-purple">' + totalParentalDays + '</div><div class="lbl">Días de permiso (asignados)</div></div>' +
-      '<div class="total-box"><div class="num c-pink">' + totalWorkDays + '</div><div class="lbl">En días laborables de turno</div></div>';
-  }, 0);
-
-  // Render months
-  const container = document.getElementById('yearCalendar');
-  const monthsToShow = [
-    [2026,3],[2026,4],[2026,5],[2026,6],[2026,7],[2026,8],
-    [2026,9],[2026,10],[2026,11],[2027,0],[2027,1],[2027,2],[2027,3]
-  ];
-  for (const [year, month] of monthsToShow) {
-    const monthDiv = document.createElement('div');
-    monthDiv.className = 'glass cal-month';
-    const title = document.createElement('h3');
-    title.textContent = monthNames[month] + (year === 2027 ? ' 2027' : '');
-    monthDiv.appendChild(title);
-    const header = document.createElement('div');
-    header.className = 'cal-header';
-    for (const lbl of dayLabels) { const s = document.createElement('span'); s.textContent = lbl; header.appendChild(s); }
-    monthDiv.appendChild(header);
-    const daysDiv = document.createElement('div');
-    daysDiv.className = 'cal-days';
-    const firstDay = new Date(year, month, 1);
-    let startDow = firstDay.getDay() - 1; if (startDow < 0) startDow = 6;
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    for (let i = 0; i < startDow; i++) { const e = document.createElement('div'); e.className = 'cal-day empty'; daysDiv.appendChild(e); }
-    for (let d = 1; d <= daysInMonth; d++) {
-      const date = new Date(year, month, d);
-      const dow = date.getDay();
-      const isWeekend = (dow === 0 || dow === 6);
-      const shiftOff = isShiftOff(date);
-      const type = getType(date);
-      const tripDay = isTrip(date);
-      const schoolDay = isSchool(date);
-      const cell = document.createElement('div');
-      cell.className = 'cal-day';
-      cell.textContent = d;
-      const alsoAnnual = isAnnualLeave(date);
-      if (type && alsoAnnual && type !== 'annual') {
-        // Diagonal split: parental/mandatory + annual overlap
-        cell.classList.add(type === 'mandatory' ? 'split-mandatory-annual' : 'split-parental-annual');
-      } else if (type) {
-        cell.classList.add(type);
-      } else if (isWeekend) {
-        cell.classList.add('weekend');
-      } else {
-        cell.classList.add('workday');
-      }
-      if (shiftOff) { cell.classList.add('shift-off'); cell.title = 'Día libre de turno'; }
-      if (tripDay) cell.classList.add('trip');
-      if (schoolDay && !type) cell.classList.add('school');
-      if (year === 2026 && month === 3 && d === 20) { cell.classList.add('baby'); cell.title = '¡Nace Luca!'; }
-      const todayCmp = new Date(); todayCmp.setHours(0,0,0,0);
-      if (date.getTime() === todayCmp.getTime()) { cell.classList.add('today'); cell.title = (cell.title ? cell.title + ' · ' : '') + 'Hoy'; }
-      daysDiv.appendChild(cell);
-    }
-    monthDiv.appendChild(daysDiv);
-    container.appendChild(monthDiv);
-  }
-})();
-
-// ========== TRÁMITES + SYNC + UPLOADS (Supabase) ==========
-(function() {
-  const LEGACY_KEY = 'parental-leave-tramites';
-  const LOCAL_STATE_KEY = 'parental-leave-state';
-  const BUCKET = 'documents';
-
-  const GROUP_FOLDERS = {
-    preparacion: 'Hospital',
-    registro: 'Registro-Civil',
-    inss: 'INSS',
-    binter: 'Binter'
-  };
-
-  let sb = null;
-  let stateRowId = null;
-  let lastSavedAt = 0;
-  let authed = false;
-
-  // ---------- Toast module ----------
-  const toastHost = document.getElementById('toast-host');
+  // ---------- Toast ----------
+  const toastEl = document.getElementById('toast');
+  let toastTimer;
   function toast(msg, kind) {
-    kind = kind || 'info';
-    const el = document.createElement('div');
-    el.className = 'toast ' + kind;
-    el.innerHTML = '<span>' + msg + '</span>';
-    if (kind !== 'loading') {
-      const x = document.createElement('span');
-      x.className = 'toast-x';
-      x.textContent = '×';
-      x.onclick = () => el.remove();
-      el.appendChild(x);
-    }
-    toastHost.appendChild(el);
-    if (kind === 'success') setTimeout(() => el.remove(), 2500);
-    else if (kind === 'error') setTimeout(() => el.remove(), 8000);
-    return el;
+    toastEl.textContent = msg;
+    toastEl.className = 'show ' + (kind || '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toastEl.className = ''; }, 3000);
   }
 
-  // ---------- State ----------
-  let state = { tramites: {}, docs: {}, meta: {}, subtasks: {} };
-
-  function stripLegacyPrefix(p) {
-    if (typeof p !== 'string') return p;
-    return p.replace(/^Documents\//, '');
-  }
-  function normalizeDocs(docs) {
-    const out = {};
-    Object.keys(docs || {}).forEach(k => { out[k] = stripLegacyPrefix(docs[k]); });
-    return out;
-  }
-  function syncBirthActualToWindow() {
-    window.birthActual = (state.meta && state.meta.birthActual) || null;
-  }
-
-  function loadLocal() {
-    try {
-      const s = JSON.parse(localStorage.getItem(LOCAL_STATE_KEY) || 'null');
-      if (s && typeof s === 'object') return {
-        tramites: s.tramites || {},
-        docs: normalizeDocs(s.docs),
-        meta: s.meta || {},
-        subtasks: s.subtasks || {}
-      };
-    } catch {}
-    try {
-      const legacy = JSON.parse(localStorage.getItem(LEGACY_KEY) || 'null');
-      if (legacy && typeof legacy === 'object') return { tramites: legacy, docs: {}, meta: {}, subtasks: {} };
-    } catch {}
-    return { tramites: {}, docs: {}, meta: {}, subtasks: {} };
-  }
-  function saveLocal() { localStorage.setItem(LOCAL_STATE_KEY, JSON.stringify(state)); }
-
-  async function loadRemote() {
-    const { data, error } = await sb.from('app_state').select('*').limit(1).maybeSingle();
-    if (error) throw error;
-    if (!data) return null;
-    stateRowId = data.id;
-    return {
-      tramites: data.tramites || {},
-      docs: normalizeDocs(data.docs),
-      meta: data.meta || {},
-      subtasks: data.subtasks || {}
-    };
-  }
-
-  let saveTimer = null;
-  let pendingToast = null;
-  function queueSave() {
-    saveLocal();
-    if (!authed || !stateRowId) return;
-    if (saveTimer) clearTimeout(saveTimer);
-    saveTimer = setTimeout(doSave, 1500);
-  }
-  async function doSave() {
-    if (!stateRowId) return;
-    const now = new Date().toISOString();
-    lastSavedAt = Date.now();
-    if (pendingToast) pendingToast.remove();
-    pendingToast = toast('Sincronizando…', 'loading');
-    const { error } = await sb.from('app_state').update({
-      tramites: state.tramites,
-      docs: state.docs,
-      meta: state.meta || {},
-      subtasks: state.subtasks || {},
-      updated_at: now
-    }).eq('id', stateRowId);
-    if (pendingToast) pendingToast.remove();
-    if (error) {
-      pendingToast = toast('⚠ No se pudo guardar: ' + error.message, 'error');
-    } else {
-      pendingToast = toast('✓ Guardado', 'success');
-    }
-  }
-
-  async function signedUrlFor(path) {
-    try {
-      const { data, error } = await sb.storage.from(BUCKET).createSignedUrl(path, 3600);
-      if (error) return null;
-      return data && data.signedUrl;
-    } catch { return null; }
-  }
-  async function openDoc(path) {
-    const url = await signedUrlFor(path);
-    if (url) window.open(url, '_blank', 'noopener');
-    else toast('⚠ No se pudo abrir el archivo', 'error');
-  }
-
-  // ---------- UI: checkboxes ----------
-  function applyRowStyle(cb) {
-    const row = cb.closest('.tramite-row');
-    if (!row) return;
-    const badge = row.querySelector('.badge');
-    if (cb.checked) {
-      row.classList.add('done');
-      if (badge) { badge.className = 'badge badge-done'; badge.textContent = 'Hecho'; }
-    } else {
-      row.classList.remove('done');
-      if (badge) { badge.className = 'badge badge-pending'; badge.textContent = 'Pendiente'; }
-    }
-  }
-  function updateGroupProgress(group) {
-    const boxes = document.querySelectorAll('input[data-group="' + group + '"]');
-    const total = boxes.length;
-    const checked = Array.from(boxes).filter(b => b.checked).length;
-    const fill = document.getElementById('prog-' + group);
-    const label = document.getElementById('prog-label-' + group);
-    if (fill) fill.style.width = (total ? (checked / total * 100) : 0) + '%';
-    if (label) label.textContent = checked + ' / ' + total + ' completados';
-  }
-  function updateAggregate() {
-    const allBoxes = document.querySelectorAll('.tramite-row input[type="checkbox"]');
-    const total = allBoxes.length;
-    const checked = Array.from(allBoxes).filter(b => b.checked).length;
-    const pct = total ? (checked / total * 100) : 0;
-    const done = document.getElementById('agg-done');
-    const tot = document.getElementById('agg-total');
-    const fill = document.getElementById('agg-fill');
-    if (done) done.textContent = checked;
-    if (tot) tot.textContent = total;
-    if (fill) fill.style.width = pct + '%';
-  }
-
-  // Render JS-mode groups (Bebé, Salud, Ayudas) from TRAMITES config
-  function renderJsGroups() {
-    const host = document.getElementById('js-groups-host');
-    if (!host || host.childElementCount) return;
-    Object.entries(window.GROUPS).forEach(([groupKey, g]) => {
-      if (g.renderMode !== 'js') return;
-      const wrap = document.createElement('div');
-      wrap.className = 'glass tramite-group';
-      wrap.id = 'grp-' + groupKey;
-      let html = '<h3>' + g.title + '</h3>';
-      if (g.desc) html += '<p class="group-desc">' + g.desc + '</p>';
-      html += '<div class="progress-label" id="prog-label-' + groupKey + '">0 / ' + g.count + ' completados</div>';
-      html += '<div class="progress-track"><div class="progress-fill" id="prog-' + groupKey + '" style="width:0%"></div></div>';
-      for (let i = 0; i < g.count; i++) {
-        const key = groupKey + '-' + i;
-        const t = window.TRAMITES[key];
-        if (!t) continue;
-        const folder = GROUP_FOLDERS[groupKey] || 'Hospital';
-        html += '<div class="tramite-row"><input type="checkbox" data-group="' + groupKey + '" data-idx="' + i + '">';
-        html += '<div class="tramite-info"><div class="name">' + t.name + '</div>';
-        if (t.meta) html += '<div class="meta">' + t.meta + '</div>';
-        html += '<span class="doc-slot" data-folder="' + folder + '"></span></div>';
-        html += '<span class="badge badge-pending">Pendiente</span></div>';
-      }
-      host.appendChild(wrap);
-      wrap.innerHTML = html;
-    });
-    // Make the new groups eligible for upload injection
-    ['bebe','salud','ayudas'].forEach(k => { if (!GROUP_FOLDERS[k]) GROUP_FOLDERS[k] = 'Hospital'; });
-  }
-  renderJsGroups();
-
-  // Inject scope chip into every tramite row (existing HTML + JS-rendered)
-  function renderScopeChips() {
-    document.querySelectorAll('.tramite-row input[type="checkbox"]').forEach(box => {
-      const key = box.dataset.group + '-' + box.dataset.idx;
-      const t = window.TRAMITES[key];
-      if (!t || !t.scope) return;
-      const info = box.parentElement.querySelector('.tramite-info');
-      if (!info || info.querySelector('.scope-chip')) return;
-      const chipDef = window.SCOPE_CHIPS[t.scope];
-      if (!chipDef) return;
-      const chip = document.createElement('span');
-      chip.className = 'scope-chip ' + chipDef.cls;
-      chip.textContent = chipDef.emoji + ' ' + chipDef.label;
-      chip.title = 'Ámbito: ' + chipDef.label;
-      const nameEl = info.querySelector('.name');
-      if (nameEl) nameEl.appendChild(chip);
-    });
-  }
-  renderScopeChips();
-
-  // Expandable subtasks UI
-  function renderSubtasks() {
-    document.querySelectorAll('.tramite-row input[type="checkbox"]').forEach(box => {
-      const key = box.dataset.group + '-' + box.dataset.idx;
-      const t = window.TRAMITES[key];
-      if (!t || !t.subtasks || !t.subtasks.length) return;
-      const row = box.closest('.tramite-row');
-      if (row.querySelector('.subtasks-panel')) return;
-
-      const btn = document.createElement('button');
-      btn.className = 'subtask-toggle';
-      btn.type = 'button';
-      btn.title = 'Mostrar subtareas';
-      btn.textContent = '▾';
-      row.appendChild(btn);
-
-      const panel = document.createElement('div');
-      panel.className = 'subtasks-panel';
-      panel.style.display = 'none';
-      t.subtasks.forEach(st => {
-        const id = 'st-' + key + '-' + st.id;
-        const item = document.createElement('label');
-        item.className = 'subtask-item';
-        item.innerHTML = '<input type="checkbox" data-tramite="' + key + '" data-sub="' + st.id + '"> <span>' + st.label + '</span>';
-        panel.appendChild(item);
-      });
-      row.parentNode.insertBefore(panel, row.nextSibling);
-
-      btn.addEventListener('click', () => {
-        const open = panel.style.display !== 'none';
-        panel.style.display = open ? 'none' : '';
-        btn.textContent = open ? '▾' : '▴';
-      });
-
-      panel.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-        cb.addEventListener('change', () => {
-          const tk = cb.dataset.tramite;
-          const sk = cb.dataset.sub;
-          state.subtasks = state.subtasks || {};
-          state.subtasks[tk] = state.subtasks[tk] || {};
-          state.subtasks[tk][sk] = cb.checked;
-          renderSubtaskProgress(tk);
-          queueSave();
-          if (navigator.vibrate && cb.checked) navigator.vibrate(15);
-        });
-      });
-    });
-  }
-  renderSubtasks();
-
-  // Per-trámite journal notes
-  function renderJournalButtons() {
-    document.querySelectorAll('.tramite-row input[type="checkbox"]').forEach(box => {
-      const key = box.dataset.group + '-' + box.dataset.idx;
-      const row = box.closest('.tramite-row');
-      if (row.querySelector('.journal-toggle')) return;
-
-      const btn = document.createElement('button');
-      btn.className = 'journal-toggle';
-      btn.type = 'button';
-      btn.title = 'Notas';
-      btn.textContent = '📝';
-      row.appendChild(btn);
-
-      const panel = document.createElement('div');
-      panel.className = 'journal-panel';
-      panel.style.display = 'none';
-      const ta = document.createElement('textarea');
-      ta.className = 'journal-textarea';
-      ta.placeholder = 'Notas: personas contactadas, números de referencia, dudas, fechas de seguimiento…';
-      ta.rows = 3;
-      panel.appendChild(ta);
-      const meta = document.createElement('div');
-      meta.className = 'journal-meta';
-      panel.appendChild(meta);
-      row.parentNode.insertBefore(panel, row.nextSibling);
-
-      btn.addEventListener('click', () => {
-        const open = panel.style.display !== 'none';
-        panel.style.display = open ? 'none' : '';
-        if (!open) ta.focus();
-      });
-      ta.addEventListener('input', () => {
-        state.meta = state.meta || {};
-        state.meta.journal = state.meta.journal || {};
-        if (ta.value.trim()) {
-          state.meta.journal[key] = { note: ta.value, updatedAt: new Date().toISOString() };
-        } else {
-          delete state.meta.journal[key];
-        }
-        updateJournalDot(key);
-        queueSave();
-        updateJournalMeta(key, meta);
-      });
-    });
-  }
-  renderJournalButtons();
-
-  function applyJournalState() {
-    document.querySelectorAll('.journal-panel textarea').forEach(ta => {
-      const row = ta.closest('.journal-panel').previousElementSibling;
-      const box = row.querySelector('input[data-group]');
-      if (!box) return;
-      const key = box.dataset.group + '-' + box.dataset.idx;
-      const entry = ((state.meta || {}).journal || {})[key];
-      ta.value = entry ? entry.note : '';
-      const meta = ta.parentElement.querySelector('.journal-meta');
-      updateJournalMeta(key, meta);
-      updateJournalDot(key);
-    });
-  }
-  function updateJournalMeta(key, metaEl) {
-    const entry = ((state.meta || {}).journal || {})[key];
-    if (!metaEl) return;
-    if (!entry) { metaEl.textContent = ''; return; }
-    const d = new Date(entry.updatedAt);
-    metaEl.textContent = 'Última edición: ' + d.toLocaleDateString('es-ES') + ' ' + d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-  }
-  function updateJournalDot(key) {
-    const row = document.querySelector('.tramite-row input[data-group="' + key.split('-')[0] + '"][data-idx="' + key.split('-').slice(1).join('-') + '"]');
-    if (!row) return;
-    const btn = row.closest('.tramite-row').querySelector('.journal-toggle');
-    if (!btn) return;
-    const has = !!((state.meta || {}).journal || {})[key];
-    btn.classList.toggle('has-note', has);
-  }
-
-  function applySubtaskState() {
-    document.querySelectorAll('.subtasks-panel input[type="checkbox"]').forEach(cb => {
-      const tk = cb.dataset.tramite;
-      const sk = cb.dataset.sub;
-      cb.checked = !!((state.subtasks || {})[tk] || {})[sk];
-    });
-    document.querySelectorAll('.tramite-row input[data-group]').forEach(box => {
-      renderSubtaskProgress(box.dataset.group + '-' + box.dataset.idx);
-    });
-  }
-
-  function renderSubtaskProgress(key) {
-    const t = window.TRAMITES[key];
-    if (!t || !t.subtasks || !t.subtasks.length) return;
-    const row = document.querySelector('.tramite-row input[data-group="' + key.split('-')[0] + '"][data-idx="' + key.split('-').slice(1).join('-') + '"]');
-    if (!row) return;
-    const tr = row.closest('.tramite-row');
-    const btn = tr.querySelector('.subtask-toggle');
-    if (!btn) return;
-    const sub = (state.subtasks || {})[key] || {};
-    const done = t.subtasks.filter(s => sub[s.id]).length;
-    const total = t.subtasks.length;
-    let pill = btn.querySelector('.subtask-count');
-    if (!pill) {
-      pill = document.createElement('span');
-      pill.className = 'subtask-count';
-      btn.prepend(pill);
-    }
-    pill.textContent = done + '/' + total;
-  }
-
-  // Dependency rendering: grey out rows whose deps aren't complete
-  function renderDependencyState() {
-    document.querySelectorAll('.tramite-row input[type="checkbox"]').forEach(box => {
-      const key = box.dataset.group + '-' + box.dataset.idx;
-      const t = window.TRAMITES[key];
-      const row = box.closest('.tramite-row');
-      if (!row) return;
-      let depBadge = row.querySelector('.dep-badge');
-      if (!t || !t.dependsOn || !t.dependsOn.length) {
-        row.classList.remove('blocked');
-        if (depBadge) depBadge.remove();
-        return;
-      }
-      const unmet = t.dependsOn.filter(k => !state.tramites[k]);
-      if (!unmet.length) {
-        row.classList.remove('blocked');
-        if (depBadge) depBadge.remove();
-        return;
-      }
-      row.classList.add('blocked');
-      if (!depBadge) {
-        depBadge = document.createElement('span');
-        depBadge.className = 'dep-badge';
-        const statusBadge = row.querySelector('.badge');
-        if (statusBadge && statusBadge.parentNode) statusBadge.parentNode.insertBefore(depBadge, statusBadge);
-        else row.appendChild(depBadge);
-      }
-      const names = unmet.map(k => {
-        const t2 = window.TRAMITES[k];
-        return t2 && t2.name ? t2.name : k;
-      });
-      depBadge.textContent = '⏳ Requiere ' + unmet.length;
-      depBadge.title = 'Requiere: ' + names.join(' · ');
-    });
-  }
-
-  const allBoxes = Array.from(document.querySelectorAll('.tramite-row input[type="checkbox"]'));
-  const groups = new Set();
-  allBoxes.forEach(b => groups.add(b.dataset.group));
-
-  function renderUrgencyBadge(box) {
-    const row = box.closest('.tramite-row');
-    if (!row) return;
-    let badge = row.querySelector('.deadline-badge');
-    if (box.checked) { if (badge) badge.remove(); return; }
-    const key = box.dataset.group + '-' + box.dataset.idx;
-    const dl = window.resolveDeadline(key);
-    if (!dl) { if (badge) badge.remove(); return; }
-    const fmt = window.formatDeadlineBadge(dl.daysUntil);
-    if (!badge) {
-      badge = document.createElement('span');
-      badge.className = 'deadline-badge';
-      const statusBadge = row.querySelector('.badge');
-      if (statusBadge && statusBadge.parentNode) statusBadge.parentNode.insertBefore(badge, statusBadge);
-      else row.appendChild(badge);
-    }
-    badge.className = 'deadline-badge ' + fmt.cls;
-    badge.textContent = fmt.text;
-    badge.title = 'Límite: ' + window.fmtLongDate(dl.date) + ' · ' + dl.label;
-  }
-
-  function renderUrgentBanner() {
-    const banner = document.getElementById('urgent-banner');
-    if (!banner) return;
-    if (sessionStorage.getItem('urgent-banner-dismissed') === '1') { banner.style.display = 'none'; return; }
-    const items = [];
-    allBoxes.forEach(box => {
-      if (box.checked) return;
-      const key = box.dataset.group + '-' + box.dataset.idx;
-      const dl = window.resolveDeadline(key);
-      if (!dl) return;
-      const rule = window.TRAMITE_DEADLINES[key] || {};
-      const isCritical = rule.priority === 'critical';
-      if (dl.daysUntil <= 3 || (isCritical && dl.daysUntil <= 7)) {
-        items.push({ key, dl, box, isCritical });
-      }
-    });
-    if (!items.length) { banner.style.display = 'none'; return; }
-    items.sort((a,b) => a.dl.daysUntil - b.dl.daysUntil);
-    const overdue = items.filter(i => i.dl.daysUntil < 0).length;
-    const label = overdue ? '⚠ ' + overdue + ' vencido' + (overdue>1?'s':'') + ' · ' + items.length + ' urgente' + (items.length>1?'s':'') : '⚠ ' + items.length + ' urgente' + (items.length>1?'s':'') + ' esta semana';
-    banner.querySelector('.urgent-text').textContent = label;
-    banner.style.display = '';
-    banner.onclick = () => {
-      const top = items[0];
-      const tab = document.querySelector('.nav-link[href="#tramites"]');
-      if (tab) tab.click();
-      setTimeout(() => {
-        top.box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        const row = top.box.closest('.tramite-row');
-        if (row) { row.style.boxShadow = '0 0 0 2px #ef4444'; setTimeout(() => { row.style.boxShadow = ''; }, 1800); }
-      }, 120);
-    };
-  }
-
-  window.renderMissionCountdown = function() {
-    const ccard = document.getElementById('countdown-card');
-    const dEl = document.getElementById('cd-days');
-    const hEl = document.getElementById('cd-hours');
-    const mEl = document.getElementById('cd-mins');
-    const sEl = document.getElementById('cd-secs');
-    const sub = document.getElementById('countdown-sub');
-    const status = document.getElementById('mission-status');
-    const sign = document.getElementById('cd-sign');
-    if (!ccard || !dEl) return;
-    const now = new Date();
-    let target, postBirth = false;
-    if (window.isBornYet && window.isBornYet()) {
-      target = window.getBirthAnchor();
-      postBirth = true;
-    } else {
-      target = new Date(window.BIRTH_EDD);
-    }
-    let diff = target - now;
-    const past = diff < 0;
-    diff = Math.abs(diff);
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    dEl.textContent = String(d).padStart(3, '0');
-    hEl.textContent = String(h).padStart(2, '0');
-    mEl.textContent = String(m).padStart(2, '0');
-    sEl.textContent = String(s).padStart(2, '0');
-    if (sign) sign.textContent = past ? 'T+' : 'T−';
-    if (postBirth) {
-      ccard.classList.add('post-birth');
-      if (status) status.textContent = 'MISSION ACTIVE';
-      if (past) sub.textContent = 'desde el nacimiento registrado';
-    } else {
-      ccard.classList.remove('post-birth');
-      if (past) {
-        if (status) status.textContent = 'HOLD · PAST EDD';
-      } else {
-        if (status) status.textContent = d < 7 ? 'GO FOR LAUNCH WINDOW' : 'COUNTDOWN ACTIVE';
-      }
-    }
-  };
-  setInterval(window.renderMissionCountdown, 1000);
-
-  function renderDashboard() {
-    const today = new Date(); today.setHours(0,0,0,0);
-    if (typeof window.renderMissionCountdown === 'function') window.renderMissionCountdown();
-    renderUrgentBanner();
-
-    const title = document.getElementById('next-action-title');
-    const meta = document.getElementById('next-action-meta');
-    const bdg = document.getElementById('next-action-badge');
-    if (!title) return;
-    const candidates = [];
-    allBoxes.forEach(box => {
-      if (box.checked) return;
-      const key = box.dataset.group + '-' + box.dataset.idx;
-      const dl = window.resolveDeadline(key);
-      if (!dl) return;
-      const nameEl = box.parentElement.querySelector('.tramite-info .name');
-      candidates.push({ key, dl, name: nameEl ? nameEl.textContent : key, box });
-    });
-    if (!candidates.length) {
-      title.textContent = '🎉 Todo al día';
-      meta.textContent = 'No hay plazos pendientes inmediatos.';
-      bdg.style.display = 'none';
-      title.onclick = null;
-      return;
-    }
-    candidates.sort((a, b) => a.dl.daysUntil - b.dl.daysUntil);
-    const top = candidates[0];
-    title.textContent = top.name;
-    meta.textContent = 'Límite: ' + window.fmtLongDate(top.dl.date) + ' · ' + top.dl.label;
-    const fmt = window.formatDeadlineBadge(top.dl.daysUntil);
-    bdg.style.display = '';
-    bdg.className = 'dash-badge ' + fmt.cls;
-    bdg.textContent = fmt.text;
-    title.onclick = () => {
-      const tramitesTab = document.querySelector('.nav-link[href="#tramites"]');
-      if (tramitesTab) tramitesTab.click();
-      setTimeout(() => {
-        top.box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        const row = top.box.closest('.tramite-row');
-        if (row) {
-          row.style.transition = 'box-shadow 0.3s';
-          row.style.boxShadow = '0 0 0 2px #fbbf24';
-          setTimeout(() => { row.style.boxShadow = ''; }, 1800);
-        }
-      }, 120);
-    };
-  }
-
-  function applyStateToUI() {
-    allBoxes.forEach(box => {
-      const key = box.dataset.group + '-' + box.dataset.idx;
-      box.checked = !!state.tramites[key];
-      applyRowStyle(box);
-      renderRowDoc(box);
-      renderUrgencyBadge(box);
-    });
-    applySubtaskState();
-    if (typeof applyJournalState === 'function') applyJournalState();
-    renderDependencyState();
-    groups.forEach(updateGroupProgress);
-    updateAggregate();
-    renderDashboard();
-    if (typeof autoCollapseCompleted === 'function') autoCollapseCompleted();
-  }
-
-  let lastUndoToast = null;
-  allBoxes.forEach(box => {
-    box.addEventListener('change', function() {
-      const key = this.dataset.group + '-' + this.dataset.idx;
-      const wasChecked = !this.checked;
-      state.tramites[key] = this.checked;
-      applyRowStyle(this);
-      renderUrgencyBadge(this);
-      renderDependencyState();
-      updateGroupProgress(this.dataset.group);
-      updateAggregate();
-      renderDashboard();
-      autoCollapseCompleted();
-      queueSave();
-      if (navigator.vibrate) navigator.vibrate(this.checked ? 25 : 10);
-      if (lastUndoToast) lastUndoToast.remove();
-      const self = this;
-      const msg = this.checked ? '✓ Marcado' : '↺ Desmarcado';
-      const t = toast(msg + ' · Deshacer', 'success');
-      const undo = document.createElement('button');
-      undo.textContent = 'Deshacer';
-      undo.className = 'toast-undo';
-      undo.onclick = () => {
-        self.checked = wasChecked;
-        self.dispatchEvent(new Event('change'));
-        t.remove();
-      };
-      t.appendChild(undo);
-      lastUndoToast = t;
-    });
-  });
-
-  function autoCollapseCompleted() {
-    Object.keys(window.GROUPS || {}).forEach(groupKey => {
-      const grpEl = document.getElementById('grp-' + groupKey);
-      if (!grpEl) return;
-      const boxes = grpEl.querySelectorAll('input[type="checkbox"][data-group]');
-      if (!boxes.length) return;
-      const allDone = Array.from(boxes).every(b => b.checked);
-      if (allDone && !grpEl.dataset.manualExpand) grpEl.classList.add('group-collapsed');
-      else if (!allDone) grpEl.classList.remove('group-collapsed');
-    });
-  }
-
-  // Make group <h3> click toggle collapsed state (manual override)
-  document.querySelectorAll('.tramite-group > h3').forEach(h3 => {
-    h3.style.cursor = 'pointer';
-    h3.addEventListener('click', () => {
-      const grp = h3.parentElement;
-      if (grp.classList.toggle('group-collapsed')) delete grp.dataset.manualExpand;
-      else grp.dataset.manualExpand = '1';
-    });
-  });
-
-  // Trámites search
-  const searchInput = document.getElementById('tramites-search-input');
-  const searchClear = document.getElementById('tramites-search-clear');
-  function applySearchFilter(q) {
-    q = (q || '').trim().toLowerCase();
-    searchClear.style.display = q ? '' : 'none';
-    const allRows = document.querySelectorAll('.tramite-row');
-    if (!q) {
-      allRows.forEach(r => r.style.display = '');
-      document.querySelectorAll('.tramite-group').forEach(g => g.style.display = '');
-      document.querySelectorAll('.subtasks-panel').forEach(p => { p.style.display = 'none'; });
-      return;
-    }
-    const groupCounts = new Map();
-    allRows.forEach(r => {
-      const cb = r.querySelector('input[data-group]');
-      if (!cb) return;
-      const key = cb.dataset.group + '-' + cb.dataset.idx;
-      const t = window.TRAMITES[key] || {};
-      const name = (r.querySelector('.name')?.textContent || t.name || '').toLowerCase();
-      const meta = (r.querySelector('.meta')?.textContent || t.meta || '').toLowerCase();
-      const subs = (t.subtasks || []).map(s => s.label).join(' ').toLowerCase();
-      const hit = name.includes(q) || meta.includes(q) || subs.includes(q);
-      r.style.display = hit ? '' : 'none';
-      const grp = cb.dataset.group;
-      groupCounts.set(grp, (groupCounts.get(grp) || 0) + (hit ? 1 : 0));
-    });
-    document.querySelectorAll('.tramite-group').forEach(g => {
-      const grpKey = g.id.replace('grp-', '');
-      g.style.display = (groupCounts.get(grpKey) || 0) ? '' : 'none';
-      g.classList.remove('group-collapsed');
-    });
-  }
-  if (searchInput) {
-    searchInput.addEventListener('input', e => applySearchFilter(e.target.value));
-    searchClear.addEventListener('click', () => { searchInput.value = ''; applySearchFilter(''); searchInput.focus(); });
-  }
-
-  // ---------- Per-row attach ----------
-  function renderRowDoc(box) {
-    const row = box.closest('.tramite-row');
-    const slot = row.querySelector('.doc-slot');
-    if (!slot) return;
-    const key = box.dataset.group + '-' + box.dataset.idx;
-    const folder = slot.dataset.folder;
-    slot.innerHTML = '';
-    const path = stripLegacyPrefix(state.docs[key]);
-    if (path) {
-      const a = document.createElement('a');
-      a.className = 'doc-pill filled';
-      a.href = '#';
-      a.rel = 'noopener';
-      a.innerHTML = '<span>📎</span><span class="doc-name">' + path.split('/').pop() + '</span>';
-      a.onclick = (e) => { e.preventDefault(); openDoc(path); };
-      slot.appendChild(a);
-      const del = document.createElement('button');
-      del.className = 'doc-pill-unlink';
-      del.title = 'Desvincular';
-      del.textContent = '✕';
-      del.onclick = (e) => {
-        e.preventDefault(); e.stopPropagation();
-        delete state.docs[key];
-        renderRowDoc(box);
-        queueSave();
-      };
-      slot.appendChild(del);
-    } else {
-      const btn = document.createElement('button');
-      btn.className = 'doc-pill' + (authed ? '' : ' disabled');
-      btn.title = 'Subir a ' + folder + '/';
-      btn.innerHTML = '<span>⬆</span><span>Subir a ' + folder + '/</span>';
-      btn.onclick = () => {
-        if (!authed) { toast('⚠ Inicia sesión primero', 'error'); return; }
-        openAttachPicker(box, folder);
-      };
-      slot.appendChild(btn);
-    }
-  }
-
-  function openAttachPicker(box, folder) {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'application/pdf,image/*';
-    input.onchange = async () => {
-      if (!input.files || !input.files[0]) return;
-      const group = box.dataset.group;
-      const key = group + '-' + box.dataset.idx;
-      const uploaded = await uploadFile(input.files[0], folder);
-      if (uploaded) {
-        state.docs[key] = uploaded.path;
-        renderRowDoc(box);
-        queueSave();
-        // Refresh the doc list for whichever group matches this folder, if any
-        Object.keys(GROUP_FOLDERS).forEach(g => {
-          if (GROUP_FOLDERS[g] === folder) refreshDocList(g);
-        });
-      }
-    };
-    input.click();
-  }
-
-  // ---------- Uploader + Doc list per group ----------
-  function slugify(s) {
-    return s.toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
-      .slice(0, 60) || 'archivo';
-  }
-  function yyyymmdd(d) {
-    return d.getFullYear().toString() +
-      String(d.getMonth()+1).padStart(2,'0') +
-      String(d.getDate()).padStart(2,'0');
-  }
-
-  async function uploadFile(file, folder) {
-    const MAX_HARD = 50 * 1024 * 1024;
-    if (file.size > MAX_HARD) { toast('⚠ Archivo supera el límite de 50 MB', 'error'); return null; }
-
-    const origBase = (file.name.split('.').slice(0, -1).join('.') || file.name);
-    const ext = (file.name.split('.').pop() || 'bin').toLowerCase();
-    const label = prompt('Nombre para el archivo (sin extensión):', origBase);
-    if (label === null) return null;
-    const slug = slugify(label) || slugify(origBase);
-    const fname = yyyymmdd(new Date()) + '-' + slug + '.' + ext;
-    const path = folder + '/' + fname;
-
-    const loadingT = toast('Subiendo ' + fname + '…', 'loading');
-    const { error } = await sb.storage.from(BUCKET).upload(path, file, {
-      upsert: false,
-      contentType: file.type || undefined
-    });
-    loadingT.remove();
-    if (error) {
-      toast('⚠ Error subiendo: ' + error.message, 'error');
-      return null;
-    }
-    toast('✓ Subido', 'success');
-    return { path, name: fname };
-  }
-
-  async function refreshDocList(group) {
-    const folder = GROUP_FOLDERS[group];
-    const listEl = document.getElementById('doc-list-' + group);
-    if (!listEl) return;
-    if (!authed) { listEl.innerHTML = '<div class="doc-list-empty">Inicia sesión para ver documentos.</div>'; return; }
-    listEl.innerHTML = '<div class="doc-list-empty">Cargando…</div>';
-    try {
-      const { data, error } = await sb.storage.from(BUCKET).list(folder, { limit: 100, sortBy: { column: 'name', order: 'desc' } });
-      if (error) throw error;
-      const files = (data || []).filter(f => f.name && !f.name.startsWith('.'));
-      if (!files.length) { listEl.innerHTML = '<div class="doc-list-empty">Sin documentos aún.</div>'; return; }
-      listEl.innerHTML = '';
-      files.forEach(f => {
-        const entry = document.createElement('div');
-        entry.className = 'doc-entry';
-        const a = document.createElement('a');
-        a.href = '#';
-        a.rel = 'noopener';
-        a.textContent = f.name;
-        a.onclick = (e) => { e.preventDefault(); openDoc(folder + '/' + f.name); };
-        entry.appendChild(a);
-        const del = document.createElement('button');
-        del.className = 'doc-del';
-        del.title = 'Eliminar';
-        del.textContent = '🗑';
-        del.onclick = async () => {
-          if (!confirm('¿Eliminar ' + f.name + '?')) return;
-          const loadingT = toast('Eliminando…', 'loading');
-          const fullPath = folder + '/' + f.name;
-          const { error: delErr } = await sb.storage.from(BUCKET).remove([fullPath]);
-          loadingT.remove();
-          if (delErr) { toast('⚠ Error: ' + delErr.message, 'error'); return; }
-          toast('✓ Eliminado', 'success');
-          let dirty = false;
-          Object.keys(state.docs).forEach(k => { if (state.docs[k] === fullPath) { delete state.docs[k]; dirty = true; } });
-          if (dirty) { applyStateToUI(); queueSave(); }
-          refreshDocList(group);
-        };
-        entry.appendChild(del);
-        listEl.appendChild(entry);
-      });
-    } catch (e) {
-      listEl.innerHTML = '<div class="doc-list-empty">Error: ' + (e.message || e) + '</div>';
-    }
-  }
-
-  function injectUploaderUI() {
-    Object.keys(GROUP_FOLDERS).forEach(group => {
-      const grpEl = document.getElementById('grp-' + group);
-      if (!grpEl || grpEl.querySelector('.uploader')) return;
-      const folder = GROUP_FOLDERS[group];
-
-      const uploader = document.createElement('label');
-      uploader.className = 'uploader' + (authed ? '' : ' hidden');
-      uploader.id = 'upl-' + group;
-      uploader.innerHTML =
-        '<div>📎 Subir archivo o arrastra aquí → <strong>' + folder + '/</strong></div>' +
-        '<div class="u-hint">PDF o imagen · máx 50 MB</div>';
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'application/pdf,image/*';
-      input.setAttribute('capture', 'environment');
-      uploader.appendChild(input);
-      input.addEventListener('change', async () => {
-        if (!input.files || !input.files[0]) return;
-        const f = input.files[0];
-        input.value = '';
-        await uploadFile(f, folder);
-        refreshDocList(group);
-      });
-
-      // Drag-drop
-      uploader.addEventListener('dragover', e => { e.preventDefault(); uploader.classList.add('drag-over'); });
-      uploader.addEventListener('dragleave', () => uploader.classList.remove('drag-over'));
-      uploader.addEventListener('drop', async e => {
-        e.preventDefault();
-        uploader.classList.remove('drag-over');
-        if (!e.dataTransfer.files.length) return;
-        for (const f of e.dataTransfer.files) {
-          await uploadFile(f, folder);
-        }
-        refreshDocList(group);
-      });
-
-      const list = document.createElement('div');
-      list.className = 'doc-list';
-      list.id = 'doc-list-' + group;
-
-      grpEl.appendChild(uploader);
-      grpEl.appendChild(list);
-    });
-  }
-
-  // ---------- Birth modal ----------
-  const birthModal = document.getElementById('birth-modal');
-  const birthBtn = document.getElementById('birth-toggle-btn');
-  const birthInput = document.getElementById('birth-date-input');
-  if (birthBtn) {
-    birthBtn.addEventListener('click', () => {
-      birthInput.value = (state.meta && state.meta.birthActual) || '';
-      document.getElementById('birth-clear').style.display = window.isBornYet() ? '' : 'none';
-      birthModal.classList.add('open');
-    });
-  }
-  birthModal && birthModal.addEventListener('click', e => { if (e.target === birthModal) birthModal.classList.remove('open'); });
-  document.getElementById('birth-cancel').onclick = () => birthModal.classList.remove('open');
-  document.getElementById('birth-save').onclick = () => {
-    const v = birthInput.value;
-    if (!v) { toast('⚠ Selecciona una fecha', 'error'); return; }
-    state.meta = state.meta || {};
-    state.meta.birthActual = v;
-    syncBirthActualToWindow();
-    birthModal.classList.remove('open');
-    applyStateToUI();
-    queueSave();
-    toast('✓ Nacimiento registrado — recalculando plazos', 'success');
-    if (navigator.vibrate) navigator.vibrate(30);
-  };
-  document.getElementById('birth-clear').onclick = () => {
-    if (!confirm('¿Borrar la fecha de nacimiento? Los plazos volverán a anclarse a la EDD.')) return;
-    state.meta = state.meta || {};
-    delete state.meta.birthActual;
-    syncBirthActualToWindow();
-    birthModal.classList.remove('open');
-    applyStateToUI();
-    queueSave();
-    toast('Fecha de nacimiento borrada', 'success');
-  };
-
-  // ---------- Urgent banner dismiss ----------
-  const urgDismiss = document.getElementById('urgent-dismiss');
-  if (urgDismiss) urgDismiss.addEventListener('click', (e) => {
-    e.stopPropagation();
-    sessionStorage.setItem('urgent-banner-dismissed', '1');
-    document.getElementById('urgent-banner').style.display = 'none';
-  });
-
-  // ---------- Settings modal (session) ----------
-  const modal = document.getElementById('settings-modal');
-  const navSettings = document.getElementById('nav-settings');
-  const syncPill = document.getElementById('sync-pill');
-  const sessionEmailEl = document.getElementById('session-email');
-
-  navSettings.addEventListener('click', async e => {
-    e.preventDefault();
-    const { data } = await sb.auth.getUser();
-    if (sessionEmailEl) sessionEmailEl.textContent = data && data.user ? 'Sesión: ' + data.user.email : '';
-    modal.classList.add('open');
-  });
-  document.getElementById('logout-cancel').onclick = () => modal.classList.remove('open');
-  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
-  document.getElementById('logout-btn').onclick = async () => {
-    await sb.auth.signOut();
-    location.reload();
-  };
-
-  function updateSyncPill() {
-    if (authed) {
-      syncPill.textContent = '☁ Sincronizado';
-      syncPill.classList.add('synced');
-    } else {
-      syncPill.textContent = '📱 Local';
-      syncPill.classList.remove('synced');
-    }
-  }
-
-  function refreshAllDocs() {
-    Object.keys(GROUP_FOLDERS).forEach(refreshDocList);
-  }
-
-  // ---------- Realtime ----------
-  function subscribeRealtime() {
-    if (!stateRowId) return;
-    sb.channel('app_state_changes')
-      .on('postgres_changes',
-          { event: 'UPDATE', schema: 'public', table: 'app_state', filter: 'id=eq.' + stateRowId },
-          (payload) => {
-            const row = payload.new;
-            if (!row) return;
-            const remoteUpdated = row.updated_at ? new Date(row.updated_at).getTime() : 0;
-            if (remoteUpdated && Math.abs(remoteUpdated - lastSavedAt) < 2000) return;
-            state.tramites = row.tramites || {};
-            state.docs = normalizeDocs(row.docs);
-            state.meta = row.meta || {};
-            state.subtasks = row.subtasks || {};
-            syncBirthActualToWindow();
-            saveLocal();
-            applyStateToUI();
-          })
-      .subscribe();
-  }
-
-  // ---------- Init ----------
-  state = loadLocal();
-  syncBirthActualToWindow();
-  applyStateToUI();
-
-  async function initialSync() {
-    try {
-      const remote = await loadRemote();
-      if (remote) {
-        state = remote;
-        syncBirthActualToWindow();
-        saveLocal();
-      } else if (stateRowId === null) {
-        toast('⚠ Falta la fila inicial en app_state', 'error');
-      }
-    } catch (e) {
-      toast('⚠ No se pudo cargar: ' + (e.message || e), 'error');
-    }
-    applyStateToUI();
-  }
-
-  async function initAuthed() {
-    sb = window.sb;
-    authed = true;
-    updateSyncPill();
-    await initialSync();
-    injectUploaderUI();
-    refreshAllDocs();
-    allBoxes.forEach(renderRowDoc);
-    subscribeRealtime();
-  }
-
-  if (window.__authReady) {
-    initAuthed();
-  } else {
-    window.addEventListener('auth-ready', initAuthed, { once: true });
-    updateSyncPill();
-  }
-})();
-
-// ========== DOCUMENT LIBRARY ==========
-(function() {
-  const BUCKET = 'documents';
-  const LIB_PREFIX = 'library/';
-  let sb = null;
-  let library = [];            // [{ id, filename, storage_path, doc_type, tags, uploaded_at }]
-  let attachments = [];         // [{ tramite_key, document_id }]
-  let currentPickerTramite = null;
-
-  const typeLabels = {
-    'dni-luis': 'DNI Luis', 'dni-madre': 'DNI Colombina',
-    'libro-familia': 'Libro de Familia', 'empadronamiento': 'Empadronamiento',
-    'parte-medico': 'Parte médico', 'informe-mat': 'Informe maternidad',
-    'cert-empresa': 'Cert. empresa', 'iban': 'IBAN',
-    'seguro-medico': 'Seguro médico', 'otro': 'Otro'
-  };
-
-  function toast(msg, kind) {
-    const host = document.getElementById('toast-host'); if (!host) return;
-    const el = document.createElement('div');
-    el.className = 'toast ' + (kind || 'info');
-    el.innerHTML = '<span>' + msg + '</span>';
-    host.appendChild(el);
-    setTimeout(() => el.remove(), kind === 'error' ? 6000 : 2500);
-  }
-
-  async function signedUrl(path) {
-    const { data, error } = await sb.storage.from(BUCKET).createSignedUrl(path, 3600);
-    if (error) return null;
-    return data && data.signedUrl;
-  }
-
-  async function fetchLibrary() {
-    const { data, error } = await sb.from('documents').select('*').order('uploaded_at', { ascending: false });
-    if (error) { toast('⚠ No se pudo leer biblioteca: ' + error.message, 'error'); return; }
-    library = data || [];
-    renderLibrary();
-    renderAttachedPillsAll();
-  }
-  async function fetchAttachments() {
-    const { data, error } = await sb.from('tramite_attachments').select('*');
-    if (error) { toast('⚠ No se pudo leer adjuntos: ' + error.message, 'error'); return; }
-    attachments = data || [];
-    renderAttachedPillsAll();
-  }
-
-  function renderLibrary() {
-    const listEl = document.getElementById('lib-list');
-    if (!listEl) return;
-    if (!library.length) { listEl.innerHTML = '<div class="doc-list-empty">Sin documentos en la biblioteca aún.</div>'; return; }
-    const byType = {};
-    library.forEach(d => {
-      const k = d.doc_type || 'otro';
-      (byType[k] = byType[k] || []).push(d);
-    });
-    let html = '';
-    Object.keys(byType).forEach(type => {
-      html += '<div class="lib-group">';
-      html += '<div class="lib-group-title">' + (typeLabels[type] || type) + ' <span class="lib-group-count">' + byType[type].length + '</span></div>';
-      byType[type].forEach(d => {
-        const count = attachments.filter(a => a.document_id === d.id).length;
-        html += '<div class="lib-entry" data-id="' + d.id + '">';
-        html += '<a class="lib-name" href="#">' + escapeHtml(d.filename) + '</a>';
-        html += '<span class="lib-attach-count" title="Adjunto a ' + count + ' trámites">📎 ' + count + '</span>';
-        html += '<button class="lib-del" title="Eliminar">🗑</button>';
-        html += '</div>';
-      });
-      html += '</div>';
-    });
-    listEl.innerHTML = html;
-    listEl.querySelectorAll('.lib-entry').forEach(entry => {
-      const id = entry.dataset.id;
-      const doc = library.find(d => d.id === id);
-      entry.querySelector('.lib-name').onclick = async (e) => {
-        e.preventDefault();
-        const url = await signedUrl(doc.storage_path);
-        if (url) window.open(url, '_blank', 'noopener');
-      };
-      entry.querySelector('.lib-del').onclick = async () => {
-        if (!confirm('¿Eliminar "' + doc.filename + '" de la biblioteca? Se desvinculará de todos los trámites.')) return;
-        const t = toast('Eliminando…', 'loading');
-        await sb.storage.from(BUCKET).remove([doc.storage_path]);
-        const { error } = await sb.from('documents').delete().eq('id', doc.id);
-        t.remove();
-        if (error) { toast('⚠ ' + error.message, 'error'); return; }
-        toast('✓ Eliminado', 'success');
-        await Promise.all([fetchLibrary(), fetchAttachments()]);
-      };
-    });
-  }
-
-  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-  function renderAttachedPillsAll() {
-    document.querySelectorAll('.tramite-row').forEach(row => {
-      const cb = row.querySelector('input[type="checkbox"][data-group]');
-      if (!cb) return;
-      const key = cb.dataset.group + '-' + cb.dataset.idx;
-      renderAttachedPills(key, row);
-    });
-  }
-  function renderAttachedPills(key, row) {
-    if (!row) {
-      const cb = document.querySelector('.tramite-row input[data-group="' + key.split('-')[0] + '"][data-idx="' + key.split('-').slice(1).join('-') + '"]');
-      if (!cb) return;
-      row = cb.closest('.tramite-row');
-    }
-    let host = row.querySelector('.lib-attached-host');
-    if (!host) {
-      host = document.createElement('span');
-      host.className = 'lib-attached-host';
-      const info = row.querySelector('.tramite-info');
-      if (info) info.appendChild(host);
-    }
-    host.innerHTML = '';
-    const keyAttachments = attachments.filter(a => a.tramite_key === key);
-    keyAttachments.forEach(a => {
-      const doc = library.find(d => d.id === a.document_id);
-      if (!doc) return;
-      const pill = document.createElement('a');
-      pill.className = 'lib-pill';
-      pill.href = '#';
-      pill.innerHTML = '<span>📎</span><span>' + escapeHtml(doc.filename) + '</span>';
-      pill.onclick = async (e) => { e.preventDefault(); const u = await signedUrl(doc.storage_path); if (u) window.open(u, '_blank', 'noopener'); };
-      host.appendChild(pill);
-    });
-    // "Adjuntar desde biblioteca" button
-    let addBtn = row.querySelector('.lib-add-btn');
-    if (!addBtn) {
-      addBtn = document.createElement('button');
-      addBtn.className = 'lib-add-btn';
-      addBtn.type = 'button';
-      addBtn.title = 'Adjuntar desde biblioteca';
-      addBtn.textContent = '📎+';
-      row.appendChild(addBtn);
-      addBtn.onclick = () => openPickerForTramite(key);
-    }
-  }
-
-  function openPickerForTramite(key) {
-    currentPickerTramite = key;
-    const modal = document.getElementById('lib-picker-modal');
-    const t = window.TRAMITES && window.TRAMITES[key];
-    const nameEl = document.getElementById('lib-picker-tramite-name');
-    nameEl.textContent = t && t.name ? t.name : key;
-    renderPickerList();
-    modal.classList.add('open');
-  }
-  function renderPickerList() {
-    const list = document.getElementById('lib-picker-list');
-    if (!library.length) {
-      list.innerHTML = '<div class="doc-list-empty">Sube documentos primero desde la pestaña Docs.</div>';
-      return;
-    }
-    const attachedIds = new Set(attachments.filter(a => a.tramite_key === currentPickerTramite).map(a => a.document_id));
-    list.innerHTML = library.map(d => {
-      const type = typeLabels[d.doc_type || 'otro'] || 'Otro';
-      const checked = attachedIds.has(d.id) ? 'checked' : '';
-      return '<label class="lib-pick-item"><input type="checkbox" data-id="' + d.id + '" ' + checked + '> <span class="lib-pick-name">' + escapeHtml(d.filename) + '</span> <span class="lib-pick-type">' + type + '</span></label>';
-    }).join('');
-    list.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-      cb.addEventListener('change', async () => {
-        const docId = cb.dataset.id;
-        if (cb.checked) {
-          const { error } = await sb.from('tramite_attachments').insert({ tramite_key: currentPickerTramite, document_id: docId });
-          if (error) { toast('⚠ ' + error.message, 'error'); cb.checked = false; return; }
-        } else {
-          const { error } = await sb.from('tramite_attachments').delete().match({ tramite_key: currentPickerTramite, document_id: docId });
-          if (error) { toast('⚠ ' + error.message, 'error'); cb.checked = true; return; }
-        }
-        await fetchAttachments();
-      });
-    });
-  }
-
-  async function uploadToLibrary(file, docType) {
-    if (!file) return;
-    const id = crypto.randomUUID();
-    const safeName = file.name.replace(/[^\w.\-]+/g, '_');
-    const path = LIB_PREFIX + id + '/' + safeName;
-    const t = toast('Subiendo…', 'loading');
-    const up = await sb.storage.from(BUCKET).upload(path, file, { upsert: false, contentType: file.type || undefined });
-    if (up.error) { t.remove(); toast('⚠ ' + up.error.message, 'error'); return null; }
-    const ins = await sb.from('documents').insert({
-      id, filename: file.name, storage_path: path, doc_type: docType || null
-    }).select().single();
-    t.remove();
-    if (ins.error) { toast('⚠ ' + ins.error.message, 'error'); return null; }
-    toast('✓ Subido', 'success');
-    await fetchLibrary();
-    return ins.data;
-  }
-
-  function wire() {
-    const pickBtn = document.getElementById('lib-pick-btn');
-    const fileInput = document.getElementById('lib-file-input');
-    const typeSelect = document.getElementById('lib-type-select');
-    pickBtn && pickBtn.addEventListener('click', (e) => { e.preventDefault(); fileInput.click(); });
-    fileInput && fileInput.addEventListener('change', async () => {
-      if (!fileInput.files || !fileInput.files[0]) return;
-      await uploadToLibrary(fileInput.files[0], typeSelect.value || null);
-      fileInput.value = '';
-    });
-    const modal = document.getElementById('lib-picker-modal');
-    modal && modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
-    document.getElementById('lib-picker-close').onclick = () => modal.classList.remove('open');
-    document.getElementById('lib-picker-upload').onclick = () => {
-      const tempIn = document.createElement('input');
-      tempIn.type = 'file';
-      tempIn.accept = 'application/pdf,image/*';
-      tempIn.onchange = async () => {
-        if (!tempIn.files || !tempIn.files[0]) return;
-        const t = window.TRAMITES && window.TRAMITES[currentPickerTramite];
-        const guessType = t && t.requiresDocs && t.requiresDocs[0] ? t.requiresDocs[0] : null;
-        const doc = await uploadToLibrary(tempIn.files[0], guessType);
-        if (doc) {
-          await sb.from('tramite_attachments').insert({ tramite_key: currentPickerTramite, document_id: doc.id });
-          await fetchAttachments();
-          renderPickerList();
-        }
-      };
-      tempIn.click();
-    };
-  }
-
-  function subscribeLibRealtime() {
-    sb.channel('lib-changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'documents' }, () => fetchLibrary())
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'tramite_attachments' }, () => fetchAttachments())
-      .subscribe();
-  }
-
-  async function init() {
-    sb = window.sb;
-    wire();
-    await Promise.all([fetchLibrary(), fetchAttachments()]);
-    subscribeLibRealtime();
-  }
-
-  if (window.__authReady) init();
-  else window.addEventListener('auth-ready', init, { once: true });
-})();
-
-// ========== SERVICE WORKER ==========
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js').catch(() => {/* ignore */});
-  });
-}
-
-// ========== TAB NAV ==========
-(function() {
-  const links = Array.from(document.querySelectorAll('.nav-link')).filter(l => {
-    const href = l.getAttribute('href');
-    return href && href.startsWith('#');
-  });
-  const sections = document.querySelectorAll('.container > section.tab-section');
-  if (!links.length) return;
-
-  function activate(id) {
-    const target = document.getElementById(id);
-    if (!target || !target.classList.contains('tab-section')) return false;
-    sections.forEach(s => s.classList.remove('active'));
-    links.forEach(l => l.classList.remove('active'));
-    target.classList.add('active');
-    document.body.dataset.tab = id;
-    const link = links.find(l => l.getAttribute('href') === '#' + id);
-    if (link) link.classList.add('active');
-    window.scrollTo(0, 0);
-    return true;
-  }
-
-  links.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const id = link.getAttribute('href').slice(1);
-      if (activate(id)) history.replaceState(null, '', '#' + id);
-    });
-  });
-
-  const initial = (location.hash || '').slice(1);
-  if (!initial || !activate(initial)) activate('resumen');
-})();
-
-// === ÚLTIMAS NOTICIAS (shared via Supabase) ===
-(function newsModule() {
-  const MAX_PHOTO_BYTES = 800 * 1024;
-  const listEl = () => document.getElementById('news-list');
-  const errEl  = () => document.getElementById('news-error');
-
+  // ---------- Lightbox ----------
   function openLightbox(src) {
     const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:10000;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px;box-sizing:border-box;';
+    overlay.className = 'lightbox';
     const img = document.createElement('img');
     img.src = src;
-    img.style.cssText = 'max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;box-shadow:0 8px 40px rgba(0,0,0,0.5);';
     overlay.appendChild(img);
     const close = () => { overlay.remove(); document.removeEventListener('keydown', onKey); };
     const onKey = (e) => { if (e.key === 'Escape') close(); };
@@ -3024,105 +565,367 @@ if ('serviceWorker' in navigator) {
     document.addEventListener('keydown', onKey);
     document.body.appendChild(overlay);
   }
-  window.openLightbox = openLightbox;
 
-  function fmtTs(iso) {
+  // ---------- Time helpers ----------
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function relTime(iso) {
     const d = new Date(iso);
-    const dd = String(d.getDate()).padStart(2,'0');
-    const mm = String(d.getMonth()+1).padStart(2,'0');
-    const hh = String(d.getHours()).padStart(2,'0');
-    const mi = String(d.getMinutes()).padStart(2,'0');
-    return dd+'-'+mm+' '+hh+':'+mi;
+    const diff = (Date.now() - d.getTime()) / 1000;
+    if (diff < 60) return 'ahora';
+    if (diff < 3600) return 'hace ' + Math.floor(diff/60) + ' min';
+    if (diff < 86400) return 'hace ' + Math.floor(diff/3600) + ' h';
+    if (diff < 86400*7) return 'hace ' + Math.floor(diff/86400) + ' d';
+    return pad(d.getDate()) + '-' + pad(d.getMonth()+1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+  function absTime(iso) {
+    const d = new Date(iso);
+    return pad(d.getDate()) + '-' + pad(d.getMonth()+1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
   }
 
-  function renderNews(rows) {
-    const ul = listEl(); if (!ul) return;
-    ul.innerHTML = '';
-    rows.forEach(r => {
-      const li = document.createElement('li');
-      li.style.marginBottom = '8px';
-      const head = document.createElement('div');
-      head.textContent = fmtTs(r.created_at) + ' ' + r.text;
-      li.appendChild(head);
-      if (r.photo_data_url) {
-        const img = document.createElement('img');
-        img.src = r.photo_data_url;
-        img.style.cssText = 'max-width:100%;max-height:180px;display:block;margin-top:4px;border-radius:6px;cursor:zoom-in;';
-        img.addEventListener('click', () => openLightbox(r.photo_data_url));
-        li.appendChild(img);
-      }
-      ul.appendChild(li);
-    });
+  // ---------- Countdown ----------
+  const cdDisplay = document.getElementById('cd-display');
+  const cdStatus = document.getElementById('cd-status');
+  const cdBornLine = document.getElementById('cd-born-line');
+
+  function renderClock(diffMs, sign) {
+    const totalSec = Math.floor(Math.abs(diffMs) / 1000);
+    const days = Math.floor(totalSec / 86400);
+    const hours = Math.floor((totalSec % 86400) / 3600);
+    const mins = Math.floor((totalSec % 3600) / 60);
+    const secs = totalSec % 60;
+    cdDisplay.innerHTML =
+      '<div class="cd-clock">' +
+        '<span class="cd-sign">' + sign + '</span>' +
+        '<div class="cd-seg"><div class="cd-num amber">' + pad(days) + '</div><div class="cd-lbl">DÍAS</div></div>' +
+        '<div class="cd-sep">:</div>' +
+        '<div class="cd-seg"><div class="cd-num">' + pad(hours) + '</div><div class="cd-lbl">HRS</div></div>' +
+        '<div class="cd-sep">:</div>' +
+        '<div class="cd-seg"><div class="cd-num">' + pad(mins) + '</div><div class="cd-lbl">MIN</div></div>' +
+        '<div class="cd-sep">:</div>' +
+        '<div class="cd-seg"><div class="cd-num">' + pad(secs) + '</div><div class="cd-lbl">SEG</div></div>' +
+      '</div>';
   }
 
-  async function loadNews() {
-    const { data, error } = await sb.from('news')
-      .select('id, created_at, text, photo_data_url')
+  function tick() {
+    const now = Date.now();
+    if (bornAt) {
+      const diff = now - new Date(bornAt).getTime();
+      cdStatus.textContent = 'NACIDO';
+      cdStatus.classList.add('born');
+      const d = new Date(bornAt);
+      cdBornLine.style.display = 'block';
+      cdBornLine.textContent = 'Llegó el ' + pad(d.getDate()) + '-' + pad(d.getMonth()+1) + '-' + d.getFullYear() + ' a las ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+      renderClock(diff, 'T+');
+    } else if (now < TARGET.getTime()) {
+      cdStatus.textContent = 'PROGRAMADO';
+      cdStatus.classList.remove('born');
+      cdBornLine.style.display = 'none';
+      renderClock(TARGET.getTime() - now, 'T−');
+    } else {
+      cdStatus.textContent = 'EN CURSO';
+      cdStatus.classList.remove('born');
+      cdBornLine.style.display = 'none';
+      cdDisplay.innerHTML = '<div class="cd-suspense">. . .</div>';
+    }
+  }
+  setInterval(tick, 1000);
+  tick();
+
+  async function loadBornAt() {
+    const { data, error } = await sb.from('birth_moment').select('born_at').eq('id', 1).maybeSingle();
+    if (error) { console.warn('birth_moment load failed', error); return; }
+    bornAt = data && data.born_at;
+    tick();
+  }
+
+  document.getElementById('btn-born').addEventListener('click', async () => {
+    if (!confirm('¿Marcar a Luca como nacido AHORA?')) return;
+    const { error } = await sb.from('birth_moment').update({ born_at: new Date().toISOString() }).eq('id', 1);
+    if (error) { toast('Error: ' + error.message, 'error'); return; }
+    toast('¡Bienvenido Luca!', 'success');
+    await loadBornAt();
+  });
+
+  // ---------- Auth ----------
+  const loginModal = document.getElementById('login-modal');
+  const loginEmail = document.getElementById('login-email');
+  const loginPass = document.getElementById('login-pass');
+  const loginErr = document.getElementById('login-error');
+  const loginSubmit = document.getElementById('login-submit');
+  const adminLink = document.getElementById('admin-link');
+
+  function showLogin() {
+    loginErr.style.display = 'none';
+    loginModal.classList.add('show');
+    setTimeout(() => loginEmail.focus(), 50);
+  }
+  function hideLogin() { loginModal.classList.remove('show'); }
+
+  adminLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (isAdmin) {
+      if (confirm('¿Cerrar sesión?')) sb.auth.signOut();
+    } else {
+      showLogin();
+    }
+  });
+  document.getElementById('login-cancel').addEventListener('click', hideLogin);
+  loginModal.addEventListener('click', (e) => { if (e.target === loginModal) hideLogin(); });
+  loginPass.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginSubmit.click(); });
+
+  loginSubmit.addEventListener('click', async () => {
+    loginErr.style.display = 'none';
+    loginSubmit.disabled = true; loginSubmit.textContent = 'Entrando…';
+    const { error } = await sb.auth.signInWithPassword({ email: loginEmail.value.trim(), password: loginPass.value });
+    loginSubmit.disabled = false; loginSubmit.textContent = 'Entrar';
+    if (error) {
+      loginErr.textContent = 'Credenciales incorrectas';
+      loginErr.style.display = 'block';
+      return;
+    }
+    loginPass.value = '';
+    hideLogin();
+  });
+
+  function applyAuth(session) {
+    isAdmin = !!session;
+    document.body.classList.toggle('is-admin', isAdmin);
+    adminLink.textContent = isAdmin ? 'Cerrar sesión' : 'Soy Luis';
+  }
+
+  sb.auth.getSession().then(({ data }) => applyAuth(data.session));
+  sb.auth.onAuthStateChange((_event, session) => applyAuth(session));
+
+  // ---------- Updates ----------
+  const feedEl = document.getElementById('feed');
+
+  async function loadUpdates() {
+    const { data, error } = await sb.from('birth_updates')
+      .select('id, created_at, text, photo_url')
       .order('created_at', { ascending: false })
-      .limit(50);
-    if (error) { console.warn('news load failed', error); return; }
-    renderNews(data || []);
+      .limit(200);
+    if (error) { console.warn('updates load failed', error); return; }
+    updates = data || [];
+    await loadAllComments();
+    renderFeed();
   }
 
-  function readPhoto(file) {
-    return new Promise((resolve, reject) => {
-      if (!file) return resolve(null);
-      if (file.size > MAX_PHOTO_BYTES) {
-        return reject(new Error('Foto demasiado grande (máx 800KB)'));
-      }
-      const r = new FileReader();
-      r.onload = () => resolve(r.result);
-      r.onerror = () => reject(new Error('No se pudo leer la foto'));
-      r.readAsDataURL(file);
+  async function loadAllComments() {
+    if (!updates.length) { commentsByUpdate.clear(); return; }
+    const ids = updates.map(u => u.id);
+    const { data, error } = await sb.from('birth_comments')
+      .select('id, update_id, created_at, name, text')
+      .in('update_id', ids)
+      .order('created_at', { ascending: true });
+    if (error) { console.warn('comments load failed', error); return; }
+    commentsByUpdate.clear();
+    (data || []).forEach(c => {
+      if (!commentsByUpdate.has(c.update_id)) commentsByUpdate.set(c.update_id, []);
+      commentsByUpdate.get(c.update_id).push(c);
     });
   }
 
-  async function postNews(text, photoFile) {
-    const photo_data_url = await readPhoto(photoFile);
-    const { error } = await sb.from('news').insert({ text, photo_data_url });
+  function renderFeed() {
+    feedEl.innerHTML = '';
+    if (!updates.length) {
+      const e = document.createElement('div');
+      e.className = 'feed-empty';
+      e.textContent = 'Aún no hay actualizaciones.';
+      feedEl.appendChild(e);
+      return;
+    }
+    updates.forEach(u => feedEl.appendChild(renderUpdate(u)));
+  }
+
+  function renderUpdate(u) {
+    const card = document.createElement('div');
+    card.className = 'card update';
+    card.dataset.id = u.id;
+
+    const meta = document.createElement('div');
+    meta.className = 'update-meta';
+    const time = document.createElement('div');
+    time.className = 'update-time';
+    time.textContent = relTime(u.created_at) + ' · ' + absTime(u.created_at);
+    meta.appendChild(time);
+    const del = document.createElement('button');
+    del.className = 'update-del';
+    del.title = 'Eliminar';
+    del.textContent = '×';
+    del.addEventListener('click', () => deleteUpdate(u));
+    meta.appendChild(del);
+    card.appendChild(meta);
+
+    if (u.text) {
+      const txt = document.createElement('div');
+      txt.className = 'update-text';
+      txt.textContent = u.text;
+      card.appendChild(txt);
+    }
+    if (u.photo_url) {
+      const img = document.createElement('img');
+      img.className = 'update-photo';
+      img.src = u.photo_url;
+      img.loading = 'lazy';
+      img.addEventListener('click', () => openLightbox(u.photo_url));
+      card.appendChild(img);
+    }
+
+    card.appendChild(renderCommentsBlock(u));
+    return card;
+  }
+
+  function renderCommentsBlock(u) {
+    const wrap = document.createElement('div');
+    wrap.className = 'comments';
+    const title = document.createElement('div');
+    title.className = 'comments-title';
+    const list = commentsByUpdate.get(u.id) || [];
+    title.textContent = list.length ? 'Comentarios (' + list.length + ')' : 'Comentarios';
+    wrap.appendChild(title);
+
+    if (!list.length) {
+      const empty = document.createElement('div');
+      empty.className = 'comments-empty';
+      empty.textContent = 'Sé el primero en comentar.';
+      wrap.appendChild(empty);
+    } else {
+      list.forEach(c => {
+        const row = document.createElement('div');
+        row.className = 'comment';
+        const n = document.createElement('span'); n.className = 'comment-name'; n.textContent = c.name;
+        const t = document.createElement('span'); t.className = 'comment-text'; t.textContent = ' · ' + c.text;
+        const ts = document.createElement('span'); ts.className = 'comment-time'; ts.textContent = relTime(c.created_at);
+        row.appendChild(n); row.appendChild(t); row.appendChild(ts);
+        wrap.appendChild(row);
+      });
+    }
+
+    const form = document.createElement('div');
+    form.className = 'comment-form';
+    const nameRow = document.createElement('div');
+    nameRow.className = 'name-row';
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.placeholder = 'Tu nombre';
+    nameInput.maxLength = 80;
+    nameInput.value = localStorage.getItem('commenter-name') || '';
+    const textArea = document.createElement('textarea');
+    textArea.placeholder = 'Escribe un comentario…';
+    textArea.rows = 1;
+    textArea.maxLength = 1000;
+    nameRow.appendChild(nameInput);
+    nameRow.appendChild(textArea);
+    form.appendChild(nameRow);
+
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-primary';
+    btn.textContent = 'Comentar';
+    btn.addEventListener('click', async () => {
+      const name = nameInput.value.trim();
+      const text = textArea.value.trim();
+      if (!name || !text) { toast('Nombre y comentario requeridos', 'error'); return; }
+      btn.disabled = true; btn.textContent = '…';
+      try {
+        await postComment(u.id, name, text);
+        localStorage.setItem('commenter-name', name);
+        textArea.value = '';
+        await loadUpdates();
+      } catch (ex) {
+        toast('Error: ' + (ex.message || ex), 'error');
+      } finally {
+        btn.disabled = false; btn.textContent = 'Comentar';
+      }
+    });
+    actions.appendChild(btn);
+    form.appendChild(actions);
+    wrap.appendChild(form);
+    return wrap;
+  }
+
+  async function postComment(updateId, name, text) {
+    const { error } = await sb.from('birth_comments').insert({ update_id: updateId, name, text });
     if (error) throw error;
   }
 
-  function bindForm() {
-    const form = document.getElementById('news-form');
-    if (!form) return;
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const ta = document.getElementById('news-text');
-      const fi = document.getElementById('news-photo');
-      const btn = document.getElementById('news-submit');
-      const err = errEl();
-      err.style.display = 'none';
-      const text = ta.value.trim();
-      if (!text) { err.textContent = 'Escribe algo'; err.style.display = 'block'; return; }
-      btn.disabled = true; btn.textContent = 'Publicando…';
-      try {
-        await postNews(text, fi.files[0] || null);
-        ta.value = ''; fi.value = '';
-        await loadNews();
-      } catch (ex) {
-        err.textContent = ex.message || 'Error al publicar';
-        err.style.display = 'block';
-      } finally {
-        btn.disabled = false; btn.textContent = 'Publicar';
-      }
+  async function deleteUpdate(u) {
+    if (!confirm('¿Eliminar esta actualización?')) return;
+    if (u.photo_url && u.photo_url.startsWith(PUBLIC_BASE)) {
+      const path = u.photo_url.slice(PUBLIC_BASE.length);
+      sb.storage.from(BUCKET).remove([path]).catch(() => {});
+    }
+    const { error } = await sb.from('birth_updates').delete().eq('id', u.id);
+    if (error) { toast('Error: ' + error.message, 'error'); return; }
+    toast('Actualización eliminada', 'success');
+    await loadUpdates();
+  }
+
+  // ---------- Admin post form ----------
+  const upText = document.getElementById('up-text');
+  const upPhoto = document.getElementById('up-photo');
+  const upSubmit = document.getElementById('up-submit');
+  const upError = document.getElementById('up-error');
+
+  function slugify(s) {
+    return s.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9.]+/g, '-').replace(/^-+|-+$/g, '')
+      .slice(0, 60) || 'foto';
+  }
+
+  async function uploadPhoto(file) {
+    if (file.size > MAX_PHOTO) throw new Error('Foto demasiado grande (máx 10 MB)');
+    const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+    const path = Date.now() + '-' + slugify(file.name.replace(/\.[^.]+$/, '')) + '.' + ext;
+    const { error } = await sb.storage.from(BUCKET).upload(path, file, {
+      upsert: false,
+      contentType: file.type || undefined
     });
+    if (error) throw error;
+    return PUBLIC_BASE + path;
   }
 
-  function subscribeRealtime() {
-    sb.channel('news-feed')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'news' }, () => loadNews())
-      .subscribe();
-  }
-
-  window.addEventListener('auth-ready', () => {
-    bindForm();
-    loadNews();
-    subscribeRealtime();
+  upSubmit.addEventListener('click', async () => {
+    upError.style.display = 'none';
+    const text = upText.value.trim();
+    if (!text) { upError.textContent = 'Escribe algo'; upError.style.display = 'block'; return; }
+    const file = upPhoto.files[0] || null;
+    upSubmit.disabled = true; upSubmit.textContent = 'Publicando…';
+    try {
+      let photo_url = null;
+      if (file) photo_url = await uploadPhoto(file);
+      const { error } = await sb.from('birth_updates').insert({ text, photo_url });
+      if (error) throw error;
+      upText.value = ''; upPhoto.value = '';
+      toast('Publicado', 'success');
+      await loadUpdates();
+    } catch (ex) {
+      upError.textContent = ex.message || 'Error al publicar';
+      upError.style.display = 'block';
+    } finally {
+      upSubmit.disabled = false; upSubmit.textContent = 'Publicar';
+    }
   });
+
+  // ---------- Realtime ----------
+  sb.channel('birth-feed')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'birth_updates' }, () => loadUpdates())
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'birth_comments' }, () => loadUpdates())
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'birth_moment' }, () => loadBornAt())
+    .subscribe();
+
+  // ---------- Boot ----------
+  loadBornAt();
+  loadUpdates();
+
+  // ---------- Service worker ----------
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js').catch(() => {});
+  }
 })();
 </script>
 
-</div><!-- /main-content -->
 </body>
 </html>

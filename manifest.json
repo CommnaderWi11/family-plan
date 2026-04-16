@@ -1,13 +1,13 @@
 {
-  "name": "Plan de Paternidad — Luca",
-  "short_name": "Luca 2026",
-  "description": "Plan de paternidad y vacaciones 2026–2027",
+  "name": "Llega Luca",
+  "short_name": "Luca",
+  "description": "Cuenta atrás y noticias de la llegada de Luca",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0a0a1a",
-  "theme_color": "#1a0533",
+  "background_color": "#fdfaf4",
+  "theme_color": "#fdfaf4",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }

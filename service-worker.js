@@ -1,8 +1,9 @@
-const VERSION = 'v8-journal-vacunas';
-const CACHE = 'paternidad-shell-' + VERSION;
+const VERSION = 'v9-llega-luca';
+const CACHE = 'llega-luca-shell-' + VERSION;
 const SHELL = [
   './',
   './index.html',
+  './parental-leave.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
