@@ -529,7 +529,7 @@ body.is-admin .update-del { display: inline-block; }
   </div>
 
   <div class="header">
-    <h1>Llega Luca</h1>
+    <h1 id="page-title">Llega Luca</h1>
     <div class="sub">17 de abril de 2026 · 12:00</div>
   </div>
 
@@ -707,6 +707,7 @@ body.is-admin .update-del { display: inline-block; }
     return kg.toFixed(3).replace('.', ',') + ' kg';
   }
 
+  const pageTitle = document.getElementById('page-title');
   function updateBirthBox() {
     if (bornAt) {
       const d = new Date(bornAt);
@@ -714,9 +715,13 @@ body.is-admin .update-del { display: inline-block; }
       bbWeight.textContent = fmtWeight(weightGrams);
       birthBox.classList.add('show');
       cdCard.classList.add('celebrate');
+      pageTitle.textContent = '¡Llegó Luca!';
+      document.title = '¡Llegó Luca!';
     } else {
       birthBox.classList.remove('show');
       cdCard.classList.remove('celebrate');
+      pageTitle.textContent = 'Llega Luca';
+      document.title = 'Llega Luca';
     }
   }
 
