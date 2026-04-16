@@ -88,29 +88,21 @@ body {
   0%   { box-shadow: 0 6px 28px rgba(217,147,72,0.20), 0 0 0 1px rgba(245,185,107,0.35); }
   100% { box-shadow: 0 8px 36px rgba(232,117,91,0.35), 0 0 0 1px rgba(232,117,91,0.45); }
 }
-.cd-row {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: 18px;
-  flex-wrap: wrap;
-}
-.cd-main { flex: 1 1 280px; min-width: 0; }
 .birth-box {
-  flex: 0 0 auto;
   display: none;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: space-around;
   background: linear-gradient(135deg, #fff7ea, #ffe9cf);
   border: 1px solid #f3d4a3;
   border-radius: 14px;
   padding: 14px 18px;
-  min-width: 130px;
+  margin: 16px auto 0;
   text-align: center;
   box-shadow: 0 4px 14px rgba(217,147,72,0.15);
+  max-width: 360px;
 }
 .birth-box.show { display: flex; }
+.birth-box-cell { flex: 1; }
 .birth-box .bb-label {
   font-size: 10px;
   letter-spacing: 0.18em;
@@ -127,15 +119,9 @@ body {
   line-height: 1.1;
 }
 .birth-box .bb-divider {
-  width: 32px; height: 1px;
+  width: 1px; height: 28px;
   background: #e8c896;
-  margin: 10px 0;
-}
-@media (max-width: 480px) {
-  .cd-row { gap: 14px; }
-  .birth-box { width: 100%; flex-direction: row; justify-content: space-around; padding: 12px; }
-  .birth-box .bb-divider { width: 1px; height: 28px; margin: 0 8px; }
-  .birth-box-cell { flex: 1; }
+  margin: 0 8px;
 }
 .cd-strip {
   display: flex;
@@ -208,36 +194,6 @@ body {
   50%      { opacity: 1; }
 }
 
-.cd-born-line {
-  margin-top: 10px;
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 18px;
-  color: #2f7a48;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.cd-born-arrow {
-  font-size: 22px;
-  color: #2f7a48;
-  display: inline-block;
-  animation: arrowNudge 1.6s ease-in-out infinite;
-}
-.cd-born-arrow::before { content: '→'; }
-@media (max-width: 600px) {
-  .cd-born-arrow::before { content: '↓'; }
-}
-@keyframes arrowNudge {
-  0%, 100% { transform: translateX(0); }
-  50%      { transform: translateX(4px); }
-}
-@media (max-width: 600px) {
-  @keyframes arrowNudge {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(4px); }
-  }
-}
 
 .cd-admin-actions {
   margin-top: 18px;
@@ -562,21 +518,16 @@ body.is-admin .update-del { display: inline-block; }
       <span>Cuenta atrás</span>
       <span class="cd-status" id="cd-status">PROGRAMADO</span>
     </div>
-    <div class="cd-row">
-      <div class="cd-main">
-        <div id="cd-display"></div>
-        <div id="cd-born-line" class="cd-born-line" style="display:none;"></div>
+    <div id="cd-display"></div>
+    <div class="birth-box" id="birth-box">
+      <div class="birth-box-cell">
+        <div class="bb-label">Hora</div>
+        <div class="bb-value" id="bb-time">—</div>
       </div>
-      <div class="birth-box" id="birth-box">
-        <div class="birth-box-cell">
-          <div class="bb-label">Hora</div>
-          <div class="bb-value" id="bb-time">—</div>
-        </div>
-        <div class="bb-divider"></div>
-        <div class="birth-box-cell">
-          <div class="bb-label">Peso</div>
-          <div class="bb-value" id="bb-weight">—</div>
-        </div>
+      <div class="bb-divider"></div>
+      <div class="birth-box-cell">
+        <div class="bb-label">Peso</div>
+        <div class="bb-value" id="bb-weight">—</div>
       </div>
     </div>
     <div class="cd-admin-actions">
@@ -739,14 +690,11 @@ body.is-admin .update-del { display: inline-block; }
       cdCard.classList.add('celebrate');
       pageTitle.textContent = '¡Llegó Luca!';
       document.title = '¡Llegó Luca!';
-      cdBornLine.style.display = 'inline-flex';
-      cdBornLine.innerHTML = 'Llegó a las: <span class="cd-born-arrow"></span>';
     } else {
       birthBox.classList.remove('show');
       cdCard.classList.remove('celebrate');
       pageTitle.textContent = 'Llega Luca';
       document.title = 'Llega Luca';
-      cdBornLine.style.display = 'none';
     }
   }
 
