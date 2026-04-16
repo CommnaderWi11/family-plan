@@ -49,21 +49,33 @@ body {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 8px;
-  min-height: 28px;
+  min-height: 44px;
 }
 .top-bar a {
-  font-size: 11px;
+  font-size: 22px;
+  line-height: 1;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #c5b89e;
+  color: #b8a98c;
   text-decoration: none;
-  padding: 4px 8px;
-  border-radius: 6px;
-  opacity: 0.6;
-  transition: color .2s, opacity .2s;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  opacity: 0.85;
+  transition: color .2s, background .2s, opacity .2s;
+  -webkit-tap-highlight-color: rgba(217,147,72,0.2);
 }
-.top-bar a:hover { color: #1f2742; opacity: 1; }
-body.is-admin .top-bar a { opacity: 1; color: #8a7e6b; }
+.top-bar a:hover, .top-bar a:active { color: #1f2742; background: #f3e8d3; opacity: 1; }
+body.is-admin .top-bar a {
+  width: auto;
+  padding: 0 14px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a7e6b;
+}
 
 .header { text-align: center; margin-bottom: 32px; }
 .header h1 {
@@ -77,6 +89,7 @@ body.is-admin .top-bar a { opacity: 1; color: #8a7e6b; }
   cursor: default;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 .header .sub {
   font-size: 13px;
