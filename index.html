@@ -125,6 +125,23 @@ body {
   margin-top: 16px;
 }
 .cd-hero:hover { transform: rotate(0deg) scale(1.03); }
+.cd-hero[hidden] { display: none !important; }
+
+.update-pin {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #b8a98c;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-right: 4px;
+  transition: color .15s, background .15s;
+}
+.update-pin:hover { background: #fcefe1; color: #c97a4a; }
+.update-pin.active { color: #c97a4a; }
+body.is-admin .update-pin { display: inline-block; }
 .countdown-card.celebrate {
   background: linear-gradient(135deg, #fffaf0, #fff4e3);
   box-shadow: 0 6px 28px rgba(217,147,72,0.25), 0 0 0 1px rgba(245,185,107,0.4);
@@ -807,7 +824,7 @@ body.is-offline .offline-badge { display: inline-block; }
         <button class="btn btn-link" id="btn-reset-born" hidden>Resetear</button>
       </div>
     </div>
-    <img class="cd-hero" id="cd-hero" src="https://voirsxfjdayhhvwviaqt.supabase.co/storage/v1/object/public/birth-photos/1776374297163-9utl5j-ab0844da-1e80-4425-a5e2-89a939f260dd-t.jpg" alt="Esperando a Luca" loading="lazy" decoding="async">
+    <img class="cd-hero" id="cd-hero" alt="Portada" loading="lazy" decoding="async" hidden>
   </div>
 
   <!-- ADMIN POST FORM -->
@@ -887,10 +904,12 @@ body.is-offline .offline-badge { display: inline-block; }
   let isAdmin = false;
   let bornAt = null;
   let weightGrams = null;
+  let heroPhotoUrl = null;
   let hasFiredConfetti = false;
   let updates = [];
   let pendingFiles = [];
   const commentsByUpdate = new Map();
+  const cdHero = document.getElementById('cd-hero');
 
   // ---------- Toast ----------
   const toastEl = document.getElementById('toast');
@@ -1140,13 +1159,40 @@ body.is-offline .offline-badge { display: inline-block; }
     if (bornAt && !prev) maybeNotifyBirth();
   }
 
+  function applyHero() {
+    if (heroPhotoUrl) {
+      cdHero.src = heroPhotoUrl;
+      cdHero.hidden = false;
+    } else {
+      cdHero.hidden = true;
+      cdHero.removeAttribute('src');
+    }
+    // refresh pin button states in feed if rendered
+    feedEl.querySelectorAll('.update-pin').forEach(btn => {
+      const url = btn.dataset.photo;
+      btn.classList.toggle('active', url && url === heroPhotoUrl);
+      btn.title = (url && url === heroPhotoUrl) ? 'Quitar de portada' : 'Fijar como portada';
+    });
+  }
+
   async function loadBornAt() {
     const prev = bornAt;
-    const { data, error } = await sb.from('birth_moment').select('born_at, weight_grams').eq('id', 1).maybeSingle();
+    const { data, error } = await sb.from('birth_moment').select('born_at, weight_grams, hero_photo_url').eq('id', 1).maybeSingle();
     if (error) { console.warn('birth_moment load failed', error); return; }
     bornAt = data && data.born_at;
     weightGrams = data && data.weight_grams;
+    heroPhotoUrl = data && data.hero_photo_url;
+    applyHero();
     applyBornFromData(prev);
+  }
+
+  async function setHero(url) {
+    const next = (url === heroPhotoUrl) ? null : url; // toggle
+    const { error } = await sb.from('birth_moment').update({ hero_photo_url: next }).eq('id', 1);
+    if (error) { toast('Error: ' + error.message, 'error'); return; }
+    heroPhotoUrl = next;
+    applyHero();
+    toast(next ? 'Fijada como portada' : 'Portada quitada', 'success');
   }
 
   // Birth modal
@@ -1411,12 +1457,26 @@ body.is-offline .offline-badge { display: inline-block; }
     time.className = 'update-time';
     time.textContent = relTime(u.created_at) + ' · ' + absTime(u.created_at);
     meta.appendChild(time);
+    const adminBtns = document.createElement('div');
+    const photosForPin = normalizePhotos(u);
+    if (photosForPin.length) {
+      const pin = document.createElement('button');
+      pin.className = 'update-pin';
+      const url = photosForPin[0].f;
+      pin.dataset.photo = url;
+      pin.textContent = '📌';
+      pin.title = (url === heroPhotoUrl) ? 'Quitar de portada' : 'Fijar como portada';
+      if (url === heroPhotoUrl) pin.classList.add('active');
+      pin.addEventListener('click', () => setHero(url));
+      adminBtns.appendChild(pin);
+    }
     const del = document.createElement('button');
     del.className = 'update-del';
     del.title = 'Eliminar';
     del.textContent = '×';
     del.addEventListener('click', () => deleteUpdate(u));
-    meta.appendChild(del);
+    adminBtns.appendChild(del);
+    meta.appendChild(adminBtns);
     card.appendChild(meta);
 
     if (u.text) {
