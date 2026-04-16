@@ -426,27 +426,25 @@ input[type="file"]::file-selector-button {
   color: #2a3142;
 }
 
-/* photo grid: thumbnails, click for lightbox */
+/* photo thumbnails: small strip, click for lightbox */
 .update-photos {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-top: 12px;
 }
-.update-photos.n-1 { grid-template-columns: 1fr; }
-.update-photos.n-2 { grid-template-columns: 1fr 1fr; }
-.update-photos.n-3, .update-photos.n-4, .update-photos.n-5, .update-photos.n-6 { grid-template-columns: repeat(3, 1fr); }
 .update-photo-thumb {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: 84px;
+  height: 84px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: zoom-in;
   background: #f5ecdc;
-  transition: transform .25s, box-shadow .25s;
+  transition: transform .15s, box-shadow .15s;
   display: block;
+  flex: 0 0 auto;
 }
-.update-photos.n-1 .update-photo-thumb { aspect-ratio: 4 / 3; }
-.update-photo-thumb:hover { transform: scale(1.01); box-shadow: 0 6px 18px rgba(20,30,60,0.12); }
+.update-photo-thumb:hover { transform: scale(1.04); box-shadow: 0 4px 12px rgba(20,30,60,0.15); }
 
 .update-del {
   display: none;
@@ -552,6 +550,22 @@ body.is-admin .update-del { display: inline-block; }
 }
 .comment-form .name-row input { flex: 0 0 140px; }
 .comment-form .name-row textarea { flex: 1; min-height: 42px; }
+.commenter-as {
+  font-size: 12px;
+  color: #8a7e6b;
+  margin-bottom: 4px;
+}
+.commenter-as strong { color: #2a3142; font-weight: 600; }
+.commenter-as .change-name {
+  background: transparent;
+  border: none;
+  padding: 0 0 0 6px;
+  color: #c97a4a;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+}
+.commenter-as .change-name:hover { color: #b9442b; }
 .comment-form .actions {
   display: flex;
   justify-content: flex-end;
@@ -1388,7 +1402,7 @@ body.is-offline .offline-badge { display: inline-block; }
     const photos = normalizePhotos(u);
     if (photos.length) {
       const grid = document.createElement('div');
-      grid.className = 'update-photos n-' + Math.min(photos.length, 6);
+      grid.className = 'update-photos';
       photos.forEach((p, idx) => {
         const img = document.createElement('img');
         img.className = 'update-photo-thumb';
@@ -1474,13 +1488,28 @@ body.is-offline .offline-badge { display: inline-block; }
 
     const form = document.createElement('div');
     form.className = 'comment-form';
+
+    const savedName = localStorage.getItem('commenter-name') || '';
+
+    const asRow = document.createElement('div');
+    asRow.className = 'commenter-as';
+    const asLabel = document.createElement('span');
+    asLabel.innerHTML = 'Comentando como <strong></strong>';
+    asRow.appendChild(asLabel);
+    const changeBtn = document.createElement('button');
+    changeBtn.type = 'button';
+    changeBtn.className = 'change-name';
+    changeBtn.textContent = 'cambiar';
+    asRow.appendChild(changeBtn);
+    form.appendChild(asRow);
+
     const nameRow = document.createElement('div');
     nameRow.className = 'name-row';
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
     nameInput.placeholder = 'Tu nombre';
     nameInput.maxLength = 80;
-    nameInput.value = localStorage.getItem('commenter-name') || '';
+    nameInput.value = savedName;
     const textArea = document.createElement('textarea');
     textArea.placeholder = 'Escribe un comentario…';
     textArea.rows = 1;
@@ -1489,20 +1518,41 @@ body.is-offline .offline-badge { display: inline-block; }
     nameRow.appendChild(textArea);
     form.appendChild(nameRow);
 
+    function applyNameMode() {
+      const name = localStorage.getItem('commenter-name') || '';
+      if (name) {
+        asLabel.querySelector('strong').textContent = name;
+        asRow.style.display = '';
+        nameInput.style.display = 'none';
+        nameInput.value = name;
+      } else {
+        asRow.style.display = 'none';
+        nameInput.style.display = '';
+      }
+    }
+    changeBtn.addEventListener('click', () => {
+      localStorage.removeItem('commenter-name');
+      applyNameMode();
+      nameInput.focus();
+    });
+    applyNameMode();
+
     const actions = document.createElement('div');
     actions.className = 'actions';
     const btn = document.createElement('button');
     btn.className = 'btn btn-primary';
     btn.textContent = 'Comentar';
     btn.addEventListener('click', async () => {
-      const name = nameInput.value.trim();
+      const name = (localStorage.getItem('commenter-name') || nameInput.value).trim();
       const text = textArea.value.trim();
-      if (!name || !text) { toast('Nombre y comentario requeridos', 'error'); return; }
+      if (!name) { nameInput.style.display = ''; nameInput.focus(); toast('Escribe tu nombre', 'error'); return; }
+      if (!text) { toast('Escribe un comentario', 'error'); textArea.focus(); return; }
       btn.disabled = true; btn.textContent = '…';
       try {
         await postComment(u.id, name, text);
         localStorage.setItem('commenter-name', name);
         textArea.value = '';
+        applyNameMode();
       } catch (ex) {
         toast('Error: ' + (ex.message || ex), 'error');
       } finally {
