@@ -1,4 +1,4 @@
-const VERSION = 'v10-llega-luca';
+const VERSION = 'v11-llega-luca';
 const SHELL_CACHE = 'llega-luca-shell-' + VERSION;
 const DATA_CACHE = 'llega-luca-data-' + VERSION;
 const PHOTO_CACHE = 'llega-luca-photos-' + VERSION;

@@ -787,7 +787,7 @@ body.is-offline .offline-badge { display: inline-block; }
   <!-- ADMIN POST FORM -->
   <div class="card admin-post" id="admin-post">
     <div class="label">Nueva actualización</div>
-    <textarea id="up-text" placeholder="Comparte una actualización…" maxlength="4000" rows="3"></textarea>
+    <textarea id="up-text" placeholder="Comparte una actualización (opcional si subes foto)…" maxlength="4000" rows="3"></textarea>
     <div class="form-row">
       <input type="file" id="up-photo" accept="image/*" multiple>
       <button class="btn btn-primary" id="up-submit">Publicar</button>
@@ -1631,8 +1631,7 @@ body.is-offline .offline-badge { display: inline-block; }
         const set = await uploadPhotoSet(pendingFiles[i]);
         photos.push(set);
       }
-      const payload = { text: text || null, photos: photos.length ? photos : null };
-      // backward-compat: also fill photo_url with first full
+      const payload = { text: text || '', photos: photos.length ? photos : null };
       if (photos.length) payload.photo_url = photos[0].f;
       const { error } = await sb.from('birth_updates').insert(payload);
       if (error) throw error;
