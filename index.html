@@ -49,33 +49,21 @@ body {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 8px;
-  min-height: 44px;
+  min-height: 36px;
 }
 .top-bar a {
-  font-size: 22px;
+  font-size: 12px;
   line-height: 1;
-  letter-spacing: 0.06em;
-  color: #b8a98c;
-  text-decoration: none;
-  width: 44px;
-  height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  opacity: 0.85;
-  transition: color .2s, background .2s, opacity .2s;
-  -webkit-tap-highlight-color: rgba(217,147,72,0.2);
-}
-.top-bar a:hover, .top-bar a:active { color: #1f2742; background: #f3e8d3; opacity: 1; }
-body.is-admin .top-bar a {
-  width: auto;
-  padding: 0 14px;
-  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #8a7e6b;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 999px;
+  transition: color .2s, background .2s;
+  -webkit-tap-highlight-color: rgba(217,147,72,0.2);
 }
+.top-bar a:hover, .top-bar a:active { color: #1f2742; background: #f3e8d3; }
 
 .header { text-align: center; margin-bottom: 32px; }
 .header h1 {
@@ -756,7 +744,7 @@ body.is-offline .offline-badge { display: inline-block; }
 
 <div class="container">
   <div class="top-bar">
-    <a href="#" id="admin-link" aria-label="Admin">·</a>
+    <a href="#" id="admin-link" aria-label="Login">Soy Daddey</a>
   </div>
 
   <div class="header">
@@ -1250,8 +1238,8 @@ body.is-offline .offline-badge { display: inline-block; }
   function applyAuth(session) {
     isAdmin = !!session;
     document.body.classList.toggle('is-admin', isAdmin);
-    adminLink.textContent = isAdmin ? 'Cerrar sesión' : '·';
-    adminLink.setAttribute('aria-label', isAdmin ? 'Cerrar sesión' : 'Admin');
+    adminLink.textContent = isAdmin ? 'Cerrar sesión' : 'Soy Daddey';
+    adminLink.setAttribute('aria-label', isAdmin ? 'Cerrar sesión' : 'Login');
   }
 
   sb.auth.getSession().then(({ data }) => applyAuth(data.session));
