@@ -890,7 +890,7 @@ window.sb.auth.getSession().then(({ data }) => {
   <!-- ========== HEADER ========== -->
   <div class="header">
     <h1>Family Planning</h1>
-    <div class="sub">Parental leave dashboard</div>
+    <div class="sub">Luca — born April 17, 2026</div>
   </div>
 
   <!-- ========== RESUMEN ========== -->
@@ -1227,21 +1227,6 @@ window.sb.auth.getSession().then(({ data }) => {
   </div>
 </div>
 
-<!-- ========== BIRTH MODAL ========== -->
-<div class="modal-backdrop" id="birth-modal">
-  <div class="modal">
-    <h3>👶 Registrar nacimiento</h3>
-    <p>Marca la fecha real de nacimiento de Luca. Todos los plazos posteriores se recalcularán desde esta fecha.</p>
-    <label style="display:block;font-size:12px;color:var(--text-muted);margin-top:14px;margin-bottom:6px;">Fecha de nacimiento</label>
-    <input type="date" id="birth-date-input" min="2026-03-01" max="2026-06-30" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#f0eef5;font-size:15px;font-family:inherit;">
-    <div class="modal-actions">
-      <button class="btn btn-secondary" id="birth-cancel">Cancelar</button>
-      <button class="btn btn-primary" id="birth-save">Guardar</button>
-      <button class="btn btn-danger" id="birth-clear" style="display:none;">Borrar (aún no nació)</button>
-    </div>
-  </div>
-</div>
-
 <!-- ========== TOAST HOST ========== -->
 <div id="toast-host"></div>
 
@@ -1251,7 +1236,7 @@ window.sb.auth.getSession().then(({ data }) => {
 <script>
 // ========== DEADLINE ENGINE ==========
 window.BIRTH_EDD = new Date(2026, 3, 17, 12, 0, 0); // Cesárea 17 Abr 2026 12:00
-window.birthActual = null; // set when "Ya nació" toggled, YYYY-MM-DD string
+window.birthActual = '2026-04-17'; // Luca born April 17, 2026
 window.getBirthAnchor = function() {
   if (window.birthActual) {
     const [y, m, d] = window.birthActual.split('-').map(n => parseInt(n, 10));
@@ -1629,7 +1614,7 @@ window.fmtLongDate = function(d) {
     return out;
   }
   function syncBirthActualToWindow() {
-    window.birthActual = (state.meta && state.meta.birthActual) || null;
+    window.birthActual = (state.meta && state.meta.birthActual) || '2026-04-17';
   }
 
   function loadLocal() {
@@ -2395,42 +2380,6 @@ window.fmtLongDate = function(d) {
       grpEl.appendChild(list);
     });
   }
-
-  // ---------- Birth modal ----------
-  const birthModal = document.getElementById('birth-modal');
-  const birthBtn = document.getElementById('birth-toggle-btn');
-  const birthInput = document.getElementById('birth-date-input');
-  if (birthBtn) {
-    birthBtn.addEventListener('click', () => {
-      birthInput.value = (state.meta && state.meta.birthActual) || '';
-      document.getElementById('birth-clear').style.display = window.isBornYet() ? '' : 'none';
-      birthModal.classList.add('open');
-    });
-  }
-  birthModal && birthModal.addEventListener('click', e => { if (e.target === birthModal) birthModal.classList.remove('open'); });
-  document.getElementById('birth-cancel').onclick = () => birthModal.classList.remove('open');
-  document.getElementById('birth-save').onclick = () => {
-    const v = birthInput.value;
-    if (!v) { toast('⚠ Selecciona una fecha', 'error'); return; }
-    state.meta = state.meta || {};
-    state.meta.birthActual = v;
-    syncBirthActualToWindow();
-    birthModal.classList.remove('open');
-    applyStateToUI();
-    queueSave();
-    toast('✓ Nacimiento registrado — recalculando plazos', 'success');
-    if (navigator.vibrate) navigator.vibrate(30);
-  };
-  document.getElementById('birth-clear').onclick = () => {
-    if (!confirm('¿Borrar la fecha de nacimiento? Los plazos volverán a anclarse a la EDD.')) return;
-    state.meta = state.meta || {};
-    delete state.meta.birthActual;
-    syncBirthActualToWindow();
-    birthModal.classList.remove('open');
-    applyStateToUI();
-    queueSave();
-    toast('Fecha de nacimiento borrada', 'success');
-  };
 
   // ---------- Urgent banner dismiss ----------
   const urgDismiss = document.getElementById('urgent-dismiss');
