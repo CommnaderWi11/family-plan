@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Family Planning</title>
+<title>Family Plan</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1a0533" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#f5f3ff" media="(prefers-color-scheme: light)">
@@ -811,17 +811,17 @@ section { scroll-margin-top: 60px; }
 <div id="auth-gate" style="display:none;position:fixed;inset:0;z-index:9999;background:#0a0a1a;background-image:linear-gradient(135deg,#1a0533 0%,#0f1b3d 40%,#0a2a4a 70%,#132743 100%);display:flex;align-items:center;justify-content:center;font-family:'Inter',system-ui,sans-serif;">
   <div style="background:rgba(255,255,255,0.06);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:40px;max-width:340px;width:90%;text-align:center;box-shadow:0 8px 40px rgba(139,92,246,0.15);">
     <div style="font-size:36px;margin-bottom:12px;">👶</div>
-    <h2 style="color:#f0eef5;font-size:20px;font-weight:700;margin-bottom:6px;">Plan de Paternidad</h2>
-    <p style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:24px;">Inicia sesión para acceder</p>
+    <h2 style="color:#f0eef5;font-size:20px;font-weight:700;margin-bottom:6px;">Family Plan</h2>
+    <p style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:24px;">Sign in to access</p>
     <input id="auth-email" type="email" placeholder="Email" autocomplete="email" autofocus
       style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#f0eef5;font-size:15px;outline:none;margin-bottom:10px;font-family:inherit;box-sizing:border-box;">
-    <input id="auth-input" type="password" placeholder="Contraseña" autocomplete="current-password"
+    <input id="auth-input" type="password" placeholder="Password" autocomplete="current-password"
       style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#f0eef5;font-size:15px;outline:none;margin-bottom:12px;font-family:inherit;box-sizing:border-box;"
       onkeydown="if(event.key==='Enter')document.getElementById('auth-btn').click()">
     <button id="auth-btn" onclick="checkAuth()"
       style="width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity 0.2s;"
-      onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Entrar</button>
-    <p id="auth-error" style="color:#fb7185;font-size:12px;margin-top:10px;display:none;">Credenciales incorrectas</p>
+      onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Sign in</button>
+    <p id="auth-error" style="color:#fb7185;font-size:12px;margin-top:10px;display:none;">Incorrect credentials</p>
   </div>
 </div>
 <script>
@@ -847,11 +847,11 @@ async function checkAuth(){
   const errEl = document.getElementById('auth-error');
   const btn = document.getElementById('auth-btn');
   errEl.style.display = 'none';
-  btn.disabled = true; btn.textContent = 'Entrando…';
+  btn.disabled = true; btn.textContent = 'Signing in…';
   const { error } = await window.sb.auth.signInWithPassword({ email: emailEl.value.trim(), password: passEl.value });
-  btn.disabled = false; btn.textContent = 'Entrar';
+  btn.disabled = false; btn.textContent = 'Sign in';
   if (error) {
-    errEl.textContent = 'Credenciales incorrectas';
+    errEl.textContent = 'Incorrect credentials';
     errEl.style.display = 'block';
     passEl.value = ''; passEl.focus();
     return;
@@ -875,14 +875,14 @@ window.sb.auth.getSession().then(({ data }) => {
 <!-- ========== STICKY NAV ========== -->
 <nav class="sticky-nav">
   <div class="nav-inner">
-    <a href="#resumen" class="nav-link active">Resumen</a>
-    <a href="#calendario" class="nav-link">Calendario</a>
-    <a href="#bloques" class="nav-link">Permisos & Vacaciones</a>
-    <a href="#tramites" class="nav-link">Trámites</a>
+    <a href="#resumen" class="nav-link active">Dashboard</a>
+    <a href="#calendario" class="nav-link">Calendar</a>
+    <a href="#bloques" class="nav-link">Leave & Vacation</a>
+    <a href="#tramites" class="nav-link">Procedures</a>
     <a href="#documentos" class="nav-link">Docs</a>
-    <a href="#notas" class="nav-link">Notas</a>
-    <a class="nav-link settings-link" id="nav-settings">⚙ Ajustes</a>
-    <span class="sync-pill" id="sync-pill">📱 Solo este dispositivo</span>
+    <a href="#notas" class="nav-link">Notes</a>
+    <a class="nav-link settings-link" id="nav-settings">⚙ Settings</a>
+    <span class="sync-pill" id="sync-pill">📱 Device only</span>
   </div>
 </nav>
 
@@ -890,24 +890,24 @@ window.sb.auth.getSession().then(({ data }) => {
 
   <!-- ========== HEADER ========== -->
   <div class="header">
-    <h1>Family Planning</h1>
+    <h1>Family Plan</h1>
     <div class="sub">Luca — born April 17, 2026</div>
   </div>
 
   <!-- ========== RESUMEN ========== -->
   <section id="resumen" class="tab-section active">
     <div class="urgent-banner" id="urgent-banner" style="display:none;">
-      <span class="urgent-text">⚠ Urgente esta semana</span>
+      <span class="urgent-text">⚠ Urgent this week</span>
       <span class="urgent-arrow">→</span>
-      <button class="urgent-x" id="urgent-dismiss" title="Ocultar hasta cerrar sesión">×</button>
+      <button class="urgent-x" id="urgent-dismiss" title="Hide until logout">×</button>
     </div>
     <div class="dashboard">
       <div class="glass dash-card" id="total-dias">
-        <div class="dash-label">Total días de permiso</div>
+        <div class="dash-label">Total leave days</div>
         <div id="parentalDaySummary" class="parental-totals" style="margin-top:8px;"></div>
       </div>
       <div class="glass dash-card next-action-card" id="next-action-card">
-        <div class="dash-label">Próxima acción</div>
+        <div class="dash-label">Next action</div>
         <div class="dash-title" id="next-action-title">—</div>
         <div class="dash-meta" id="next-action-meta"></div>
         <div class="dash-badge" id="next-action-badge"></div>
@@ -916,47 +916,47 @@ window.sb.auth.getSession().then(({ data }) => {
     <div class="glass aggregate-card">
       <div class="agg-num"><span id="agg-done">0</span>/<span id="agg-total">0</span></div>
       <div class="agg-info">
-        <div class="agg-label">Trámites completados</div>
+        <div class="agg-label">Procedures completed</div>
         <div class="progress-track"><div class="progress-fill" id="agg-fill" style="width:0%"></div></div>
       </div>
     </div>
     <div class="summary">
       <div class="glass">
-        <div class="label">Permiso Parental</div>
-        <div class="value c-purple">19 sem</div>
-        <div class="detail">6 oblig. + 11 flexibles (antes de 1 año) + 2 adicionales (hasta 8 años)</div>
+        <div class="label">Parental Leave</div>
+        <div class="value c-purple">19 wks</div>
+        <div class="detail">6 mandatory + 11 flexible (before age 1) + 2 additional (until age 8)</div>
       </div>
       <div class="glass">
-        <div class="label">Vacaciones Anuales</div>
-        <div class="value c-green">3 bloques</div>
-        <div class="detail">21 abr–2 may · 21 sep–2 oct · 11–22 dic</div>
+        <div class="label">Annual Vacation</div>
+        <div class="value c-green">3 blocks</div>
+        <div class="detail">21 Apr–2 May · 21 Sep–2 Oct · 11–22 Dec</div>
       </div>
       <div class="glass">
-        <div class="label">Escuela de Verano</div>
-        <div class="value c-orange">~6 sem</div>
-        <div class="detail">22 jun – 31 jul</div>
+        <div class="label">Summer School</div>
+        <div class="value c-orange">~6 wks</div>
+        <div class="detail">22 Jun – 31 Jul</div>
       </div>
       <div class="glass">
-        <div class="label">Viajes</div>
+        <div class="label">Trips</div>
         <div class="value c-pink">3 + 1</div>
-        <div class="detail">Siam Park 5–7 jun · La Graciosa 5–12 nov · Japón abr '27 · Padre (TBD)</div>
+        <div class="detail">Siam Park 5–7 Jun · La Graciosa 5–12 Nov · Japan Apr '27 · Father (TBD)</div>
       </div>
     </div>
   </section>
 
   <!-- ========== CALENDARIO ========== -->
   <section id="calendario" class="tab-section">
-    <div class="section-title">Vista Anual</div>
+    <div class="section-title">Annual View</div>
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-mandatory-bg)"></div> Parental obligatorio</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-parental-bg)"></div> Parental flexible</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-annual-bg)"></div> Vacaciones anuales</div>
-      <div class="legend-item"><div class="legend-dot" style="background: linear-gradient(135deg, var(--cal-parental-bg) 50%, var(--cal-annual-bg) 50%)"></div> Parental + Vacaciones</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); box-shadow: inset 0 0 0 2.5px var(--cal-trip-ring)"></div> Viaje</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); outline: 2.5px solid var(--cal-shift-ring); outline-offset:-2.5px"></div> Días libres turno</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); border-bottom: 2.5px solid var(--cal-school-border)"></div> Escuela verano</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-baby-bg)"></div> Nace Luca</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); box-shadow: 0 0 0 2.5px #fbbf24"></div> Hoy</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-mandatory-bg)"></div> Mandatory parental</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-parental-bg)"></div> Flexible parental</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-annual-bg)"></div> Annual vacation</div>
+      <div class="legend-item"><div class="legend-dot" style="background: linear-gradient(135deg, var(--cal-parental-bg) 50%, var(--cal-annual-bg) 50%)"></div> Parental + Vacation</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); box-shadow: inset 0 0 0 2.5px var(--cal-trip-ring)"></div> Trip</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); outline: 2.5px solid var(--cal-shift-ring); outline-offset:-2.5px"></div> Shift days off</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); border-bottom: 2.5px solid var(--cal-school-border)"></div> Summer school</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-baby-bg)"></div> Luca is born</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--cal-workday-bg); box-shadow: 0 0 0 2.5px #fbbf24"></div> Today</div>
     </div>
     <div class="cal-grid" id="yearCalendar"></div>
   </section>
@@ -964,61 +964,61 @@ window.sb.auth.getSession().then(({ data }) => {
   <!-- ========== BLOQUES DE PERMISO ========== -->
   <section id="bloques" class="tab-section">
     <div class="glass data-card">
-      <h2>Bloques de Permiso Parental (19 semanas)</h2>
+      <h2>Parental Leave Blocks (19 weeks)</h2>
       <table class="data-table">
-        <thead><tr><th>Bloque</th><th>Plan</th><th>Días</th><th>Período</th></tr></thead>
+        <thead><tr><th>Block</th><th>Plan</th><th>Days</th><th>Period</th></tr></thead>
         <tbody>
           <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#a855f7"></span>Obligatorio</td>
-            <td data-label="Plan">Primeras 6 semanas con Luca en casa, adaptación familiar</td>
-            <td data-label="Días">42</td>
-            <td data-label="Período">20 abr – 31 may</td>
+            <td data-label="Block"><span class="status-dot" style="background:#a855f7"></span>Mandatory</td>
+            <td data-label="Plan">First 6 weeks with Luca at home, family adjustment</td>
+            <td data-label="Days">42</td>
+            <td data-label="Period">20 Apr – 31 May</td>
           </tr>
           <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloque 1 – Junio</td>
-            <td data-label="Plan">Adaptación a la vida en Tenerife con Luca</td>
-            <td data-label="Días">12</td>
-            <td data-label="Período">14 – 25 jun</td>
+            <td data-label="Block"><span class="status-dot" style="background:#d8b4fe"></span>Block 1 – June</td>
+            <td data-label="Plan">Settling into life in Tenerife with Luca</td>
+            <td data-label="Days">12</td>
+            <td data-label="Period">14 – 25 Jun</td>
           </tr>
           <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloque 2 – Agosto</td>
-            <td data-label="Plan">Porque Agosto nunca se lo dan a un piloto</td>
-            <td data-label="Días">12</td>
-            <td data-label="Período">7 – 18 ago</td>
+            <td data-label="Block"><span class="status-dot" style="background:#d8b4fe"></span>Block 2 – August</td>
+            <td data-label="Plan">Because August is never given to a pilot</td>
+            <td data-label="Days">12</td>
+            <td data-label="Period">7 – 18 Aug</td>
           </tr>
           <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloque 3 – La Graciosa</td>
-            <td data-label="Plan">Primer viaje a La Graciosa con familia de 4</td>
-            <td data-label="Días">12</td>
-            <td data-label="Período">5 – 16 nov</td>
+            <td data-label="Block"><span class="status-dot" style="background:#d8b4fe"></span>Block 3 – La Graciosa</td>
+            <td data-label="Plan">First trip to La Graciosa as a family of 4</td>
+            <td data-label="Days">12</td>
+            <td data-label="Period">5 – 16 Nov</td>
           </tr>
           <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloques 4–6 – Navidad</td>
-            <td data-label="Plan">Las vacaciones de navidad más largas de nuestras vidas</td>
-            <td data-label="Días">33</td>
-            <td data-label="Período">11 dic – 12 ene</td>
+            <td data-label="Block"><span class="status-dot" style="background:#d8b4fe"></span>Blocks 4–6 – Christmas</td>
+            <td data-label="Plan">The longest Christmas vacation of our lives</td>
+            <td data-label="Days">33</td>
+            <td data-label="Period">11 Dec – 12 Jan</td>
           </tr>
           <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#d8b4fe"></span>Bloques 7–9 – Japón</td>
-            <td data-label="Plan">Viaje a Asia por visado. Kyoto</td>
-            <td data-label="Días">24</td>
-            <td data-label="Período">26 mar – 18 abr '27</td>
+            <td data-label="Block"><span class="status-dot" style="background:#d8b4fe"></span>Blocks 7–9 – Japan</td>
+            <td data-label="Plan">Asia trip for visa renewal. Kyoto</td>
+            <td data-label="Days">24</td>
+            <td data-label="Period">26 Mar – 18 Apr '27</td>
           </tr>
           <tr class="muted-row">
-            <td data-label="Bloque"><span class="status-dot" style="background:#aaa"></span>Reservados (2 bloques)</td>
-            <td data-label="Plan">Posible viaje con Padre</td>
-            <td data-label="Días">—</td>
-            <td data-label="Período">Por decidir</td>
+            <td data-label="Block"><span class="status-dot" style="background:#aaa"></span>Reserved (2 blocks)</td>
+            <td data-label="Plan">Possible trip with Father</td>
+            <td data-label="Days">—</td>
+            <td data-label="Period">TBD</td>
           </tr>
           <tr class="muted-row">
-            <td data-label="Bloque"><span class="status-dot" style="background:var(--accent-blue)"></span>Adicionales (2 semanas)</td>
-            <td data-label="Plan">Uso futuro — disponibles hasta que Luca cumpla 8 años</td>
-            <td data-label="Días">14</td>
-            <td data-label="Período">Antes abr 2034</td>
+            <td data-label="Block"><span class="status-dot" style="background:var(--accent-blue)"></span>Additional (2 weeks)</td>
+            <td data-label="Plan">Future use — available until Luca turns 8</td>
+            <td data-label="Days">14</td>
+            <td data-label="Period">Before Apr 2034</td>
           </tr>
           <tr class="total-row">
             <td data-label="">Total</td>
-            <td data-label="">19 semanas (17 planificadas + 2 para uso futuro)</td>
+            <td data-label="">19 weeks (17 planned + 2 for future use)</td>
             <td data-label=""></td>
             <td data-label=""></td>
           </tr>
@@ -1027,24 +1027,24 @@ window.sb.auth.getSession().then(({ data }) => {
     </div>
 
     <div class="glass data-card" style="margin-top: 18px;">
-      <h2>Resumen de Vacaciones Anuales</h2>
+      <h2>Annual Vacation Summary</h2>
       <table class="data-table">
-        <thead><tr><th>Bloque</th><th>Período</th><th>Estado</th></tr></thead>
+        <thead><tr><th>Block</th><th>Period</th><th>Status</th></tr></thead>
         <tbody>
           <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#f59e0b"></span>21 abr – 2 may</td>
-            <td data-label="Período">~8 días laborables</td>
-            <td data-label="Estado">Compensable — coincide con permiso obligatorio</td>
+            <td data-label="Block"><span class="status-dot" style="background:#f59e0b"></span>21 Apr – 2 May</td>
+            <td data-label="Period">~8 working days</td>
+            <td data-label="Status">Refundable — overlaps with mandatory leave</td>
           </tr>
           <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#22c55e"></span>21 sep – 2 oct</td>
-            <td data-label="Período">~8 días laborables</td>
-            <td data-label="Estado">Aprobado</td>
+            <td data-label="Block"><span class="status-dot" style="background:#22c55e"></span>21 Sep – 2 Oct</td>
+            <td data-label="Period">~8 working days</td>
+            <td data-label="Status">Approved</td>
           </tr>
           <tr>
-            <td data-label="Bloque"><span class="status-dot" style="background:#22c55e"></span>11 – 22 dic</td>
-            <td data-label="Período">~8 días laborables</td>
-            <td data-label="Estado">Aprobado — enlaza con bloques navideños</td>
+            <td data-label="Block"><span class="status-dot" style="background:#22c55e"></span>11 – 22 Dec</td>
+            <td data-label="Period">~8 working days</td>
+            <td data-label="Status">Approved — links with Christmas blocks</td>
           </tr>
         </tbody>
       </table>
@@ -1053,100 +1053,100 @@ window.sb.auth.getSession().then(({ data }) => {
 
   <!-- ========== TRÁMITES ========== -->
   <section id="tramites" class="tab-section">
-    <div class="section-title">Trámites y Documentación</div>
+    <div class="section-title">Procedures & Documentation</div>
     <div class="tramites-search">
-      <input type="search" id="tramites-search-input" placeholder="🔍 Buscar trámite…" autocomplete="off">
-      <button class="tramites-search-clear" id="tramites-search-clear" title="Limpiar" style="display:none;">×</button>
+      <input type="search" id="tramites-search-input" placeholder="🔍 Search procedure…" autocomplete="off">
+      <button class="tramites-search-clear" id="tramites-search-clear" title="Clear" style="display:none;">×</button>
     </div>
 
     <!-- PREPARACIÓN (pre-parto) -->
     <div class="glass tramite-group" id="grp-preparacion">
-      <h3>🎒 Preparación pre-parto</h3>
-      <p class="group-desc">Tareas críticas antes del nacimiento. Parto previsto en Vithas Ciudad Jardín (Las Palmas de GC).</p>
-      <div class="progress-label" id="prog-label-preparacion">0 / 4 completados</div>
+      <h3>🎒 Pre-birth preparation</h3>
+      <p class="group-desc">Critical tasks before birth. Delivery planned at Vithas Ciudad Jardín (Las Palmas de GC).</p>
+      <div class="progress-label" id="prog-label-preparacion">0 / 4 completed</div>
       <div class="progress-track"><div class="progress-fill" id="prog-preparacion" style="width:0%"></div></div>
 
       <div class="tramite-row"><input type="checkbox" data-group="preparacion" data-idx="0">
-        <div class="tramite-info"><div class="name">Bolsa hospital preparada</div><div class="meta">Vithas · Mamá + bebé + acompañante · Lista 7 d antes EDD</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Hospital bag ready</div><div class="meta">Vithas · Mom + baby + companion · Ready 7d before EDD</div><span class="doc-slot" data-folder="Hospital"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="preparacion" data-idx="1">
-        <div class="tramite-info"><div class="name">Silla de coche homologada i-Size (grupo 0+)</div><div class="meta">Obligatoria al alta · Instalada y probada antes del 30 abr</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">i-Size approved car seat (group 0+)</div><div class="meta">Required at discharge · Installed and tested before Apr 30</div><span class="doc-slot" data-folder="Hospital"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="preparacion" data-idx="2">
-        <div class="tramite-info"><div class="name">Plan de parto</div><div class="meta">Semana 36-37 · Entregar al equipo de matronas de Vithas</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Birth plan</div><div class="meta">Week 36-37 · Submit to Vithas midwife team</div><span class="doc-slot" data-folder="Hospital"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="preparacion" data-idx="3">
-        <div class="tramite-info"><div class="name">Logística hermano mayor durante parto</div><div class="meta">Luther King La Laguna · Coordinar recogida/pernocta · 3 d antes EDD</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Older sibling logistics during birth</div><div class="meta">Luther King La Laguna · Coordinate pickup/overnight · 3d before EDD</div><span class="doc-slot" data-folder="Hospital"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
     </div>
 
     <!-- REGISTRO CIVIL -->
     <div class="glass tramite-group" id="grp-registro">
-      <h3>Registro Civil — Inscripción de Nacimiento</h3>
-      <p class="group-desc">El hospital tramita la inscripción en 72h. Tener los documentos listos antes del parto.</p>
-      <div class="progress-label" id="prog-label-registro">0 / 4 completados</div>
+      <h3>Registro Civil — Birth Registration</h3>
+      <p class="group-desc">Hospital processes registration within 72h. Have documents ready before birth.</p>
+      <div class="progress-label" id="prog-label-registro">0 / 4 completed</div>
       <div class="progress-track"><div class="progress-fill" id="prog-registro" style="width:0%"></div></div>
 
       <div class="tramite-row"><input type="checkbox" data-group="registro" data-idx="0">
-        <div class="tramite-info"><div class="name">Parte médico de nacimiento</div><div class="meta">Registro Civil · 72h tras nacimiento</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Medical birth report</div><div class="meta">Registro Civil · 72h after birth</div><span class="doc-slot" data-folder="Hospital"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="registro" data-idx="1">
-        <div class="tramite-info"><div class="name">DNI ambos progenitores (copia)</div><div class="meta">Registro Civil · Con la inscripción</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">DNI both parents (copy)</div><div class="meta">Registro Civil · With registration</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="registro" data-idx="2">
-        <div class="tramite-info"><div class="name">Libro de Familia</div><div class="meta">Registro Civil · Con la inscripción</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Libro de Familia</div><div class="meta">Registro Civil · With registration</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="registro" data-idx="3">
-        <div class="tramite-info"><div class="name">Declaración de nacimiento</div><div class="meta">Registro Civil · 10 días (max 30) — solo si hospital no lo tramitó</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Birth declaration</div><div class="meta">Registro Civil · 10 days (max 30) — only if hospital didn't process it</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
     </div>
 
     <!-- INSS -->
     <div class="glass tramite-group" id="grp-inss">
-      <h3>INSS / Seguridad Social — Prestación por Nacimiento</h3>
-      <p class="group-desc">Solicitar vía Tu Seguridad Social con Cl@ve, por correo, o presencial en CAISS con cita previa. Plazo resolución: 30 días.</p>
-      <div class="progress-label" id="prog-label-inss">0 / 6 completados</div>
+      <h3>INSS / Seguridad Social — Birth Benefit</h3>
+      <p class="group-desc">Request via Tu Seguridad Social with Cl@ve, by mail, or in person at CAISS with appointment. Resolution: 30 days.</p>
+      <div class="progress-label" id="prog-label-inss">0 / 6 completed</div>
       <div class="progress-track"><div class="progress-fill" id="prog-inss" style="width:0%"></div></div>
 
       <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="0">
-        <div class="tramite-info"><div class="name">Formulario solicitud (MP-1 bis)</div><div class="meta">INSS sede electrónica · Desde día siguiente al nacimiento</div><span class="doc-slot" data-folder="INSS"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Application form (MP-1 bis)</div><div class="meta">INSS online portal · From day after birth</div><span class="doc-slot" data-folder="INSS"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="1">
-        <div class="tramite-info"><div class="name">DNI / NIE</div><div class="meta">INSS · Con la solicitud</div><span class="doc-slot" data-folder="INSS"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">DNI / NIE</div><div class="meta">INSS · With application</div><span class="doc-slot" data-folder="INSS"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="2">
-        <div class="tramite-info"><div class="name">Informe de maternidad</div><div class="meta">INSS · Lo expide el servicio público de salud tras el parto</div><span class="doc-slot" data-folder="Hospital"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Maternity report</div><div class="meta">INSS · Issued by public health service after birth</div><span class="doc-slot" data-folder="Hospital"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="3">
-        <div class="tramite-info"><div class="name">Libro de Familia o certificado nacimiento</div><div class="meta">INSS · Obtenido del Registro Civil tras inscripción</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Libro de Familia or birth certificate</div><div class="meta">INSS · Obtained from Registro Civil after registration</div><span class="doc-slot" data-folder="Registro-Civil"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="4">
-        <div class="tramite-info"><div class="name">Certificado de empresa (periodo obligatorio)</div><div class="meta">INSS (Binter lo envía) · Fecha inicio suspensión + bases cotización</div><span class="doc-slot" data-folder="Binter"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Company certificate (mandatory period)</div><div class="meta">INSS (Binter sends it) · Suspension start date + contribution basis</div><span class="doc-slot" data-folder="Binter"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="inss" data-idx="5">
-        <div class="tramite-info"><div class="name">Solicitud periodos sucesivos (cada bloque)</div><div class="meta">INSS · Max 15 días antes de cada bloque · Múltiplos de 7 días</div><span class="doc-slot" data-folder="INSS"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Successive period request (each block)</div><div class="meta">INSS · Max 15 days before each block · Multiples of 7 days</div><span class="doc-slot" data-folder="INSS"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
     </div>
 
     <!-- BINTER -->
     <div class="glass tramite-group" id="grp-binter">
-      <h3>Binter — Empresa / RRHH</h3>
-      <p class="group-desc">Comunicar los bloques con mínimo 15 días de antelación para que RRHH emita el certificado de empresa al INSS.</p>
-      <div class="progress-label" id="prog-label-binter">0 / 4 completados</div>
+      <h3>Binter — Company / HR</h3>
+      <p class="group-desc">Notify blocks with at least 15 days notice so HR can issue the company certificate to INSS.</p>
+      <div class="progress-label" id="prog-label-binter">0 / 4 completed</div>
       <div class="progress-track"><div class="progress-fill" id="prog-binter" style="width:0%"></div></div>
 
       <div class="tramite-row"><input type="checkbox" data-group="binter" data-idx="0">
-        <div class="tramite-info"><div class="name">Comunicación formal de permiso parental</div><div class="meta">RRHH Binter · Antes del nacimiento · Fechas periodo obligatorio (20 abr – 31 may)</div><span class="doc-slot" data-folder="Binter"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Formal parental leave notification</div><div class="meta">Binter HR · Before birth · Mandatory period dates (20 Apr – 31 May)</div><span class="doc-slot" data-folder="Binter"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="binter" data-idx="1">
-        <div class="tramite-info"><div class="name">Certificado / Libro de Familia</div><div class="meta">RRHH Binter · Tras inscripción · Acreditar nacimiento</div><span class="doc-slot" data-folder="Binter"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Certificate / Libro de Familia</div><div class="meta">Binter HR · After registration · Prove birth</div><span class="doc-slot" data-folder="Binter"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="binter" data-idx="2">
-        <div class="tramite-info"><div class="name">Solicitud de cada bloque flexible</div><div class="meta">RRHH Binter · Min 15 días antes de cada bloque</div><span class="doc-slot" data-folder="Binter"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Flexible block request</div><div class="meta">Binter HR · Min 15 days before each block</div><span class="doc-slot" data-folder="Binter"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="binter" data-idx="3">
-        <div class="tramite-info"><div class="name">Solicitud devolución vacaciones solapadas</div><div class="meta">RRHH Binter · 21 abr – 2 may (~8 días) solapan con obligatorio → devolver al saldo</div><span class="doc-slot" data-folder="Binter"></span></div>
-        <span class="badge badge-pending">Pendiente</span></div>
+        <div class="tramite-info"><div class="name">Overlapping vacation refund request</div><div class="meta">Binter HR · 21 Apr – 2 May (~8 days) overlap with mandatory → refund to balance</div><span class="doc-slot" data-folder="Binter"></span></div>
+        <span class="badge badge-pending">Pending</span></div>
     </div>
 
     <!-- JS-rendered groups (Bebé · Salud · Ayudas) -->
@@ -1155,30 +1155,30 @@ window.sb.auth.getSession().then(({ data }) => {
 
   <!-- ========== DOCUMENTOS (biblioteca) ========== -->
   <section id="documentos" class="tab-section">
-    <div class="section-title">Biblioteca de Documentos</div>
+    <div class="section-title">Document Library</div>
     <div class="glass data-card">
-      <p style="color: var(--text-muted); margin-bottom: 14px;">Sube cada documento una sola vez y adjúntalo a los trámites que lo necesiten (DNI, Libro de Familia, empadronamiento…).</p>
+      <p style="color: var(--text-muted); margin-bottom: 14px;">Upload each document once and attach it to the procedures that need it (DNI, Libro de Familia, Empadronamiento…).</p>
       <div class="lib-uploader">
         <label>
           <input type="file" id="lib-file-input" accept="application/pdf,image/*" style="display:none;">
-          <span class="btn btn-primary" id="lib-pick-btn">📤 Subir documento</span>
+          <span class="btn btn-primary" id="lib-pick-btn">📤 Upload document</span>
         </label>
         <select id="lib-type-select" class="lib-type">
-          <option value="">Tipo (opcional)</option>
+          <option value="">Type (optional)</option>
           <option value="dni-luis">DNI Luis</option>
           <option value="dni-madre">DNI Colombina</option>
-          <option value="libro-familia">Libro de Familia / Certificado literal</option>
+          <option value="libro-familia">Libro de Familia / Certified copy</option>
           <option value="empadronamiento">Empadronamiento</option>
-          <option value="parte-medico">Parte médico de nacimiento</option>
-          <option value="informe-mat">Informe de maternidad</option>
-          <option value="cert-empresa">Certificado de empresa (Binter)</option>
-          <option value="iban">Certificado titularidad IBAN</option>
-          <option value="seguro-medico">Tarjeta seguro médico</option>
-          <option value="otro">Otro</option>
+          <option value="parte-medico">Medical birth report</option>
+          <option value="informe-mat">Maternity report</option>
+          <option value="cert-empresa">Company certificate (Binter)</option>
+          <option value="iban">IBAN ownership certificate</option>
+          <option value="seguro-medico">Health insurance card</option>
+          <option value="otro">Other</option>
         </select>
       </div>
       <div class="lib-list" id="lib-list">
-        <div class="doc-list-empty">Cargando biblioteca…</div>
+        <div class="doc-list-empty">Loading library…</div>
       </div>
     </div>
   </section>
@@ -1186,16 +1186,16 @@ window.sb.auth.getSession().then(({ data }) => {
   <!-- ========== NOTAS (al final) ========== -->
   <section id="notas" class="tab-section">
     <div class="glass data-card">
-      <h2>Notas Importantes</h2>
+      <h2>Important Notes</h2>
       <div class="alert">
-        <strong>Solapamiento de vacaciones:</strong> Las vacaciones aprobadas del 21 abr al 2 may (~8 días laborables) coinciden con el permiso parental obligatorio. Estos días deben devolverse al saldo de vacaciones anuales. Solicitar reprogramación a RRHH.
+        <strong>Vacation overlap:</strong> Approved vacation from 21 Apr to 2 May (~8 working days) overlaps with mandatory parental leave. These days must be refunded to annual vacation balance. Request rescheduling from HR.
       </div>
       <ul class="notes-list">
-        <li><strong>Optimización por turnos:</strong> Los bloques comienzan en la posición 3 del ciclo (primer día laborable tras 3 días libres). Bloques individuales: 6/7 días laborables (85,7%), 12 días libres consecutivos. Cadenas de 3: 15/21 (71,4%).</li>
-        <li><strong>Siam Park (5–7 jun):</strong> Cae en días libres de turno — no requiere permiso.</li>
-        <li><strong>La Graciosa (5–12 nov):</strong> 5–7 nov días libres de turno + bloque 3 (8–14 nov). Totalmente cubierto.</li>
-        <li><strong>Viaje con padre (por decidir):</strong> Viaje con padre (77 años) a Miami o Perú — destino pendiente. 2 bloques reservados.</li>
-        <li><strong>Plazo límite:</strong> 17 de las 19 semanas deben usarse antes de que Luca cumpla 1 año (20 abr 2027). Los bloques de Japón terminan el 15 abr — 5 días de margen. Las 2 semanas adicionales pueden disfrutarse hasta que cumpla 8 años (abr 2034).</li>
+        <li><strong>Shift optimization:</strong> Blocks start at position 3 of the cycle (first working day after 3 days off). Individual blocks: 6/7 working days (85.7%), 12 consecutive days off. Chains of 3: 15/21 (71.4%).</li>
+        <li><strong>Siam Park (5–7 Jun):</strong> Falls on shift days off — no leave required.</li>
+        <li><strong>La Graciosa (5–12 Nov):</strong> 5–7 Nov shift days off + block 3 (8–14 Nov). Fully covered.</li>
+        <li><strong>Trip with father (TBD):</strong> Trip with father (77 years old) to Miami or Peru — destination pending. 2 blocks reserved.</li>
+        <li><strong>Deadline:</strong> 17 of the 19 weeks must be used before Luca turns 1 (20 Apr 2027). Japan blocks end Apr 15 — 5 days margin. The 2 additional weeks can be used until he turns 8 (Apr 2034).</li>
       </ul>
     </div>
   </section>
@@ -1205,12 +1205,12 @@ window.sb.auth.getSession().then(({ data }) => {
 <!-- ========== SETTINGS MODAL ========== -->
 <div class="modal-backdrop" id="settings-modal">
   <div class="modal">
-    <h3>⚙ Sesión</h3>
-    <p>Los trámites y documentos se sincronizan automáticamente entre dispositivos con la misma cuenta.</p>
+    <h3>⚙ Session</h3>
+    <p>Procedures and documents sync automatically across devices with the same account.</p>
     <p id="session-email" style="font-size:12px;color:var(--text-muted);margin-top:6px;"></p>
     <div class="modal-actions">
-      <button class="btn btn-secondary" id="logout-cancel">Cerrar</button>
-      <button class="btn btn-danger" id="logout-btn">Cerrar sesión</button>
+      <button class="btn btn-secondary" id="logout-cancel">Close</button>
+      <button class="btn btn-danger" id="logout-btn">Log out</button>
     </div>
   </div>
 </div>
@@ -1218,12 +1218,12 @@ window.sb.auth.getSession().then(({ data }) => {
 <!-- ========== LIBRARY PICKER MODAL ========== -->
 <div class="modal-backdrop" id="lib-picker-modal">
   <div class="modal" style="max-width: 520px;">
-    <h3>📎 Adjuntar documentos</h3>
+    <h3>📎 Attach documents</h3>
     <p id="lib-picker-tramite-name" style="color: var(--text-muted); font-size: 13px; margin-bottom: 10px;"></p>
     <div id="lib-picker-list" class="lib-picker-list"></div>
     <div class="modal-actions">
-      <button class="btn btn-secondary" id="lib-picker-close">Cerrar</button>
-      <button class="btn btn-primary" id="lib-picker-upload">⬆ Subir uno nuevo</button>
+      <button class="btn btn-secondary" id="lib-picker-close">Close</button>
+      <button class="btn btn-primary" id="lib-picker-upload">⬆ Upload new</button>
     </div>
   </div>
 </div>
@@ -1236,7 +1236,7 @@ window.sb.auth.getSession().then(({ data }) => {
      ============================================ -->
 <script>
 // ========== DEADLINE ENGINE ==========
-window.BIRTH_EDD = new Date(2026, 3, 17, 12, 0, 0); // Cesárea 17 Abr 2026 12:00
+window.BIRTH_EDD = new Date(2026, 3, 17, 12, 0, 0); // C-section 17 Apr 2026 12:00
 window.birthActual = '2026-04-17'; // Luca born April 17, 2026
 window.getBirthAnchor = function() {
   if (window.birthActual) {
@@ -1262,125 +1262,125 @@ window.BLOQUE_STARTS = {
 // Existing 4 groups are also in HTML; new 3 groups (bebe, salud, ayudas) render from this config.
 window.TRAMITES = {
   // ---------- Preparación ----------
-  'preparacion-0': { deadline: { kind: 'beforeEDD', days: 7, label: 'Lista 7 d antes EDD' }, priority: 'critical', scope: 'privado',
+  'preparacion-0': { deadline: { kind: 'beforeEDD', days: 7, label: 'Ready 7d before EDD' }, priority: 'critical', scope: 'privado',
     subtasks: [
-      { id: 'mama-ropa', label: 'Mamá: camisones (2) + bata + sujetador lactancia + chanclas' },
-      { id: 'mama-higiene', label: 'Mamá: neceser (cepillo, pasta, compresas postparto, toalla)' },
-      { id: 'bebe-bodys', label: 'Bebé: bodys 0-3m (5-6) + pijamas + calcetines + gorrito' },
-      { id: 'bebe-manta', label: 'Bebé: manta envolvente + arrullo + toalla con capucha' },
-      { id: 'bebe-panales', label: 'Bebé: pañales recién nacido (1 paquete) + toallitas' },
-      { id: 'docs-hospital', label: 'Docs: DNIs padres + tarjeta SS madre + tarjeta seguro Vithas' },
-      { id: 'acomp-essentials', label: 'Acompañante: cargador móvil + snacks + botella agua + muda' }
+      { id: 'mama-ropa', label: 'Mom: nightgowns (2) + robe + nursing bra + flip-flops' },
+      { id: 'mama-higiene', label: 'Mom: toiletry bag (toothbrush, toothpaste, postpartum pads, towel)' },
+      { id: 'bebe-bodys', label: 'Baby: bodysuits 0-3m (5-6) + pajamas + socks + hat' },
+      { id: 'bebe-manta', label: 'Baby: swaddle blanket + muslin wrap + hooded towel' },
+      { id: 'bebe-panales', label: 'Baby: newborn diapers (1 pack) + wipes' },
+      { id: 'docs-hospital', label: 'Docs: parents DNIs + mom SS card + Vithas insurance card' },
+      { id: 'acomp-essentials', label: 'Companion: phone charger + snacks + water bottle + change of clothes' }
     ]
   },
-  'preparacion-1': { deadline: { kind: 'absolute', date: '2026-04-30', label: 'Antes del 30 abr' }, priority: 'critical', scope: 'nacional',
+  'preparacion-1': { deadline: { kind: 'absolute', date: '2026-04-30', label: 'Before Apr 30' }, priority: 'critical', scope: 'nacional',
     subtasks: [
-      { id: 'comprar', label: 'Comprar silla i-Size grupo 0+ homologada' },
-      { id: 'instalar', label: 'Instalar en el coche (base isofix o cinturón)' },
-      { id: 'probar', label: 'Practicar el anclaje y desanclaje' }
+      { id: 'comprar', label: 'Buy i-Size group 0+ approved car seat' },
+      { id: 'instalar', label: 'Install in car (isofix base or seatbelt)' },
+      { id: 'probar', label: 'Practice latching and unlatching' }
     ]
   },
-  'preparacion-2': { deadline: { kind: 'beforeEDD', days: 14, label: 'Presentar semana 36-37' }, priority: 'high', scope: 'privado' },
-  'preparacion-3': { deadline: { kind: 'beforeEDD', days: 3, label: 'Coordinar 3 d antes EDD' }, priority: 'high', scope: 'privado',
+  'preparacion-2': { deadline: { kind: 'beforeEDD', days: 14, label: 'Submit week 36-37' }, priority: 'high', scope: 'privado' },
+  'preparacion-3': { deadline: { kind: 'beforeEDD', days: 3, label: 'Coordinate 3d before EDD' }, priority: 'high', scope: 'privado',
     subtasks: [
-      { id: 'school', label: 'Confirmar horario/recogida Luther King' },
-      { id: 'cuidador', label: 'Confirmar cuidador primario (abuelos/familia)' },
-      { id: 'pernocta', label: 'Plan B para pernocta si el parto es de noche' }
+      { id: 'school', label: 'Confirm Luther King schedule/pickup' },
+      { id: 'cuidador', label: 'Confirm primary caregiver (grandparents/family)' },
+      { id: 'pernocta', label: 'Plan B for overnight if birth is at night' }
     ]
   },
   // ---------- Registro Civil ----------
-  'registro-0': { deadline: { kind: 'afterBirth', days: 3, label: '72h tras nacimiento' }, priority: 'critical', scope: 'privado' },
-  'registro-1': { deadline: { kind: 'afterBirth', days: 10, label: '10 días tras nacimiento' }, scope: 'nacional' },
-  'registro-2': { deadline: { kind: 'afterBirth', days: 10, label: '10 días tras nacimiento' }, scope: 'nacional' },
-  'registro-3': { deadline: { kind: 'afterBirth', days: 10, label: '10 días (max 30)' }, scope: 'nacional' },
+  'registro-0': { deadline: { kind: 'afterBirth', days: 3, label: '72h after birth' }, priority: 'critical', scope: 'privado' },
+  'registro-1': { deadline: { kind: 'afterBirth', days: 10, label: '10 days after birth' }, scope: 'nacional' },
+  'registro-2': { deadline: { kind: 'afterBirth', days: 10, label: '10 days after birth' }, scope: 'nacional' },
+  'registro-3': { deadline: { kind: 'afterBirth', days: 10, label: '10 days (max 30)' }, scope: 'nacional' },
   // ---------- INSS ----------
-  'inss-0': { deadline: { kind: 'afterBirth', days: 15, label: 'Cuanto antes tras nacimiento' }, priority: 'high', scope: 'nacional',
+  'inss-0': { deadline: { kind: 'afterBirth', days: 15, label: 'ASAP after birth' }, priority: 'high', scope: 'nacional',
     subtasks: [
-      { id: 'clave', label: 'Tener Cl@ve PIN o certificado digital activo' },
-      { id: 'form', label: 'Rellenar modelo MP-1 bis (sede electrónica INSS)' },
-      { id: 'adj-libro', label: 'Adjuntar Libro de Familia / certificado literal' },
-      { id: 'adj-dni', label: 'Adjuntar DNIs de ambos progenitores' },
-      { id: 'adj-iban', label: 'Adjuntar certificado de titularidad IBAN' },
-      { id: 'enviar', label: 'Enviar solicitud y guardar número de registro' }
+      { id: 'clave', label: 'Have active Cl@ve PIN or digital certificate' },
+      { id: 'form', label: 'Fill out form MP-1 bis (INSS online portal)' },
+      { id: 'adj-libro', label: 'Attach Libro de Familia / certified copy' },
+      { id: 'adj-dni', label: 'Attach both parents DNIs' },
+      { id: 'adj-iban', label: 'Attach IBAN ownership certificate' },
+      { id: 'enviar', label: 'Submit application and save reference number' }
     ]
   },
-  'inss-1': { deadline: { kind: 'afterBirth', days: 15, label: 'Con la solicitud' }, scope: 'nacional' },
-  'inss-2': { deadline: { kind: 'afterBirth', days: 15, label: 'Tras el parto' }, scope: 'autonomica' },
-  'inss-3': { deadline: { kind: 'afterBirth', days: 15, label: 'Tras inscripción Registro' }, scope: 'nacional' },
-  'inss-4': { deadline: { kind: 'afterBirth', days: 15, label: 'Certificado empresa' }, scope: 'empresa' },
-  'inss-5': { deadline: { kind: 'beforeBloque', bloque: 2, days: 15, label: '15 d antes del bloque' }, scope: 'nacional' },
+  'inss-1': { deadline: { kind: 'afterBirth', days: 15, label: 'With application' }, scope: 'nacional' },
+  'inss-2': { deadline: { kind: 'afterBirth', days: 15, label: 'After birth' }, scope: 'autonomica' },
+  'inss-3': { deadline: { kind: 'afterBirth', days: 15, label: 'After Registro Civil registration' }, scope: 'nacional' },
+  'inss-4': { deadline: { kind: 'afterBirth', days: 15, label: 'Company certificate' }, scope: 'empresa' },
+  'inss-5': { deadline: { kind: 'beforeBloque', bloque: 2, days: 15, label: '15d before block' }, scope: 'nacional' },
   // ---------- Binter ----------
-  'binter-0': { deadline: { kind: 'beforeEDD', days: 1, label: 'Antes del nacimiento' }, priority: 'critical', scope: 'empresa' },
-  'binter-1': { deadline: { kind: 'afterBirth', days: 15, label: 'Tras inscripción Registro' }, scope: 'empresa' },
-  'binter-2': { deadline: { kind: 'beforeBloque', bloque: 2, days: 15, label: '15 d antes del bloque' }, scope: 'empresa' },
-  'binter-3': { deadline: { kind: 'beforeEDD', days: 7, label: 'Antes del periodo obligatorio' }, scope: 'empresa' },
+  'binter-0': { deadline: { kind: 'beforeEDD', days: 1, label: 'Before birth' }, priority: 'critical', scope: 'empresa' },
+  'binter-1': { deadline: { kind: 'afterBirth', days: 15, label: 'After Registro Civil registration' }, scope: 'empresa' },
+  'binter-2': { deadline: { kind: 'beforeBloque', bloque: 2, days: 15, label: '15d before block' }, scope: 'empresa' },
+  'binter-3': { deadline: { kind: 'beforeEDD', days: 7, label: 'Before mandatory period' }, scope: 'empresa' },
   // ---------- Bebé (admin) ----------
-  'bebe-0': { name: 'Inscripción telemática Registro Civil (Vithas tramita)', meta: 'Vithas Ciudad Jardín · 72h · Se tramita desde el hospital',
-              deadline: { kind: 'afterBirth', days: 3, label: '72h tras nacimiento' }, priority: 'critical', scope: 'privado' },
-  'bebe-1': { name: 'Libro de Familia / Certificado literal', meta: 'Registro Civil telemático · Obligatorio para el resto de trámites',
-              deadline: { kind: 'afterBirth', days: 10, label: '~10 días tras inscripción' }, priority: 'high', scope: 'nacional',
+  'bebe-0': { name: 'Online birth registration at Registro Civil (Vithas handles)', meta: 'Vithas Ciudad Jardín · 72h · Processed from hospital',
+              deadline: { kind: 'afterBirth', days: 3, label: '72h after birth' }, priority: 'critical', scope: 'privado' },
+  'bebe-1': { name: 'Libro de Familia / Certified copy', meta: 'Registro Civil online · Required for all other procedures',
+              deadline: { kind: 'afterBirth', days: 10, label: '~10 days after registration' }, priority: 'high', scope: 'nacional',
               dependsOn: ['bebe-0'] },
-  'bebe-2': { name: 'Empadronamiento bebé (Ciudad Jardín, LPGC)', meta: 'Ayto. Las Palmas · OAC Ciudad Jardín · Requiere Libro Familia',
-              deadline: { kind: 'afterBirth', days: 30, label: 'Primer mes de vida' }, scope: 'municipal',
+  'bebe-2': { name: 'Empadronamiento baby (Ciudad Jardín, LPGC)', meta: 'Las Palmas City Hall · OAC Ciudad Jardín · Requires Libro de Familia',
+              deadline: { kind: 'afterBirth', days: 30, label: 'First month' }, scope: 'municipal',
               dependsOn: ['bebe-1'],
               subtasks: [
-                { id: 'cita', label: 'Pedir cita previa en OAC Ciudad Jardín' },
-                { id: 'docs', label: 'Llevar: Libro de Familia + DNIs padres + empadronamiento madre' },
-                { id: 'volante', label: 'Obtener volante de empadronamiento del bebé' }
+                { id: 'cita', label: 'Book appointment at OAC Ciudad Jardín' },
+                { id: 'docs', label: 'Bring: Libro de Familia + parents DNIs + mother Empadronamiento' },
+                { id: 'volante', label: 'Obtain baby Empadronamiento certificate' }
               ] },
-  'bebe-3': { name: 'Tarjeta Sanitaria SCS bebé', meta: 'SCS · Requiere empadronamiento · Asignación centro de salud',
-              deadline: { kind: 'afterBirth', days: 30, label: 'Primer mes' }, scope: 'autonomica',
+  'bebe-3': { name: 'SCS health card for baby', meta: 'SCS · Requires Empadronamiento · Health center assignment',
+              deadline: { kind: 'afterBirth', days: 30, label: 'First month' }, scope: 'autonomica',
               dependsOn: ['bebe-2'],
               subtasks: [
-                { id: 'online', label: 'Solicitud online en miscs.sergas.es (o equivalente SCS)' },
-                { id: 'presencial', label: 'Alternativa: presencial en CS Ciudad Jardín con Libro Familia + volante empadronamiento' }
+                { id: 'online', label: 'Online request at miscs.sergas.es (or SCS equivalent)' },
+                { id: 'presencial', label: 'Alternative: in person at CS Ciudad Jardín with Libro de Familia + Empadronamiento certificate' }
               ] },
-  'bebe-4': { name: 'Familia Digital (app Mi Familia)', meta: 'Ministerio de Justicia · Sustituye Libro de Familia en papel · Opcional',
-              deadline: { kind: 'afterBirth', days: 30, label: 'Cuando esté disponible' }, scope: 'nacional',
+  'bebe-4': { name: 'Familia Digital (Mi Familia app)', meta: 'Ministry of Justice · Replaces paper Libro de Familia · Optional',
+              deadline: { kind: 'afterBirth', days: 30, label: 'When available' }, scope: 'nacional',
               dependsOn: ['bebe-1'] },
-  'bebe-5': { name: 'DNI bebé', meta: 'Dirección General de Policía · Cita previa · Requerido para pasaporte',
-              deadline: { kind: 'afterBirth', days: 90, label: 'Antes de solicitar pasaporte' }, scope: 'nacional',
+  'bebe-5': { name: 'Baby DNI', meta: 'Dirección General de Policía · Appointment required · Needed for passport',
+              deadline: { kind: 'afterBirth', days: 90, label: 'Before requesting passport' }, scope: 'nacional',
               dependsOn: ['bebe-1'] },
-  'bebe-6': { name: 'Pasaporte bebé', meta: 'Dirección General de Policía · Necesario para viaje Japón abr 2027 · Iniciar 2 meses antes',
-              deadline: { kind: 'absolute', date: '2027-02-01', label: 'Al menos 2 meses antes del viaje' }, scope: 'nacional',
+  'bebe-6': { name: 'Baby passport', meta: 'Dirección General de Policía · Needed for Japan trip Apr 2027 · Start 2 months ahead',
+              deadline: { kind: 'absolute', date: '2027-02-01', label: 'At least 2 months before trip' }, scope: 'nacional',
               dependsOn: ['bebe-5'] },
   // ---------- Salud ----------
-  'salud-0': { name: 'Asignación pediatra bebé (CS Ciudad Jardín)', meta: 'SCS Gran Canaria · Centro de salud por zona básica',
-               deadline: { kind: 'afterBirth', days: 30, label: 'Tras Tarjeta Sanitaria' }, scope: 'autonomica',
+  'salud-0': { name: 'Pediatrician assignment (CS Ciudad Jardín)', meta: 'SCS Gran Canaria · Health center by zone',
+               deadline: { kind: 'afterBirth', days: 30, label: 'After health card' }, scope: 'autonomica',
                dependsOn: ['bebe-3'] },
-  'salud-1': { name: 'Screening metabólico (prueba del talón)', meta: 'Vithas · Se realiza en las primeras 48h · Resultado ~15 d',
-               deadline: { kind: 'afterBirth', days: 2, label: '48h tras nacimiento' }, priority: 'critical', scope: 'privado' },
-  'salud-2': { name: 'Screening auditivo', meta: 'Vithas · Se realiza en el hospital al nacer',
-               deadline: { kind: 'afterBirth', days: 2, label: '48h tras nacimiento' }, priority: 'critical', scope: 'privado' },
-  'salud-3': { name: 'Revisión matrona postparto (sem. 1 y 6)', meta: 'SCS La Laguna · Primera visita en la primera semana',
-               deadline: { kind: 'afterBirth', days: 7, label: 'Primera semana' }, priority: 'high', scope: 'autonomica' },
-  'salud-4': { name: 'Informe de maternidad (SCS)', meta: 'Matrona o médico de familia · NO lo expide Vithas · Necesario para INSS prestación',
-               deadline: { kind: 'afterBirth', days: 15, label: 'Primeras 2 semanas' }, priority: 'high', scope: 'autonomica' },
-  'salud-5': { name: 'Revisión niño sano (1 mes)', meta: 'Pediatra asignado · Primera revisión del Programa de Salud Infantil',
-               deadline: { kind: 'afterBirth', days: 30, label: '~1 mes de vida' }, scope: 'autonomica',
+  'salud-1': { name: 'Metabolic screening (heel prick test)', meta: 'Vithas · Done within first 48h · Results ~15 days',
+               deadline: { kind: 'afterBirth', days: 2, label: '48h after birth' }, priority: 'critical', scope: 'privado' },
+  'salud-2': { name: 'Hearing screening', meta: 'Vithas · Done at hospital at birth',
+               deadline: { kind: 'afterBirth', days: 2, label: '48h after birth' }, priority: 'critical', scope: 'privado' },
+  'salud-3': { name: 'Postpartum midwife checkup (week 1 & 6)', meta: 'SCS La Laguna · First visit in the first week',
+               deadline: { kind: 'afterBirth', days: 7, label: 'First week' }, priority: 'high', scope: 'autonomica' },
+  'salud-4': { name: 'Maternity report (SCS)', meta: 'Midwife or family doctor · NOT issued by Vithas · Required for INSS benefit',
+               deadline: { kind: 'afterBirth', days: 15, label: 'First 2 weeks' }, priority: 'high', scope: 'autonomica' },
+  'salud-5': { name: 'Well-baby checkup (1 month)', meta: 'Assigned pediatrician · First Child Health Program visit',
+               deadline: { kind: 'afterBirth', days: 30, label: '~1 month old' }, scope: 'autonomica',
                dependsOn: ['salud-0'] },
-  'salud-6': { name: 'Vacuna 2 meses (calendario Canarias)', meta: 'Centro de salud asignado · Hexavalente + meningo B + neumococo + rotavirus',
-               deadline: { kind: 'afterBirth', days: 60, label: '2 meses exactos' }, scope: 'autonomica',
+  'salud-6': { name: 'Vaccine 2 months (Canarias schedule)', meta: 'Assigned health center · Hexavalent + meningo B + pneumococcal + rotavirus',
+               deadline: { kind: 'afterBirth', days: 60, label: '2 months exactly' }, scope: 'autonomica',
                dependsOn: ['salud-0'] },
-  'salud-7': { name: 'Vacuna 4 meses', meta: 'Centro de salud asignado',
-               deadline: { kind: 'afterBirth', days: 120, label: '4 meses' }, scope: 'autonomica',
+  'salud-7': { name: 'Vaccine 4 months', meta: 'Assigned health center',
+               deadline: { kind: 'afterBirth', days: 120, label: '4 months' }, scope: 'autonomica',
                dependsOn: ['salud-6'] },
-  'salud-8': { name: 'Vacuna 11 meses', meta: 'Hexavalente + Meningo C',
-               deadline: { kind: 'afterBirth', days: 330, label: '11 meses' }, scope: 'autonomica',
+  'salud-8': { name: 'Vaccine 11 months', meta: 'Hexavalent + Meningo C',
+               deadline: { kind: 'afterBirth', days: 330, label: '11 months' }, scope: 'autonomica',
                dependsOn: ['salud-7'] },
-  'salud-9': { name: 'Vacuna 12 meses', meta: 'Triple vírica + Meningo B + Varicela + Neumococo',
-               deadline: { kind: 'afterBirth', days: 365, label: '12 meses' }, scope: 'autonomica',
+  'salud-9': { name: 'Vaccine 12 months', meta: 'MMR + Meningo B + Varicella + Pneumococcal',
+               deadline: { kind: 'afterBirth', days: 365, label: '12 months' }, scope: 'autonomica',
                dependsOn: ['salud-8'] },
-  'salud-10': { name: 'Vacuna 15 meses', meta: 'Hepatitis A',
-                deadline: { kind: 'afterBirth', days: 456, label: '15 meses' }, scope: 'autonomica',
+  'salud-10': { name: 'Vaccine 15 months', meta: 'Hepatitis A',
+                deadline: { kind: 'afterBirth', days: 456, label: '15 months' }, scope: 'autonomica',
                 dependsOn: ['salud-9'] },
   // ---------- Ayudas económicas ----------
-  'ayudas-0': { name: 'Contactar con asesora fiscal Elena Melián', meta: 'Verificación IRPF — datos familiares · Actualizar número de hijos para retenciones · Al empleador',
-                deadline: { kind: 'afterBirth', days: 60, label: 'Primeros 2 meses' }, scope: 'nacional' },
-  'ayudas-2': { name: 'Actualización beneficiarios seguros de vida', meta: 'Aseguradora · Incluir al nuevo hijo',
-                deadline: { kind: 'afterBirth', days: 60, label: 'Primeros 2 meses' }, scope: 'nacional' },
-  'ayudas-3': { name: 'Actualización seguro médico privado (si aplica)', meta: 'Aseguradora · Alta del bebé · Algunos tienen 15-30 días plazo',
-                deadline: { kind: 'afterBirth', days: 15, label: 'Primeras 2 semanas' }, priority: 'high', scope: 'privado' }
+  'ayudas-0': { name: 'Contact tax advisor Elena Melián', meta: 'IRPF verification — family data · Update number of children for withholdings · To employer',
+                deadline: { kind: 'afterBirth', days: 60, label: 'First 2 months' }, scope: 'nacional' },
+  'ayudas-2': { name: 'Update life insurance beneficiaries', meta: 'Insurance company · Include new child',
+                deadline: { kind: 'afterBirth', days: 60, label: 'First 2 months' }, scope: 'nacional' },
+  'ayudas-3': { name: 'Update private health insurance (if applicable)', meta: 'Insurance company · Register baby · Some have 15-30 day deadline',
+                deadline: { kind: 'afterBirth', days: 15, label: 'First 2 weeks' }, priority: 'high', scope: 'privado' }
 };
 
 // Backwards-compat alias used by legacy paths.
@@ -1394,17 +1394,17 @@ window.TRAMITE_DEADLINES = new Proxy({}, {
 });
 
 window.GROUPS = {
-  preparacion: { title: '🎒 Preparación pre-parto', desc: 'Tareas críticas antes del nacimiento.', renderMode: 'html' },
-  registro:    { title: 'Registro Civil — Inscripción de Nacimiento', renderMode: 'html' },
-  inss:        { title: 'INSS / Seguridad Social — Prestación por Nacimiento', renderMode: 'html' },
-  binter:      { title: 'Binter — Empresa / RRHH', renderMode: 'html' },
-  bebe:        { title: '👶 Bebé — Admin', desc: 'Trámites administrativos del bebé tras el nacimiento.', renderMode: 'js', count: 7 },
-  salud:       { title: '🩺 Salud', desc: 'Seguimiento sanitario entre Vithas (parto) y SCS (post-parto La Laguna / LPGC). Calendario vacunal Canarias.', renderMode: 'js', count: 11 },
-  ayudas:      { title: '💶 Ayudas económicas', desc: 'Deducciones y ayudas aplicables a nivel nacional, autonómico y municipal.', renderMode: 'js', count: 4 }
+  preparacion: { title: '🎒 Pre-birth preparation', desc: 'Critical tasks before birth.', renderMode: 'html' },
+  registro:    { title: 'Registro Civil — Birth Registration', renderMode: 'html' },
+  inss:        { title: 'INSS / Seguridad Social — Birth Benefit', renderMode: 'html' },
+  binter:      { title: 'Binter — Company / HR', renderMode: 'html' },
+  bebe:        { title: '👶 Baby — Admin', desc: 'Administrative procedures for baby after birth.', renderMode: 'js', count: 7 },
+  salud:       { title: '🩺 Health', desc: 'Health monitoring between Vithas (delivery) and SCS (postpartum La Laguna / LPGC). Canarias vaccine schedule.', renderMode: 'js', count: 11 },
+  ayudas:      { title: '💶 Financial assistance', desc: 'Deductions and benefits at national, regional, and municipal levels.', renderMode: 'js', count: 4 }
 };
 
 window.SCOPE_CHIPS = {
-  nacional:   { label: 'Nacional', emoji: '🇪🇸', cls: 'chip-nac' },
+  nacional:   { label: 'National', emoji: '🇪🇸', cls: 'chip-nac' },
   autonomica: { label: 'Canarias', emoji: '🌴', cls: 'chip-aut' },
   municipal:  { label: 'LPGC', emoji: '🏛', cls: 'chip-mun' },
   privado:    { label: 'Vithas', emoji: '🏥', cls: 'chip-prv' },
@@ -1427,24 +1427,24 @@ window.resolveDeadline = function(key) {
 };
 
 window.formatDeadlineBadge = function(daysUntil) {
-  if (daysUntil < 0) return { text: 'Vencido hace ' + Math.abs(daysUntil) + ' d', cls: 'dl-overdue' };
-  if (daysUntil === 0) return { text: 'Vence hoy', cls: 'dl-urgent' };
-  if (daysUntil === 1) return { text: 'Vence mañana', cls: 'dl-urgent' };
-  if (daysUntil <= 3) return { text: 'Vence en ' + daysUntil + ' d', cls: 'dl-urgent' };
-  if (daysUntil <= 14) return { text: 'Vence en ' + daysUntil + ' d', cls: 'dl-soon' };
-  return { text: 'Vence en ' + daysUntil + ' d', cls: 'dl-ok' };
+  if (daysUntil < 0) return { text: 'Overdue ' + Math.abs(daysUntil) + 'd', cls: 'dl-overdue' };
+  if (daysUntil === 0) return { text: 'Due today', cls: 'dl-urgent' };
+  if (daysUntil === 1) return { text: 'Due tomorrow', cls: 'dl-urgent' };
+  if (daysUntil <= 3) return { text: 'Due in ' + daysUntil + 'd', cls: 'dl-urgent' };
+  if (daysUntil <= 14) return { text: 'Due in ' + daysUntil + 'd', cls: 'dl-soon' };
+  return { text: 'Due in ' + daysUntil + 'd', cls: 'dl-ok' };
 };
 
 window.fmtLongDate = function(d) {
-  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
 };
 </script>
 <script>
 // ========== CALENDAR ==========
 (function() {
-  const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const dayLabels = ['L','M','X','J','V','S','D'];
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dayLabels = ['M','T','W','T','F','S','S'];
   const shiftRef = new Date(2026, 3, 3);
   const CYCLE = 9;
 
@@ -1500,8 +1500,8 @@ window.fmtLongDate = function(d) {
     const target = document.getElementById('parentalDaySummary');
     if (!target) return;
     target.innerHTML =
-      '<div class="total-box"><div class="num c-purple">' + totalParentalDays + '</div><div class="lbl">Días de permiso (asignados)</div></div>' +
-      '<div class="total-box"><div class="num c-pink">' + totalWorkDays + '</div><div class="lbl">En días laborables de turno</div></div>';
+      '<div class="total-box"><div class="num c-purple">' + totalParentalDays + '</div><div class="lbl">Leave days (assigned)</div></div>' +
+      '<div class="total-box"><div class="num c-pink">' + totalWorkDays + '</div><div class="lbl">On shift working days</div></div>';
   }, 0);
 
   // Render months
@@ -1548,12 +1548,12 @@ window.fmtLongDate = function(d) {
       } else {
         cell.classList.add('workday');
       }
-      if (shiftOff) { cell.classList.add('shift-off'); cell.title = 'Día libre de turno'; }
+      if (shiftOff) { cell.classList.add('shift-off'); cell.title = 'Shift day off'; }
       if (tripDay) cell.classList.add('trip');
       if (schoolDay && !type) cell.classList.add('school');
-      if (year === 2026 && month === 3 && d === 20) { cell.classList.add('baby'); cell.title = '¡Nace Luca!'; }
+      if (year === 2026 && month === 3 && d === 20) { cell.classList.add('baby'); cell.title = 'Luca is born!'; }
       const todayCmp = new Date(); todayCmp.setHours(0,0,0,0);
-      if (date.getTime() === todayCmp.getTime()) { cell.classList.add('today'); cell.title = (cell.title ? cell.title + ' · ' : '') + 'Hoy'; }
+      if (date.getTime() === todayCmp.getTime()) { cell.classList.add('today'); cell.title = (cell.title ? cell.title + ' · ' : '') + 'Today'; }
       daysDiv.appendChild(cell);
     }
     monthDiv.appendChild(daysDiv);
@@ -1659,7 +1659,7 @@ window.fmtLongDate = function(d) {
     const now = new Date().toISOString();
     lastSavedAt = Date.now();
     if (pendingToast) pendingToast.remove();
-    pendingToast = toast('Sincronizando…', 'loading');
+    pendingToast = toast('Syncing…', 'loading');
     const { error } = await sb.from('app_state').update({
       tramites: state.tramites,
       docs: state.docs,
@@ -1669,9 +1669,9 @@ window.fmtLongDate = function(d) {
     }).eq('id', stateRowId);
     if (pendingToast) pendingToast.remove();
     if (error) {
-      pendingToast = toast('⚠ No se pudo guardar: ' + error.message, 'error');
+      pendingToast = toast('⚠ Could not save: ' + error.message, 'error');
     } else {
-      pendingToast = toast('✓ Guardado', 'success');
+      pendingToast = toast('✓ Saved', 'success');
     }
   }
 
@@ -1685,7 +1685,7 @@ window.fmtLongDate = function(d) {
   async function openDoc(path) {
     const url = await signedUrlFor(path);
     if (url) window.open(url, '_blank', 'noopener');
-    else toast('⚠ No se pudo abrir el archivo', 'error');
+    else toast('⚠ Could not open file', 'error');
   }
 
   // ---------- UI: checkboxes ----------
@@ -1695,10 +1695,10 @@ window.fmtLongDate = function(d) {
     const badge = row.querySelector('.badge');
     if (cb.checked) {
       row.classList.add('done');
-      if (badge) { badge.className = 'badge badge-done'; badge.textContent = 'Hecho'; }
+      if (badge) { badge.className = 'badge badge-done'; badge.textContent = 'Done'; }
     } else {
       row.classList.remove('done');
-      if (badge) { badge.className = 'badge badge-pending'; badge.textContent = 'Pendiente'; }
+      if (badge) { badge.className = 'badge badge-pending'; badge.textContent = 'Pending'; }
     }
   }
   function updateGroupProgress(group) {
@@ -1708,7 +1708,7 @@ window.fmtLongDate = function(d) {
     const fill = document.getElementById('prog-' + group);
     const label = document.getElementById('prog-label-' + group);
     if (fill) fill.style.width = (total ? (checked / total * 100) : 0) + '%';
-    if (label) label.textContent = checked + ' / ' + total + ' completados';
+    if (label) label.textContent = checked + ' / ' + total + ' completed';
   }
   function updateAggregate() {
     const allBoxes = document.querySelectorAll('.tramite-row input[type="checkbox"]');
@@ -1734,7 +1734,7 @@ window.fmtLongDate = function(d) {
       wrap.id = 'grp-' + groupKey;
       let html = '<h3>' + g.title + '</h3>';
       if (g.desc) html += '<p class="group-desc">' + g.desc + '</p>';
-      html += '<div class="progress-label" id="prog-label-' + groupKey + '">0 / ' + g.count + ' completados</div>';
+      html += '<div class="progress-label" id="prog-label-' + groupKey + '">0 / ' + g.count + ' completed</div>';
       html += '<div class="progress-track"><div class="progress-fill" id="prog-' + groupKey + '" style="width:0%"></div></div>';
       for (let i = 0; i < g.count; i++) {
         const key = groupKey + '-' + i;
@@ -1745,7 +1745,7 @@ window.fmtLongDate = function(d) {
         html += '<div class="tramite-info"><div class="name">' + t.name + '</div>';
         if (t.meta) html += '<div class="meta">' + t.meta + '</div>';
         html += '<span class="doc-slot" data-folder="' + folder + '"></span></div>';
-        html += '<span class="badge badge-pending">Pendiente</span></div>';
+        html += '<span class="badge badge-pending">Pending</span></div>';
       }
       host.appendChild(wrap);
       wrap.innerHTML = html;
@@ -1768,7 +1768,7 @@ window.fmtLongDate = function(d) {
       const chip = document.createElement('span');
       chip.className = 'scope-chip ' + chipDef.cls;
       chip.textContent = chipDef.emoji + ' ' + chipDef.label;
-      chip.title = 'Ámbito: ' + chipDef.label;
+      chip.title = 'Scope: ' + chipDef.label;
       const nameEl = info.querySelector('.name');
       if (nameEl) nameEl.appendChild(chip);
     });
@@ -1787,7 +1787,7 @@ window.fmtLongDate = function(d) {
       const btn = document.createElement('button');
       btn.className = 'subtask-toggle';
       btn.type = 'button';
-      btn.title = 'Mostrar subtareas';
+      btn.title = 'Show subtasks';
       btn.textContent = '▾';
       row.appendChild(btn);
 
@@ -1835,7 +1835,7 @@ window.fmtLongDate = function(d) {
       const btn = document.createElement('button');
       btn.className = 'journal-toggle';
       btn.type = 'button';
-      btn.title = 'Notas';
+      btn.title = 'Notes';
       btn.textContent = '📝';
       row.appendChild(btn);
 
@@ -1844,7 +1844,7 @@ window.fmtLongDate = function(d) {
       panel.style.display = 'none';
       const ta = document.createElement('textarea');
       ta.className = 'journal-textarea';
-      ta.placeholder = 'Notas: personas contactadas, números de referencia, dudas, fechas de seguimiento…';
+      ta.placeholder = 'Notes: people contacted, reference numbers, questions, follow-up dates…';
       ta.rows = 3;
       panel.appendChild(ta);
       const meta = document.createElement('div');
@@ -1891,7 +1891,7 @@ window.fmtLongDate = function(d) {
     if (!metaEl) return;
     if (!entry) { metaEl.textContent = ''; return; }
     const d = new Date(entry.updatedAt);
-    metaEl.textContent = 'Última edición: ' + d.toLocaleDateString('es-ES') + ' ' + d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    metaEl.textContent = 'Last edited: ' + d.toLocaleDateString('en-US') + ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
   }
   function updateJournalDot(key) {
     const row = document.querySelector('.tramite-row input[data-group="' + key.split('-')[0] + '"][data-idx="' + key.split('-').slice(1).join('-') + '"]');
@@ -1964,8 +1964,8 @@ window.fmtLongDate = function(d) {
         const t2 = window.TRAMITES[k];
         return t2 && t2.name ? t2.name : k;
       });
-      depBadge.textContent = '⏳ Requiere ' + unmet.length;
-      depBadge.title = 'Requiere: ' + names.join(' · ');
+      depBadge.textContent = '⏳ Requires ' + unmet.length;
+      depBadge.title = 'Requires: ' + names.join(' · ');
     });
   }
 
@@ -1991,7 +1991,7 @@ window.fmtLongDate = function(d) {
     }
     badge.className = 'deadline-badge ' + fmt.cls;
     badge.textContent = fmt.text;
-    badge.title = 'Límite: ' + window.fmtLongDate(dl.date) + ' · ' + dl.label;
+    badge.title = 'Deadline: ' + window.fmtLongDate(dl.date) + ' · ' + dl.label;
   }
 
   function renderUrgentBanner() {
@@ -2013,7 +2013,7 @@ window.fmtLongDate = function(d) {
     if (!items.length) { banner.style.display = 'none'; return; }
     items.sort((a,b) => a.dl.daysUntil - b.dl.daysUntil);
     const overdue = items.filter(i => i.dl.daysUntil < 0).length;
-    const label = overdue ? '⚠ ' + overdue + ' vencido' + (overdue>1?'s':'') + ' · ' + items.length + ' urgente' + (items.length>1?'s':'') : '⚠ ' + items.length + ' urgente' + (items.length>1?'s':'') + ' esta semana';
+    const label = overdue ? '⚠ ' + overdue + ' overdue · ' + items.length + ' urgent' : '⚠ ' + items.length + ' urgent this week';
     banner.querySelector('.urgent-text').textContent = label;
     banner.style.display = '';
     banner.onclick = () => {
@@ -2048,8 +2048,8 @@ window.fmtLongDate = function(d) {
       candidates.push({ key, dl, name: nameEl ? nameEl.textContent : key, box });
     });
     if (!candidates.length) {
-      title.textContent = '🎉 Todo al día';
-      meta.textContent = 'No hay plazos pendientes inmediatos.';
+      title.textContent = '🎉 All caught up';
+      meta.textContent = 'No immediate deadlines pending.';
       bdg.style.display = 'none';
       title.onclick = null;
       return;
@@ -2057,7 +2057,7 @@ window.fmtLongDate = function(d) {
     candidates.sort((a, b) => a.dl.daysUntil - b.dl.daysUntil);
     const top = candidates[0];
     title.textContent = top.name;
-    meta.textContent = 'Límite: ' + window.fmtLongDate(top.dl.date) + ' · ' + top.dl.label;
+    meta.textContent = 'Deadline: ' + window.fmtLongDate(top.dl.date) + ' · ' + top.dl.label;
     const fmt = window.formatDeadlineBadge(top.dl.daysUntil);
     bdg.style.display = '';
     bdg.className = 'dash-badge ' + fmt.cls;
@@ -2113,10 +2113,10 @@ window.fmtLongDate = function(d) {
       if (navigator.vibrate) navigator.vibrate(this.checked ? 25 : 10);
       if (lastUndoToast) lastUndoToast.remove();
       const self = this;
-      const msg = this.checked ? '✓ Marcado' : '↺ Desmarcado';
-      const t = toast(msg + ' · Deshacer', 'success');
+      const msg = this.checked ? '✓ Checked' : '↺ Unchecked';
+      const t = toast(msg + ' · Undo', 'success');
       const undo = document.createElement('button');
-      undo.textContent = 'Deshacer';
+      undo.textContent = 'Undo';
       undo.className = 'toast-undo';
       undo.onclick = () => {
         self.checked = wasChecked;
@@ -2201,7 +2201,7 @@ window.fmtLongDate = function(d) {
       slot.appendChild(a);
       const del = document.createElement('button');
       del.className = 'doc-pill-unlink';
-      del.title = 'Desvincular';
+      del.title = 'Unlink';
       del.textContent = '✕';
       del.onclick = (e) => {
         e.preventDefault(); e.stopPropagation();
@@ -2213,10 +2213,10 @@ window.fmtLongDate = function(d) {
     } else {
       const btn = document.createElement('button');
       btn.className = 'doc-pill' + (authed ? '' : ' disabled');
-      btn.title = 'Subir a ' + folder + '/';
-      btn.innerHTML = '<span>⬆</span><span>Subir a ' + folder + '/</span>';
+      btn.title = 'Upload to ' + folder + '/';
+      btn.innerHTML = '<span>⬆</span><span>Upload to ' + folder + '/</span>';
       btn.onclick = () => {
-        if (!authed) { toast('⚠ Inicia sesión primero', 'error'); return; }
+        if (!authed) { toast('⚠ Sign in first', 'error'); return; }
         openAttachPicker(box, folder);
       };
       slot.appendChild(btn);
@@ -2260,27 +2260,27 @@ window.fmtLongDate = function(d) {
 
   async function uploadFile(file, folder) {
     const MAX_HARD = 50 * 1024 * 1024;
-    if (file.size > MAX_HARD) { toast('⚠ Archivo supera el límite de 50 MB', 'error'); return null; }
+    if (file.size > MAX_HARD) { toast('⚠ File exceeds 50 MB limit', 'error'); return null; }
 
     const origBase = (file.name.split('.').slice(0, -1).join('.') || file.name);
     const ext = (file.name.split('.').pop() || 'bin').toLowerCase();
-    const label = prompt('Nombre para el archivo (sin extensión):', origBase);
+    const label = prompt('Name for the file (without extension):', origBase);
     if (label === null) return null;
     const slug = slugify(label) || slugify(origBase);
     const fname = yyyymmdd(new Date()) + '-' + slug + '.' + ext;
     const path = folder + '/' + fname;
 
-    const loadingT = toast('Subiendo ' + fname + '…', 'loading');
+    const loadingT = toast('Uploading ' + fname + '…', 'loading');
     const { error } = await sb.storage.from(BUCKET).upload(path, file, {
       upsert: false,
       contentType: file.type || undefined
     });
     loadingT.remove();
     if (error) {
-      toast('⚠ Error subiendo: ' + error.message, 'error');
+      toast('⚠ Upload error: ' + error.message, 'error');
       return null;
     }
-    toast('✓ Subido', 'success');
+    toast('✓ Uploaded', 'success');
     return { path, name: fname };
   }
 
@@ -2288,13 +2288,13 @@ window.fmtLongDate = function(d) {
     const folder = GROUP_FOLDERS[group];
     const listEl = document.getElementById('doc-list-' + group);
     if (!listEl) return;
-    if (!authed) { listEl.innerHTML = '<div class="doc-list-empty">Inicia sesión para ver documentos.</div>'; return; }
-    listEl.innerHTML = '<div class="doc-list-empty">Cargando…</div>';
+    if (!authed) { listEl.innerHTML = '<div class="doc-list-empty">Sign in to view documents.</div>'; return; }
+    listEl.innerHTML = '<div class="doc-list-empty">Loading…</div>';
     try {
       const { data, error } = await sb.storage.from(BUCKET).list(folder, { limit: 100, sortBy: { column: 'name', order: 'desc' } });
       if (error) throw error;
       const files = (data || []).filter(f => f.name && !f.name.startsWith('.'));
-      if (!files.length) { listEl.innerHTML = '<div class="doc-list-empty">Sin documentos aún.</div>'; return; }
+      if (!files.length) { listEl.innerHTML = '<div class="doc-list-empty">No documents yet.</div>'; return; }
       listEl.innerHTML = '';
       files.forEach(f => {
         const entry = document.createElement('div');
@@ -2307,16 +2307,16 @@ window.fmtLongDate = function(d) {
         entry.appendChild(a);
         const del = document.createElement('button');
         del.className = 'doc-del';
-        del.title = 'Eliminar';
+        del.title = 'Delete';
         del.textContent = '🗑';
         del.onclick = async () => {
-          if (!confirm('¿Eliminar ' + f.name + '?')) return;
-          const loadingT = toast('Eliminando…', 'loading');
+          if (!confirm('Delete ' + f.name + '?')) return;
+          const loadingT = toast('Deleting…', 'loading');
           const fullPath = folder + '/' + f.name;
           const { error: delErr } = await sb.storage.from(BUCKET).remove([fullPath]);
           loadingT.remove();
           if (delErr) { toast('⚠ Error: ' + delErr.message, 'error'); return; }
-          toast('✓ Eliminado', 'success');
+          toast('✓ Deleted', 'success');
           let dirty = false;
           Object.keys(state.docs).forEach(k => { if (state.docs[k] === fullPath) { delete state.docs[k]; dirty = true; } });
           if (dirty) { applyStateToUI(); queueSave(); }
@@ -2340,8 +2340,8 @@ window.fmtLongDate = function(d) {
       uploader.className = 'uploader' + (authed ? '' : ' hidden');
       uploader.id = 'upl-' + group;
       uploader.innerHTML =
-        '<div>📎 Subir archivo o arrastra aquí → <strong>' + folder + '/</strong></div>' +
-        '<div class="u-hint">PDF o imagen · máx 50 MB</div>';
+        '<div>📎 Upload file or drag here → <strong>' + folder + '/</strong></div>' +
+        '<div class="u-hint">PDF or image · max 50 MB</div>';
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = 'application/pdf,image/*';
@@ -2394,7 +2394,7 @@ window.fmtLongDate = function(d) {
   navSettings.addEventListener('click', async e => {
     e.preventDefault();
     const { data } = await sb.auth.getUser();
-    if (sessionEmailEl) sessionEmailEl.textContent = data && data.user ? 'Sesión: ' + data.user.email : '';
+    if (sessionEmailEl) sessionEmailEl.textContent = data && data.user ? 'Session: ' + data.user.email : '';
     modal.classList.add('open');
   });
   document.getElementById('logout-cancel').onclick = () => modal.classList.remove('open');
@@ -2406,10 +2406,10 @@ window.fmtLongDate = function(d) {
 
   function updateSyncPill() {
     if (authed) {
-      syncPill.textContent = '☁ Sincronizado';
+      syncPill.textContent = '☁ Synced';
       syncPill.classList.add('synced');
     } else {
-      syncPill.textContent = '📱 Local';
+      syncPill.textContent = '📱 Device only';
       syncPill.classList.remove('synced');
     }
   }
@@ -2453,10 +2453,10 @@ window.fmtLongDate = function(d) {
         syncBirthActualToWindow();
         saveLocal();
       } else if (stateRowId === null) {
-        toast('⚠ Falta la fila inicial en app_state', 'error');
+        toast('⚠ Missing initial row in app_state', 'error');
       }
     } catch (e) {
-      toast('⚠ No se pudo cargar: ' + (e.message || e), 'error');
+      toast('⚠ Could not load: ' + (e.message || e), 'error');
     }
     applyStateToUI();
   }
@@ -2492,9 +2492,9 @@ window.fmtLongDate = function(d) {
   const typeLabels = {
     'dni-luis': 'DNI Luis', 'dni-madre': 'DNI Colombina',
     'libro-familia': 'Libro de Familia', 'empadronamiento': 'Empadronamiento',
-    'parte-medico': 'Parte médico', 'informe-mat': 'Informe maternidad',
-    'cert-empresa': 'Cert. empresa', 'iban': 'IBAN',
-    'seguro-medico': 'Seguro médico', 'otro': 'Otro'
+    'parte-medico': 'Medical birth report', 'informe-mat': 'Maternity report',
+    'cert-empresa': 'Company cert.', 'iban': 'IBAN',
+    'seguro-medico': 'Health insurance', 'otro': 'Other'
   };
 
   function toast(msg, kind) {
@@ -2514,14 +2514,14 @@ window.fmtLongDate = function(d) {
 
   async function fetchLibrary() {
     const { data, error } = await sb.from('documents').select('*').order('uploaded_at', { ascending: false });
-    if (error) { toast('⚠ No se pudo leer biblioteca: ' + error.message, 'error'); return; }
+    if (error) { toast('⚠ Could not read library: ' + error.message, 'error'); return; }
     library = data || [];
     renderLibrary();
     renderAttachedPillsAll();
   }
   async function fetchAttachments() {
     const { data, error } = await sb.from('tramite_attachments').select('*');
-    if (error) { toast('⚠ No se pudo leer adjuntos: ' + error.message, 'error'); return; }
+    if (error) { toast('⚠ Could not read attachments: ' + error.message, 'error'); return; }
     attachments = data || [];
     renderAttachedPillsAll();
   }
@@ -2529,7 +2529,7 @@ window.fmtLongDate = function(d) {
   function renderLibrary() {
     const listEl = document.getElementById('lib-list');
     if (!listEl) return;
-    if (!library.length) { listEl.innerHTML = '<div class="doc-list-empty">Sin documentos en la biblioteca aún.</div>'; return; }
+    if (!library.length) { listEl.innerHTML = '<div class="doc-list-empty">No documents in library yet.</div>'; return; }
     const byType = {};
     library.forEach(d => {
       const k = d.doc_type || 'otro';
@@ -2543,8 +2543,8 @@ window.fmtLongDate = function(d) {
         const count = attachments.filter(a => a.document_id === d.id).length;
         html += '<div class="lib-entry" data-id="' + d.id + '">';
         html += '<a class="lib-name" href="#">' + escapeHtml(d.filename) + '</a>';
-        html += '<span class="lib-attach-count" title="Adjunto a ' + count + ' trámites">📎 ' + count + '</span>';
-        html += '<button class="lib-del" title="Eliminar">🗑</button>';
+        html += '<span class="lib-attach-count" title="Attached to ' + count + ' procedures">📎 ' + count + '</span>';
+        html += '<button class="lib-del" title="Delete">🗑</button>';
         html += '</div>';
       });
       html += '</div>';
@@ -2559,13 +2559,13 @@ window.fmtLongDate = function(d) {
         if (url) window.open(url, '_blank', 'noopener');
       };
       entry.querySelector('.lib-del').onclick = async () => {
-        if (!confirm('¿Eliminar "' + doc.filename + '" de la biblioteca? Se desvinculará de todos los trámites.')) return;
-        const t = toast('Eliminando…', 'loading');
+        if (!confirm('Delete "' + doc.filename + '" from library? It will be unlinked from all procedures.')) return;
+        const t = toast('Deleting…', 'loading');
         await sb.storage.from(BUCKET).remove([doc.storage_path]);
         const { error } = await sb.from('documents').delete().eq('id', doc.id);
         t.remove();
         if (error) { toast('⚠ ' + error.message, 'error'); return; }
-        toast('✓ Eliminado', 'success');
+        toast('✓ Deleted', 'success');
         await Promise.all([fetchLibrary(), fetchAttachments()]);
       };
     });
@@ -2612,7 +2612,7 @@ window.fmtLongDate = function(d) {
       addBtn = document.createElement('button');
       addBtn.className = 'lib-add-btn';
       addBtn.type = 'button';
-      addBtn.title = 'Adjuntar desde biblioteca';
+      addBtn.title = 'Attach from library';
       addBtn.textContent = '📎+';
       row.appendChild(addBtn);
       addBtn.onclick = () => openPickerForTramite(key);
@@ -2631,12 +2631,12 @@ window.fmtLongDate = function(d) {
   function renderPickerList() {
     const list = document.getElementById('lib-picker-list');
     if (!library.length) {
-      list.innerHTML = '<div class="doc-list-empty">Sube documentos primero desde la pestaña Docs.</div>';
+      list.innerHTML = '<div class="doc-list-empty">Upload documents first from the Docs tab.</div>';
       return;
     }
     const attachedIds = new Set(attachments.filter(a => a.tramite_key === currentPickerTramite).map(a => a.document_id));
     list.innerHTML = library.map(d => {
-      const type = typeLabels[d.doc_type || 'otro'] || 'Otro';
+      const type = typeLabels[d.doc_type || 'otro'] || 'Other';
       const checked = attachedIds.has(d.id) ? 'checked' : '';
       return '<label class="lib-pick-item"><input type="checkbox" data-id="' + d.id + '" ' + checked + '> <span class="lib-pick-name">' + escapeHtml(d.filename) + '</span> <span class="lib-pick-type">' + type + '</span></label>';
     }).join('');
@@ -2660,7 +2660,7 @@ window.fmtLongDate = function(d) {
     const id = crypto.randomUUID();
     const safeName = file.name.replace(/[^\w.\-]+/g, '_');
     const path = LIB_PREFIX + id + '/' + safeName;
-    const t = toast('Subiendo…', 'loading');
+    const t = toast('Uploading…', 'loading');
     const up = await sb.storage.from(BUCKET).upload(path, file, { upsert: false, contentType: file.type || undefined });
     if (up.error) { t.remove(); toast('⚠ ' + up.error.message, 'error'); return null; }
     const ins = await sb.from('documents').insert({
@@ -2668,7 +2668,7 @@ window.fmtLongDate = function(d) {
     }).select().single();
     t.remove();
     if (ins.error) { toast('⚠ ' + ins.error.message, 'error'); return null; }
-    toast('✓ Subido', 'success');
+    toast('✓ Uploaded', 'success');
     await fetchLibrary();
     return ins.data;
   }

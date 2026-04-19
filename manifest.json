@@ -1,7 +1,7 @@
 {
-  "name": "Parental Leave Plan",
-  "short_name": "Leave Plan",
-  "description": "Parental leave planning dashboard",
+  "name": "Family Plan",
+  "short_name": "Family Plan",
+  "description": "Family planning dashboard",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
