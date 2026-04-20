@@ -282,6 +282,7 @@ section { scroll-margin-top: 60px; }
 .cal-day.trip { box-shadow: inset 0 0 0 2.5px var(--cal-trip-ring); }
 .cal-day.shift-off { outline: 2.5px solid var(--cal-shift-ring); outline-offset: -2.5px; }
 .cal-day.school { border-bottom: 2.5px solid var(--cal-school-border); }
+.cal-day.last-school { background: var(--cal-school-border); color: #fff; font-weight: 700; }
 .cal-day.annual-overlay { border-bottom: 3px solid var(--cal-annual-overlay); }
 .cal-day.split-parental-annual {
   background: linear-gradient(135deg, var(--cal-parental-bg) 50%, var(--cal-annual-bg) 50%) !important;
@@ -977,13 +978,13 @@ window.sb.auth.getSession().then(({ data }) => {
             <td data-label="Block"><span class="status-dot" style="background:#a855f7"></span>Mandatory</td>
             <td data-label="Plan">First 6 weeks with Luca at home, family adjustment</td>
             <td data-label="Days">42</td>
-            <td data-label="Period">20 Apr – 31 May</td>
+            <td data-label="Period">17 Apr – 28 May</td>
           </tr>
           <tr>
             <td data-label="Block"><span class="status-dot" style="background:#d8b4fe"></span>Block 1 – June</td>
             <td data-label="Plan">Settling into life in Tenerife with Luca</td>
-            <td data-label="Days">12</td>
-            <td data-label="Period">14 – 25 Jun</td>
+            <td data-label="Days">7</td>
+            <td data-label="Period">26 Jun – 2 Jul</td>
           </tr>
           <tr>
             <td data-label="Block"><span class="status-dot" style="background:#d8b4fe"></span>Block 2 – August</td>
@@ -1141,7 +1142,7 @@ window.sb.auth.getSession().then(({ data }) => {
       <div class="progress-track"><div class="progress-fill" id="prog-binter" style="width:0%"></div></div>
 
       <div class="tramite-row"><input type="checkbox" data-group="binter" data-idx="0">
-        <div class="tramite-info"><div class="name">Formal parental leave notification</div><div class="meta">Binter HR · Before birth · Mandatory period dates (20 Apr – 31 May)</div><span class="doc-slot" data-folder="Binter"></span></div>
+        <div class="tramite-info"><div class="name">Formal parental leave notification</div><div class="meta">Binter HR · Before birth · Mandatory period dates (17 Apr – 28 May)</div><span class="doc-slot" data-folder="Binter"></span></div>
         <span class="badge badge-pending">Pending</span></div>
       <div class="tramite-row"><input type="checkbox" data-group="binter" data-idx="1">
         <div class="tramite-info"><div class="name">Certificate / Libro de Familia</div><div class="meta">Binter HR · After registration · Prove birth</div><span class="doc-slot" data-folder="Binter"></span></div>
@@ -1203,7 +1204,7 @@ window.sb.auth.getSession().then(({ data }) => {
         <li><strong>Siam Park (5–7 Jun):</strong> Falls on shift days off — no leave required.</li>
         <li><strong>La Graciosa (5–12 Nov):</strong> 5–7 Nov shift days off + block 3 (8–14 Nov). Fully covered.</li>
         <li><strong>Trip with father (TBD):</strong> Trip with father (77 years old) to Miami or Peru — destination pending. 2 blocks reserved.</li>
-        <li><strong>Deadline:</strong> 17 of the 19 weeks must be used before Luca turns 1 (20 Apr 2027). Japan blocks end Apr 15 — 5 days margin. The 2 additional weeks can be used until he turns 8 (Apr 2034).</li>
+        <li><strong>Deadline:</strong> 17 of the 19 weeks must be used before Luca turns 1 (17 Apr 2027). Japan blocks end Apr 15 — 5 days margin. The 2 additional weeks can be used until he turns 8 (Apr 2034).</li>
       </ul>
     </div>
   </section>
@@ -1256,8 +1257,8 @@ window.getBirthAnchor = function() {
 window.isBornYet = function() { return !!window.birthActual; };
 
 window.BLOQUE_STARTS = {
-  1: new Date(2026, 3, 20),   // obligatorio
-  2: new Date(2026, 5, 17),
+  1: new Date(2026, 3, 17),   // obligatorio
+  2: new Date(2026, 5, 26),
   3: new Date(2026, 7, 10),
   4: new Date(2026, 10, 8),
   5: new Date(2026, 11, 23)
@@ -1464,9 +1465,9 @@ window.fmtLongDate = function(d) {
     return pos < 3;
   }
 
-  const mandatory = { start: new Date(2026, 3, 20), end: new Date(2026, 4, 31) };
+  const mandatory = { start: new Date(2026, 3, 17), end: new Date(2026, 4, 28) };
   const flexibleBlocks = [
-    { start: new Date(2026, 5, 17), end: new Date(2026, 5, 23) },
+    { start: new Date(2026, 5, 26), end: new Date(2026, 6, 2) },
     { start: new Date(2026, 7, 10), end: new Date(2026, 7, 16) },
     { start: new Date(2026, 10, 8), end: new Date(2026, 10, 14) },
     { start: new Date(2026, 11, 23), end: new Date(2027, 0, 12) },
@@ -1560,7 +1561,8 @@ window.fmtLongDate = function(d) {
       if (shiftOff) { cell.classList.add('shift-off'); cell.title = 'Shift day off'; }
       if (tripDay) cell.classList.add('trip');
       if (schoolDay && !type) cell.classList.add('school');
-      if (year === 2026 && month === 3 && d === 20) { cell.classList.add('baby'); cell.title = 'Luca is born!'; }
+      if (year === 2026 && month === 3 && d === 17) { cell.classList.add('baby'); cell.title = 'Luca is born!'; }
+      if (year === 2026 && month === 5 && d === 19) { cell.classList.add('last-school'); cell.title = 'Last day of school'; }
       const todayCmp = new Date(); todayCmp.setHours(0,0,0,0);
       if (date.getTime() === todayCmp.getTime()) { cell.classList.add('today'); cell.title = (cell.title ? cell.title + ' · ' : '') + 'Today'; }
       daysDiv.appendChild(cell);
