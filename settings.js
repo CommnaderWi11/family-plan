@@ -34,8 +34,6 @@
     document.getElementById('cfg-shift-ref').value = cfg.shiftRef || '';
     document.getElementById('cfg-cycle').value = cfg.shiftCycle || 9;
     document.getElementById('cfg-days-off').value = cfg.shiftDaysOff || 3;
-    document.getElementById('cfg-birth-date').value = cfg.birthDate || '';
-    document.getElementById('cfg-last-school').value = cfg.lastSchoolDay || '';
     document.getElementById('cfg-mandatory-start').value = cfg.mandatory.start || '';
     document.getElementById('cfg-mandatory-end').value = cfg.mandatory.end || '';
     document.getElementById('cfg-school-start').value = cfg.school.start || '';
@@ -62,8 +60,8 @@
       shiftRef: document.getElementById('cfg-shift-ref').value,
       shiftCycle: parseInt(document.getElementById('cfg-cycle').value) || 9,
       shiftDaysOff: parseInt(document.getElementById('cfg-days-off').value) || 3,
-      birthDate: document.getElementById('cfg-birth-date').value,
-      lastSchoolDay: document.getElementById('cfg-last-school').value,
+      birthDate: '2026-04-17',
+      lastSchoolDay: '2026-06-19',
       mandatory: {
         start: document.getElementById('cfg-mandatory-start').value,
         end: document.getElementById('cfg-mandatory-end').value,
