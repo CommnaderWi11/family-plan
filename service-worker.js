@@ -1,13 +1,20 @@
-const VERSION = 'v1-parental-leave';
-const SHELL_CACHE = 'parental-leave-shell-' + VERSION;
-const DATA_CACHE = 'parental-leave-data-' + VERSION;
-const PHOTO_CACHE = 'parental-leave-photos-' + VERSION;
+const VERSION = 'v2-family-plan';
+const SHELL_CACHE = 'family-plan-shell-' + VERSION;
+const DATA_CACHE = 'family-plan-data-' + VERSION;
+const PHOTO_CACHE = 'family-plan-photos-' + VERSION;
 const SHELL = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './styles.css',
+  './app.js',
+  './calendar.js',
+  './tramites.js',
+  './library.js',
+  './settings.js',
+  './nav.js'
 ];
 const SUPABASE_HOST = 'voirsxfjdayhhvwviaqt.supabase.co';
 
