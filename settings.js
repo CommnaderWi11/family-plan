@@ -144,8 +144,7 @@
     const fmtShort = function(s) {
       if (!s) return '?';
       const d = typeof s === 'string' ? parseD(s) : s;
-      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      return d.getDate() + ' ' + months[d.getMonth()];
+      return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0');
     };
 
     // Count flexible weeks

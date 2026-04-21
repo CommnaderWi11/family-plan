@@ -340,7 +340,7 @@
     if (!metaEl) return;
     if (!entry) { metaEl.textContent = ''; return; }
     const d = new Date(entry.updatedAt);
-    metaEl.textContent = 'Last edited: ' + d.toLocaleDateString('en-US') + ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    metaEl.textContent = 'Last edited: ' + String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear() + ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
   }
   function updateJournalDot(key) {
     const row = document.querySelector('.tramite-row input[data-group="' + key.split('-')[0] + '"][data-idx="' + key.split('-').slice(1).join('-') + '"]');
